@@ -1,0 +1,7 @@
+{
+  "name": "dercosaApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
