@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Estado</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  @if(estados().length > 0) {
+  <div style="display: flex; align-items: center; flex-direction: column">
+    @for (estado of estados(); track estado.EPARTIDA) {
+    <ion-item style="text-align: center">
+      <div style="width: 100%; display: flex; padding: 1rem 0">
+        <div style="width: 90%; display: flex">
+          <div
+            style="
+              width: 20%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ estado.EPEDIDO }}
+          </div>
+          <div
+            style="
+              width: 10%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ estado.ELINPED }}
+          </div>
+          <div
+            style="
+              width: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ estado.CLIENTE.NOMBRECLI }}
+          </div>
+          <div
+            style="
+              width: 30%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ estado.ARTICULO.DESARTI }}
+          </div>
+        </div>
+        <div
+          style="
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <ion-checkbox
+            style="margin-left: 10px"
+            [(ngModel)]="getCheckedEstado(estado).checked"
+            (ionChange)="selectMember(estado, $event)"
+          ></ion-checkbox>
+        </div>
+      </div>
+    </ion-item>
+    } @if(estados().length > 1) {
+    {{ selectedEstados() | json }}
+    <ion-button style="margin-top: 2rem" (click)="checkAll()">
+      Seleccionar todos
+    </ion-button>
+    }
+  </div>
+  }
+</ion-content>
+@if(chekedEstados().length > 0) {
+<ion-footer>
+  <div
+    style="
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      margin: 2rem 0;
+    "
+  >
+    <div style="width: 50%">Piezas: {{ sumPiezas() }}</div>
+    <div style="width: 50%">Cantidad: {{ sumCantidad() }}</div>
+  </div>
+</ion-footer>
+}
