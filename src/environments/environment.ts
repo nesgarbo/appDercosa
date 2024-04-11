@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   backend: {
-    apiUrl: 'http://Optiplex7010:3030'
+    apiUrl: 'http://192.168.0.115:3030'
   },
 };
 

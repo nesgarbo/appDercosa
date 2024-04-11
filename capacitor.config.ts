@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'dercosaApp',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'http',
   }
 };
 

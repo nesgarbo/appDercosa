@@ -1,13 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Estado</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  @if(estados().length > 0) {
   <div style="display: flex; align-items: center; flex-direction: column">
-    @for (estado of estados(); track estado.EPARTIDA) {
-    <ion-item style="text-align: center">
+    @for (estado of pedidosStore.entities(); track estado.EPARTIDA) {
+    <ion-item style="text-align: center; width: 100%">
       <div style="width: 100%; display: flex; padding: 1rem 0">
         <div style="width: 90%; display: flex">
           <div
@@ -61,34 +63,112 @@
         >
           <ion-checkbox
             style="margin-left: 10px"
-            [(ngModel)]="getCheckedEstado(estado).checked"
-            (ionChange)="selectMember(estado, $event)"
+            (ionChange)="toggleSelection(estado)"
+            [checked]="
+              pedidosStore.selectedIds()[estado.PEDIDOLIN]?.valueOf() === true
+            "
           ></ion-checkbox>
         </div>
       </div>
     </ion-item>
-    } @if(estados().length > 1) {
-    {{ selectedEstados() | json }}
-    <ion-button style="margin-top: 2rem" (click)="checkAll()">
+    } @if(pedidosStore.entities().length > 0) { @if(!selectedAll) {
+    <ion-button style="margin-top: 2rem" (click)="selectAll()">
       Seleccionar todos
     </ion-button>
-    }
+    } @else {
+    <ion-button style="margin-top: 2rem" (click)="unselectAll()">
+      Deseleccionar todos
+    </ion-button>
+    } }
   </div>
-  }
 </ion-content>
-@if(chekedEstados().length > 0) {
 <ion-footer>
   <div
     style="
       display: flex;
-      text-align: center;
       align-items: center;
       justify-content: center;
       margin: 2rem 0;
+      flex-direction: column;
     "
   >
-    <div style="width: 50%">Piezas: {{ sumPiezas() }}</div>
-    <div style="width: 50%">Cantidad: {{ sumCantidad() }}</div>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        width: 70%;
+        text-align: center;
+      "
+    >
+      <div
+        class="fill"
+        style="
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        Piezas: {{ pedidosStore.sumPiezas() }}
+      </div>
+      <div
+        class="fill right"
+        style="
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        Cantidad: {{ pedidosStore.sumCantidad() }}
+      </div>
+    </div>
+    <form style="width: 70%;" [formGroup]="aditionalDataForm">
+      <ion-input
+        [maxlength]="4"
+        fill="outline"
+        label="Color"
+        labelPlacement="floating"
+        formControlName="ECOLOR"
+        [readonly]="true"
+        style="margin: 1rem 0"
+      >
+      </ion-input>
+      <ion-input
+        [maxlength]="40"
+        fill="outline"
+        label="Comentario"
+        labelPlacement="floating"
+        formControlName="ECOMENTA"
+        style="margin: 1rem 0"
+      >
+      </ion-input>
+    </form>
+    <div style="width: 70%">
+      <ion-select
+        [disabled]="!somethingSelected()"
+        label="Estado"
+        label-placement="floating"
+        fill="outline"
+        [(ngModel)]="codEstado"
+        multiple="false"
+      >
+        @for(option of codEstadosStore.entities(); track option.CODIESTA) {
+        <ion-select-option [value]="option.CODIESTA">{{
+          option.DESESTA
+        }}</ion-select-option>
+        }
+      </ion-select>
+    </div>
+    <ion-button
+      style="width: 70%; margin-top: 1rem"
+      (click)="accept()"
+      [disabled]="
+        !somethingSelected() ||
+        (codEstado === pedidosStore.selectedEstados()[0]?.CODESTADO?.CODIESTA &&
+        aditionalDataForm.getRawValue().ECOMENTA === pedidosStore.selectedEstados()[0]?.ECOMENTA)
+      "
+      >ACEPTAR</ion-button
+    >
   </div>
 </ion-footer>
-}

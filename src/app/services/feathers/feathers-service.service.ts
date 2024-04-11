@@ -19,7 +19,12 @@ export interface TenantUserAvailability {
 @Injectable({ providedIn: 'root' })
 export class FeathersClientService {
   private apiUrl = environment.backend.apiUrl;
-  private connection = socketio(io(this.apiUrl));
+  private connection = socketio(io(this.apiUrl, {
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    reconnectionAttempts: Infinity
+  }));
 
   private _feathers = createClient(this.connection);
 
@@ -67,6 +72,6 @@ export class FeathersClientService {
   }
 
   public async getCodEstados(): Promise<Codestados[]> {
-    return this._feathers.service('codestados').find();
+    return await this._feathers.service('codestados').find();
   }
 }
