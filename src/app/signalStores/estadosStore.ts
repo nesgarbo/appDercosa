@@ -21,10 +21,13 @@ export type EstadosState = {
 };
 
 export type AditionalData = {
+  PEDIDOLIN?: number;
   ESTADO7?: string;
   EFECESTA?: string;
   ECOMENTA?: string;
 };
+
+export type PedidolinRecord = Record<number, AditionalData>;
 
 export const PedidosStore = signalStore(
   { providedIn: 'root' },
@@ -53,7 +56,7 @@ export const PedidosStore = signalStore(
         selectedIds: { ...store.selectedIds(), [estado.PEDIDOLIN]: false },
       });
     },
-    async changeEstado(codEstado: Codestados, aditionalData?: AditionalData) {
+    async changeEstado(codEstado: Codestados, aditionalData?: PedidolinRecord) {
       const selectedIds = store.selectedIds();
       for (const identificador of Object.keys(selectedIds)) {
         const id = parseInt(identificador);
@@ -66,10 +69,10 @@ export const PedidosStore = signalStore(
               .getServiceByPath('estado')
               .update(
                 estado.EPARTIDA,
-                aditionalData
+                aditionalData?.[estado.PEDIDOLIN]
                   ? {
                       ...estado,
-                      ...aditionalData,
+                      ...aditionalData[estado.PEDIDOLIN],
                       ECOD: codEstado.CODIESTA,
                       CODESTADO: codEstado,
                     }
@@ -110,5 +113,11 @@ export const PedidosStore = signalStore(
     sumCantidad: computed(() =>
       selectedEstados().reduce((acc, estado) => acc + estado.ECANT, 0)
     ),
+    comDiff: computed(() => {
+      const comentarios = selectedEstados().map((estado) => estado.ECOMENTA);
+      let res = new Set(comentarios).size !== 1;
+      console.log('res: ', res);
+      return res;
+    }),
   }))
 );

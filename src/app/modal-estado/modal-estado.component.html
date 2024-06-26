@@ -92,12 +92,55 @@
       flex-direction: column;
     "
   >
+  <div
+      style="
+        display: flex;
+        justify-content: center;
+        width: 70%;
+        text-align: center;
+      "
+    >
+      <div
+        class="fill"
+        style="
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        {{ aditionalDataForm.getRawValue().ESTADO6 }}
+      </div>
+      <div
+        class="fill right"
+        style="
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+      {{ aditionalDataForm.getRawValue().ESTADO7 }}
+      </div>
+      <div
+        class="fill right"
+        style="
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+      {{ aditionalDataForm.getRawValue().ESTADO8 }}
+      </div>
+    </div>
     <div
       style="
         display: flex;
         justify-content: center;
         width: 70%;
         text-align: center;
+        margin: 1rem 0 0 0;
       "
     >
       <div
@@ -160,15 +203,10 @@
         }
       </ion-select>
     </div>
+    {{ pedidosStore.comDiff()}}
     <ion-button
-      style="width: 70%; margin-top: 1rem"
-      (click)="accept()"
-      [disabled]="
-        !somethingSelected() ||
-        (codEstado === pedidosStore.selectedEstados()[0]?.CODESTADO?.CODIESTA &&
-        aditionalDataForm.getRawValue().ECOMENTA === pedidosStore.selectedEstados()[0]?.ECOMENTA)
-      "
-      >ACEPTAR</ion-button
-    >
+      style="margin-top: 1rem"
+      [disabled]="!somethingSelected()"
+      (click)="accept()">Aceptar</ion-button>
   </div>
 </ion-footer>

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   backend: {
-    apiUrl: 'http://192.168.0.115:3030'
+    apiUrl: 'https://192.168.0.41:3030'
   },
 };
 
