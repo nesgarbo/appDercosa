@@ -3,9 +3,9 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
   appName: 'dercosaApp',
-  webDir: 'www',
+  webDir: 'www/browser',
   server: {
-    androidScheme: 'http',
+    hostname: 'srvapp01'
   }
 };
 

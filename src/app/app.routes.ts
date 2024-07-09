@@ -1,18 +1,40 @@
 import { Routes } from '@angular/router';
+import { TabsPage } from './tabs/tabs.page';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'estado',
+    redirectTo: 'tabs',
     pathMatch: 'full',
   },
   {
-    path: 'estado',
+    path: 'tabs',
+    component: TabsPage,
     children: [
       {
-        path: '',
+        path: 'create',
         loadComponent: () =>
-          import('./estado/estado.component').then((m) => m.EstadoComponent),
+          import('./create/create.page').then((m) => m.CreatePage),
+      },
+      {
+        path: 'today',
+        loadComponent: () =>
+          import('./today/today.page').then((m) => m.TodayPage),
+      },
+      {
+        path: 'historic',
+        loadComponent: () =>
+          import('./historic/historic.page').then((m) => m.HistoricPage),
+      },
+      {
+        path: 'chat',
+        loadComponent: () =>
+          import('./chat/chat.component').then((m) => m.ChatComponent),
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/today',
+        pathMatch: 'full',
       },
     ],
   },
