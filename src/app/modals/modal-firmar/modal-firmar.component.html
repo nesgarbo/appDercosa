@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Firma</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<div id="signature-pad" class="signature-pad">
+  <div class="signature-pad--body">
+    <canvas #signatureCanvas></canvas>
+    <div class="signature-pad--footer">
+      <div class="description">Firma arriba</div>
+  
+      <div class="signature-pad--actions">
+          <ion-button type="button" class="button clear" (click)="clear()">
+            Borrar
+          </ion-button>
+          <ion-button type="button" class="button save" (click)="toPngPad()">
+            Aceptar
+          </ion-button>
+      </div>
+    </div>
+  </div>
+</div>
+<ion-alert></ion-alert>
+<ion-modal></ion-modal>

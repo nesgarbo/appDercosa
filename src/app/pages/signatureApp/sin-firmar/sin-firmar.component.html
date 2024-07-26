@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sin Firmar</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="display: flex; align-items: center; flex-direction: column">
+    @for (visita of visitasStore.entities(); track visita.id) {
+    @if(visita.VFIRMADO === 'N') {
+    <ion-item style="text-align: center; width: 100%">
+      <div style="width: 90%; display: flex; padding: 1rem 0">
+        <div style="width: 100%; display: flex">
+          <div
+            style="
+              width: 10%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ visita.id }}
+          </div>
+          <div
+            style="
+              width: 30%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ visita.VNOMVISTA }}
+          </div>
+          <div
+            style="
+              width: 30%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ visita.VEMPRESA }}
+          </div>
+          <div
+            style="
+              width: 30%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            {{ visita.VFECHA }}
+          </div>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 10%;
+        "
+      >
+        <ion-button fill="clear" (click)="firmar(visita)"
+          ><ion-icon slot="icon-only" name="pencil-outline"></ion-icon
+        ></ion-button>
+      </div>
+    </ion-item>
+    }}
+  </div>
+</ion-content>

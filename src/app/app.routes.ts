@@ -1,41 +1,64 @@
 import { Routes } from '@angular/router';
 import { TabsPage } from './tabs/tabs.page';
+import { canActivateAuthenticatedGuard } from './guards/can-activate-authenticated.guard';
+import { homeRedirectGuard } from './guards/home-redirect.guard';
+import { ManagerGuard } from './guards/manager.guard';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'tabs',
-    pathMatch: 'full',
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/common/login/login.page').then((m) => m.LoginPage),
   },
   {
-    path: 'tabs',
-    component: TabsPage,
+    path: 'private-routes',
     children: [
       {
-        path: 'create',
-        loadComponent: () =>
-          import('./create/create.page').then((m) => m.CreatePage),
+        path: 'visitas',
+        component: TabsPage,
+        loadChildren: () =>
+          import('./pages/signatureApp/visitas.routes').then((m) => m.default),
+        canActivate: [ManagerGuard],
+        data: { manage: 'visita' },
       },
       {
-        path: 'today',
-        loadComponent: () =>
-          import('./today/today.page').then((m) => m.TodayPage),
+        path: 'calidad',
+        component: TabsPage,
+        loadChildren: () =>
+          import('./pages/calidadApp/calidad.routes').then((m) => m.default),
+        canActivate: [ManagerGuard],
+        data: { manage: 'calidad' },
       },
       {
-        path: 'historic',
+        path: 'estados',
         loadComponent: () =>
-          import('./historic/historic.page').then((m) => m.HistoricPage),
+          import('./pages/estadosApp/estado/estado.component').then(
+            (m) => m.EstadoComponent
+          ),
+        canActivate: [ManagerGuard],
+        data: { manage: 'estado' },
       },
       {
-        path: 'chat',
-        loadComponent: () =>
-          import('./chat/chat.component').then((m) => m.ChatComponent),
+        path: 'weavy',
+        loadChildren: () =>
+          import('./pages/common/weavy/weavy.routes').then((m) => m.default),
       },
       {
-        path: '',
-        redirectTo: '/tabs/today',
-        pathMatch: 'full',
+        path: 'messages',
+        loadChildren: () =>
+          import('./pages/common/messages/message.routes').then(
+            (m) => m.default
+          ),
       },
     ],
+    canActivateChild: [canActivateAuthenticatedGuard],
+  },
+  {
+    path: '',
+    canActivate: [homeRedirectGuard],
+    loadComponent: () =>
+      import('./pages/estadosApp/estado/estado.component').then(
+        (m) => m.EstadoComponent
+      ),
   },
 ];

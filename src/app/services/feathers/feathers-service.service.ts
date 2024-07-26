@@ -1,8 +1,6 @@
 import socketio from '@feathersjs/socketio-client';
 import io from 'socket.io-client';
 
-import { rx } from 'feathers-reactive';
-
 import {
     ClientApplication,
     Codestados,
@@ -25,13 +23,7 @@ import { unpackRules } from '@casl/ability/extra';
 import { Router } from '@angular/router';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { BehaviorSubject } from 'rxjs';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const resolveAction = createAliasResolver({
-    update: ['patch'],
-    read: ['get', 'find'],
-    delete: ['remove'],
-});
+import { environment } from 'src/environments/environment';
 
 export interface LoginCredentials {
     email: string;
@@ -47,7 +39,7 @@ export interface Credentials extends LoginCredentials {
  */
 @Injectable({ providedIn: 'root' })
 export class FeathersClientService {
-    private apiUrl = 'https://192.168.0.41:3030';
+    private apiUrl = environment.backend.apiUrl;
     private connection = socketio(
         io(this.apiUrl, {
             reconnection: true,
@@ -59,11 +51,7 @@ export class FeathersClientService {
 
     cloudinaryService = inject(CloudinaryService);
 
-    private _feathers = createClient(this.connection).configure(
-        rx({
-            idField: 'id',
-        })
-    );
+    private _feathers = createClient(this.connection);
 
     public get authentication() {
         return this._feathers.authentication;

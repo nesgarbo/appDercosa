@@ -10,7 +10,6 @@ import { User } from 'feathers-dercosa';
 import { PartialStateUpdater } from '@ngrx/signals';
 import { withCallState } from '@angular-architects/ngrx-toolkit';
 import { TranslateService } from '@ngx-translate/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { map, pipe, startWith, tap } from 'rxjs';
 import { derivedFrom } from 'ngxtension/derived-from';
 import { FeathersClientService, LoginCredentials } from 'src/app/services/feathers/feathers-service.service';

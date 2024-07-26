@@ -1,19 +1,25 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="historic" href="/tabs/historic">
+    @if(canManageVisita){
+    <ion-tab-button tab="sinFirmar">
       <ion-icon aria-hidden="true" name="file-tray-stacked-outline"></ion-icon>
-      <ion-label>Histórico</ion-label>
+      <ion-label>Sin Firmar</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="today" href="/tabs/today">
-      <ion-icon aria-hidden="true" name="today-outline"></ion-icon>
-      <ion-label>Hoy</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="create" href="/tabs/create">
+    <ion-tab-button tab="visitas">
       <ion-icon aria-hidden="true" name="create-outline"></ion-icon>
-      <ion-label>Nuevo</ion-label>
+      <ion-label>Visitas</ion-label>
     </ion-tab-button>
-
+    }
+    @if(canManageInspeccion){
+      <ion-tab-button tab="inspecciones">
+        <ion-icon aria-hidden="true" name="file-tray-stacked-outline"></ion-icon>
+        <ion-label>Listar Inspecciones</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="crear-inspeccion">
+        <ion-icon aria-hidden="true" name="create-outline"></ion-icon>
+        <ion-label>Crear Inspección</ion-label>
+      </ion-tab-button>
+      }
   </ion-tab-bar>
 </ion-tabs>

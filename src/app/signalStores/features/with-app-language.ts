@@ -13,7 +13,6 @@ import {
   import { TranslateService } from '@ngx-translate/core';
   import { withLocalStorageSync } from './with-local-storage-sync';
   import { LanguageCode } from 'iso-639-1-dir/dist/data';
-  import { SyncfusionService } from '../../services/syncfusion/syncfusion.service';
   
   export type LanguageState = { languageCode: AppLanguages };
   
@@ -28,11 +27,9 @@ import {
   
   export const setCalendarCulture = (
     lang: LanguageCode,
-    languagesService: LanguagesService,
-    syncfusionService: SyncfusionService
+    languagesService: LanguagesService
   ) => {
     const culture = languagesService.getLanguageCulture(lang);
-    syncfusionService.setCulture(culture);
   };
   
   export function withAppLanguage() {
@@ -43,8 +40,7 @@ import {
         (
           store,
           translateService = inject(TranslateService),
-          languagesService = inject(LanguagesService),
-          syncfusionService = inject(SyncfusionService),
+          languagesService = inject(LanguagesService)
         ) => {
           return {
             setLanguage(languageCode: AppLanguages) {
@@ -53,8 +49,7 @@ import {
               store.saveToLocalStorage({ languageCode });
               setCalendarCulture(
                 languageCode,
-                languagesService,
-                syncfusionService
+                languagesService
               );
             },
           };
@@ -72,8 +67,7 @@ import {
         (
           store,
           translateService = inject(TranslateService),
-          languagesService = inject(LanguagesService),
-          syncfusionService = inject(SyncfusionService)
+          languagesService = inject(LanguagesService)
         ) => {
           return {
             onInit() {
@@ -81,8 +75,7 @@ import {
               setAppLanguage(store.languageCode(), translateService);
               setCalendarCulture(
                 store.languageCode(),
-                languagesService,
-                syncfusionService
+                languagesService
               );
             },
           };

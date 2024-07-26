@@ -8,11 +8,11 @@ import {
 } from '@feathersjs/feathers';
 import { EntityId } from '@ngrx/signals/entities';
 import { ServiceTypes } from 'feathers-dercosa';
-import { ServiceMethodsWithPaginationDisabler } from '../../../feathers/service-methods-with-pagination-disabler';
+import { ServiceMethodsWithPaginationDisabler } from 'src/app/feathers/service-methods-with-pagination-disabler';
 
 export type DataServiceMethods<
   Result extends Entity,
-  Collection,
+  Collection
 > = Collection extends string
   ? NamedFeathersDataServiceMethods<Result, any, any, any, Collection>
   : FeathersDataServiceMethods<Result, any, any, any>;
@@ -23,20 +23,20 @@ export type FindFilter = Filter & { paginate?: PaginationParams };
 
 export type Pagination = Omit<Paginated<any>, 'data'>;
 
-export type SelectedSlice = { selectedIds: Record<EntityId, boolean> };
+export type SelectedSlice = { selectedIds: EntityId[] };
 export type SelectedNamedSlice<Collection extends string> = {
-  [K in Collection as `selected${Capitalize<K>}Ids`]: Record<EntityId, boolean>;
+  [K in Collection as `selected${Capitalize<K>}Ids`]: EntityId[];
 };
 export type NamedFeathersDataServiceState<
   Result extends Entity,
   F extends Filter,
-  Collection extends string,
+  Collection extends string
 > = {
   [K in Collection as `${K}Filter`]?: F & {
     paginate?: PaginationParams;
   };
 } & {
-  [K in Collection as `selected${Capitalize<K>}Ids`]: Record<EntityId, boolean>;
+  [K in Collection as `selected${Capitalize<K>}Ids`]: EntityId[];
 } & {
   [K in Collection as `current${Capitalize<K>}`]: Result;
 } & {
@@ -50,10 +50,10 @@ export type NamedFeathersDataServiceState<
 
 export type FeathersDataServiceState<
   Result extends Entity,
-  F extends Filter,
+  F extends Filter
 > = {
   filter?: F;
-  selectedIds: Record<Result['id'], boolean>;
+  selectedIds: Result['id'][];
   current: Result['id'];
   pagination: Pagination | null;
   orderPositions?: Record<Result['id'], number>;
@@ -61,15 +61,12 @@ export type FeathersDataServiceState<
 
 export type NamedFeathersDataServiceSignals<
   Result extends Entity,
-  Collection extends string,
+  Collection extends string
 > = {
   [K in Collection as `selected${Capitalize<K>}Entities`]: Signal<Result[]>;
 } & {
   [K in Collection as `${K}Count`]: Signal<number>;
-} 
-/* & {
-  [K in Collection as `${K}DocumentsChanged`]: Signal<Upload<Result>[]>;
-} */;
+};
 
 export type FeathersDataServiceSignals<Result extends Entity> = {
   selectedEntities: Signal<Result[]>;
@@ -81,7 +78,7 @@ export type NamedFeathersDataServiceMethods<
   Data extends Partial<Result>,
   Query extends Filter,
   PatchData extends Partial<Result>,
-  Collection extends string,
+  Collection extends string
 > = {
   [K in Collection as `get${Capitalize<K>}`]: (
     id: Result['id'],
@@ -113,20 +110,15 @@ export type NamedFeathersDataServiceMethods<
     filter?: Pagination
   ) => void;
 } & {
-  [K in Collection as `select${Capitalize<K>}Entity`]: (
-    entity: Result,
-    selected: boolean
+  [K in Collection as `select${Capitalize<K>}ById`]: (id: Result['id']) => void;
+} & {
+  [K in Collection as `deselect${Capitalize<K>}ById`]: (
+    id: Result['id']
   ) => void;
 } & {
-  [K in Collection as `select${Capitalize<K>}Entities`]: (
-    ids: Result['id'][],
-    selected: boolean
-  ) => void;
+  [K in Collection as `clear${Capitalize<K>}Selection`]: () => void;
 } & {
-  [K in Collection as `setSelected${Capitalize<K>}Entities`]: (
-    ids: Result['id'][],
-    selected: boolean
-  ) => void;
+  [K in Collection as `set${Capitalize<K>}Selection`]: (ids: Result['id'][]) => void;
 } & {
   [K in Collection as `remove${Capitalize<K>}`]: (
     id: Result['id'] | null,
@@ -135,7 +127,9 @@ export type NamedFeathersDataServiceMethods<
 } & {
   [K in Collection as `setCurrent${Capitalize<K>}`]: (entity?: Result) => void;
 } & {
-  [K in Collection as `startEmitting${Capitalize<K>}`]: () => void;
+  [K in Collection as `startEmitting${Capitalize<K>}`]: (
+    filter?: (item: Result) => boolean
+  ) => void;
 } & {
   [K in Collection as `${K}Service`]: () => ServiceMethodsWithPaginationDisabler<
     Result,
@@ -151,7 +145,7 @@ export type FeathersDataServiceMethods<
   Result extends Entity,
   Data extends Partial<Result>,
   Query extends Filter,
-  PatchData extends Partial<Result>,
+  PatchData extends Partial<Result>
 > = {
   get: (
     id: Result['id'],
@@ -170,15 +164,16 @@ export type FeathersDataServiceMethods<
   ): Promise<Result | Result[]>;
   updateFilter: (filter?: Query) => void;
   updatePagination: (pagination?: Pagination) => void;
-  selectEntity: (entity: Result, selected: boolean) => void;
-  selectEntities: (ids: Result['id'][], selected: boolean) => void;
-  setSelectedEntities: (ids: Result['id'][], selected: boolean) => void;
+  selectById: (id: Result['id']) => void;
+  deselectById: (id: Result['id']) => void;
+  clearSelection: () => void;
+  setSelection: (ids: Result['id'][]) => void;
   remove: (
     id: Result['id'] | null,
     params?: Query
   ) => Promise<Result | Result[]>;
   setCurrent: (entity?: Result) => void;
-  startEmitting: () => void;
+  startEmitting: (filter?: (item: Result) => boolean) => void;
   servicePath: () => keyof ServiceTypes;
   service: () => ServiceMethodsWithPaginationDisabler<
     Result,

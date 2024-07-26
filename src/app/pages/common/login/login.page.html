@@ -1,0 +1,29 @@
+
+<ion-alert></ion-alert>
+<div class="login-ctn">
+  <div class="login-form">
+    <div class="login-header">
+      <!-- <img src="assets/custom-icons/logo.svg" alt="logo" /> -->
+      <h1>Log in</h1>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-input
+          label="Email"
+          type="email"
+          labelPlacement="floating"
+          formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          label="Password"
+          type="password"
+          labelPlacement="floating"
+          formControlName="password"></ion-input>
+      </ion-item>
+      <ion-button type="submit" expand="block" [disabled]="!loginForm.valid">
+        Log in
+      </ion-button>
+    </form>
+  </div>
+</div>

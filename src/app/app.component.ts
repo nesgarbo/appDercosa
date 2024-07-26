@@ -1,40 +1,30 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, Renderer2 } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  inject,
+  viewChild,
+} from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import {
   IonApp,
-  IonSplitPane,
-  IonMenu,
   IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
   IonList,
   IonListHeader,
-  IonNote,
+  IonMenu,
   IonMenuToggle,
-  IonItem,
-  IonIcon,
-  IonLabel,
+  IonNote,
   IonRouterOutlet,
+  IonSplitPane,
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import {
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  heartOutline,
-  heartSharp,
-  archiveOutline,
-  archiveSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
-  bookmarkOutline,
-  bookmarkSharp,
-} from 'ionicons/icons';
-import { FeathersClientService } from './services/feathers/feathers-service.service';
-import { environment } from 'src/environments/environment';
 import { AppStore } from './signalStores/stores/appStore';
+import { addIcons } from 'ionicons';
+import { chatboxEllipsesOutline, chatboxOutline, chatbubblesOutline, documentOutline, homeOutline, listOutline, logOutOutline, searchOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -58,72 +48,51 @@ import { AppStore } from './signalStores/stores/appStore';
     IonLabel,
     IonRouterOutlet,
   ],
+  providers: [ModalController],
 })
 export class AppComponent {
-  appStore = inject(AppStore);
-  public appPages = [
-    { title: 'Maestros', url: '/maestros', icon: 'bookmark' },
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
-  ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor(private renderer: Renderer2) {
+  isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  menu = viewChild(IonMenu);
+
+  readonly appStore = inject(AppStore);
+
+  homeUrl = computed(() => {
+    return this.appStore.user()?.appHomeUrl
+      ? [this.appStore.user()?.appHomeUrl]
+      : ['/private-routes/visitas/visitas'];
+  });
+
+  constructor(private cdr: ChangeDetectorRef, private router: Router) {
+    const darkModeMediaQuery = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    );
+    this.isDarkTheme = darkModeMediaQuery.matches;
+    darkModeMediaQuery.addEventListener('change', (event) => {
+      this.isDarkTheme = event.matches;
+      this.cdr.detectChanges();
+    });
     addIcons({
-      mailOutline,
-      mailSharp,
-      paperPlaneOutline,
-      paperPlaneSharp,
-      heartOutline,
-      heartSharp,
-      archiveOutline,
-      archiveSharp,
-      trashOutline,
-      trashSharp,
-      warningOutline,
-      warningSharp,
-      bookmarkOutline,
-      bookmarkSharp,
-    });
-    const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
-    this.applyTheme(darkThemeMq.matches);
-
-    darkThemeMq.addEventListener('change', (e) => {
-      this.applyTheme(e.matches);
+      homeOutline,
+      logOutOutline,
+      searchOutline,
+      chatboxEllipsesOutline,
+      chatboxOutline,
+      chatbubblesOutline,
+      listOutline,
+      documentOutline
     });
   }
 
-  applyTheme(isDark: boolean) {
-    const themeLinkId = 'syncfusion-theme';
-    let link = document.getElementById(themeLinkId) as HTMLLinkElement;
+  user = this.appStore.user;
 
-    if (!link) {
-      link = this.renderer.createElement('link');
-      this.renderer.setAttribute(link, 'rel', 'stylesheet');
-      this.renderer.setAttribute(link, 'id', themeLinkId);
-      this.renderer.appendChild(document.head, link);
-    }
-
-    const href = isDark
-      ? 'assets/styles/material-dark.css'
-      : 'assets/styles/material.css';
-
-    this.renderer.setAttribute(link, 'href', href);
+  logout() {
+    this.appStore.logout();
+    this.router.navigate(['/login']);
   }
 
-  loadStyle(href: string) {
-    let link = document.getElementById('syncfusion-theme') as HTMLLinkElement;
-    if (link) {
-      link.href = href;
-    } else {
-      link = this.renderer.createElement('link');
-      this.renderer.setAttribute(link, 'rel', 'stylesheet');
-      this.renderer.setAttribute(link, 'id', 'syncfusion-theme');
-      this.renderer.setAttribute(link, 'href', href);
-      this.renderer.appendChild(document.head, link);
-    }
+  closeMenu() {
+    console.log('closeMenu');
+    this.menu()?.close();
   }
 }

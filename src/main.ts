@@ -13,6 +13,8 @@ import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { FeathersClientService } from './app/services/feathers/feathers-service.service';
 import { AppStore } from './app/signalStores/stores/appStore';
 import { Ability, PureAbility } from '@casl/ability';
+import { provideCacheableAnimationLoader, provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 
 if (environment.production) {
   enableProdMode();
@@ -64,6 +66,8 @@ bootstrapApplication(AppComponent, {
   },
   { provide: Ability, useValue: new Ability() },
   { provide: PureAbility, useExisting: Ability },
+    provideLottieOptions({ player: () => player }),
+    provideCacheableAnimationLoader(),
 ],
 });
 

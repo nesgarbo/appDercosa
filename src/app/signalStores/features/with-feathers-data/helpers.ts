@@ -22,6 +22,7 @@ export function getFeathersDataServiceKeys<Collection extends string>(options: {
   const removeKey = options.collection
     ? `remove${capitalize(options.collection)}`
     : 'remove';
+
   const selectEntityKey = options.collection
     ? `select${capitalize(options.collection)}Entity`
     : 'selectEntity';
@@ -29,12 +30,6 @@ export function getFeathersDataServiceKeys<Collection extends string>(options: {
   const filterKey = options.collection
     ? `${options.collection}Filter`
     : 'filter';
-  const selectedIdsKey = options.collection
-    ? `selected${capitalize(options.collection)}Ids`
-    : 'selectedIds';
-  const selectedEntitiesKey = options.collection
-    ? `selected${capitalize(options.collection)}Entities`
-    : 'selectedEntities';
   const paginationKey = options.collection
     ? `${options.collection}Pagination`
     : 'pagination';
@@ -45,12 +40,6 @@ export function getFeathersDataServiceKeys<Collection extends string>(options: {
   const updateFilterKey = options.collection
     ? `update${capitalize(options.collection)}Filter`
     : 'updateFilter';
-  const selectEntitiesKey = options.collection
-    ? `select${capitalize(options.collection)}Entities`
-    : 'selectEntities';
-  const setSelectedEntitiesKey = options.collection
-    ? `setSelected${capitalize(options.collection)}Entities`
-    : 'setSelectedEntities';
   const updatePaginationKey = options.collection
     ? `update${capitalize(options.collection)}Pagination`
     : 'updatePagination';
@@ -82,6 +71,34 @@ export function getFeathersDataServiceKeys<Collection extends string>(options: {
     ? `${options.collection}Entities`
     : 'entities';
 
+  /** Items selection */
+
+  // state
+  const selectedIdsKey = options.collection
+    ? `selected${capitalize(options.collection)}Ids`
+    : 'selectedIds';
+
+  // computed
+  const selectedEntitiesKey = options.collection
+    ? `selected${capitalize(options.collection)}Entities`
+    : 'selectedEntities';
+
+  // methods
+  const selectByIdKey = options.collection
+    ? `select${capitalize(options.collection)}ById`
+    : 'selectById';
+  const deselectByIdKey = options.collection
+    ? `deselect${capitalize(options.collection)}ById`
+    : 'deselectById';
+
+  const clearSelectionKey = options.collection
+    ? `clear${capitalize(options.collection)}Selection`
+    : 'clearSelection';
+
+  const setSelectionKey = options.collection
+    ? `set${capitalize(options.collection)}Selection`
+    : 'setSelection';
+
   return {
     createKey,
     getKey,
@@ -92,14 +109,10 @@ export function getFeathersDataServiceKeys<Collection extends string>(options: {
     selectEntityKey,
 
     filterKey,
-    selectedIdsKey,
-    selectedEntitiesKey,
     paginationKey,
     orderPositionsKey,
 
     updateFilterKey,
-    setSelectedEntitiesKey,
-    selectEntitiesKey,
     updatePaginationKey,
 
     entitiesKey,
@@ -109,7 +122,14 @@ export function getFeathersDataServiceKeys<Collection extends string>(options: {
     setCurrentKey,
     startEmittingKey,
     serviceKey,
-    servicePathKey
+    servicePathKey,
+
+    selectedIdsKey,
+    selectedEntitiesKey,
+    selectByIdKey,
+    deselectByIdKey,
+    clearSelectionKey,
+    setSelectionKey,
   };
 }
 

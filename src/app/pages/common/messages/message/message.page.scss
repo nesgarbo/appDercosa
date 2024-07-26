@@ -1,0 +1,22 @@
+.message-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    .lottie-ctn {
+        display: flex;
+        height: 80%;
+        width: 75%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    ng-lottie {
+        display: flex;
+        flex: 1;
+        width: 100%;
+    }
+}

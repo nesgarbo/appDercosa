@@ -1,0 +1,22 @@
+.login-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // This makes sure the container takes up the full height of the viewport
+  flex-direction: column; // This stacks the children vertically
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; // This centers the form fields horizontally
+
+  .login-header {
+    margin-bottom: 1rem;
+  }
+
+  ion-button {
+    margin-top: 1rem;
+  }
+  margin-bottom: 5rem;
+}

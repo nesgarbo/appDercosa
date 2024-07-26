@@ -1,11 +1,11 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'dercosaApp',
+  appId: 'com.dercosa.app',
+  appName: 'dercosa',
   webDir: 'www/browser',
   server: {
-    hostname: 'srvapp01'
+    hostname: 'serverlinux.dercosa.local'
   }
 };
 

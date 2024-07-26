@@ -1,19 +1,20 @@
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
+import { computed } from '@angular/core';
 import {
   patchState,
   signalStore,
   withComputed,
   withMethods,
-  withState,
 } from '@ngrx/signals';
-import { withDevtools } from '@angular-architects/ngrx-toolkit';
+import { updateEntity, withEntities } from '@ngrx/signals/entities';
 import {
-  setAllEntities,
-  withEntities,
-  updateEntity,
-} from '@ngrx/signals/entities';
-import { Codestados, Estado } from 'feathers-dercosa';
-import { EventEmitter, computed, inject } from '@angular/core';
-import { FeathersClientService } from 'src/app/services/feathers/feathers-service.service';
+  Codestados,
+  Estado,
+  EstadoData,
+  EstadoPatch,
+  EstadoQuery,
+} from 'feathers-dercosa';
+import { withFeathersDataService } from '../features/with-feathers-data/with-feathers-data-service';
 
 export type EstadosState = {
   selectedIds: Record<number, boolean>;
@@ -28,60 +29,31 @@ export type AditionalData = {
 
 export type PedidolinRecord = Record<number, AditionalData>;
 
-export const PedidosStore = signalStore(
+export const EstadosStore = signalStore(
   { providedIn: 'root' },
-  withState<EstadosState>({ selectedIds: {} }),
-  withDevtools('estados'),
+  withDevtools('estado'),
   withEntities<Estado>(),
+  withFeathersDataService<
+    'estado',
+    Estado,
+    EstadoData,
+    EstadoQuery,
+    EstadoPatch
+  >({ servicePath: 'estado' }),
   withMethods((store) => ({
-    async setEstados(estados: Estado[]) {
-      patchState(
-        store,
-        setAllEntities(estados, {
-          idKey: 'PEDIDOLIN',
-        }),
-        { selectedIds: {} }
-      );
-    },
-  })),
-  withMethods((store, feathers = inject(FeathersClientService)) => ({
-    select(estado: Estado) {
-      patchState(store, {
-        selectedIds: { ...store.selectedIds(), [estado.PEDIDOLIN]: true },
-      });
-    },
-    unSelect(estado: Estado) {
-      patchState(store, {
-        selectedIds: { ...store.selectedIds(), [estado.PEDIDOLIN]: false },
-      });
-    },
-    async changeEstado(codEstado: Codestados, aditionalData?: PedidolinRecord) {
+    async changeEstado(codEstado: Codestados, aditionalData: AditionalData) {
       const selectedIds = store.selectedIds();
       for (const identificador of Object.keys(selectedIds)) {
         const id = parseInt(identificador);
-        console.log('Hasta aqui todo bien');
         if (selectedIds[id]) {
-          console.log('Entra al if');
-          const estado = store.entityMap()[id];
+          const estado = store.selectedEntities()[id];
           try {
-            const updatedEstado = await feathers
-              .getServiceByPath('estado')
-              .update(
-                estado.EPARTIDA,
-                aditionalData?.[estado.PEDIDOLIN]
-                  ? {
-                      ...estado,
-                      ...aditionalData[estado.PEDIDOLIN],
-                      ECOD: codEstado.CODIESTA,
-                      CODESTADO: codEstado,
-                    }
-                  : {
-                      ...estado,
-                      ECOD: codEstado.CODIESTA,
-                      CODESTADO: codEstado,
-                    }
-              );
-            console.log('UpdatedEstado', updatedEstado);
+            const updatedEstado = (await store.patch(estado.EPARTIDA, {
+              ECOD: codEstado.CODIESTA,
+              CODESTADO: codEstado,
+              ESTADO7: aditionalData.ESTADO7,
+              ECOMENTA: aditionalData.ECOMENTA,
+            })) as Estado;
             patchState(
               store,
               updateEntity({
@@ -100,23 +72,17 @@ export const PedidosStore = signalStore(
       }
     },
   })),
-  withComputed(({ entities, selectedIds }) => ({
-    selectedEstados: computed(() =>
-      entities().filter((estado) => selectedIds()[estado.PEDIDOLIN])
-    ),
-  })),
-  withComputed(({ selectedEstados }) => ({
+  withComputed((store) => ({
     sumPiezas: computed(() =>
-      selectedEstados().reduce((acc, estado) => acc + estado.EPIEZAS, 0)
+      store.selectedEntities().reduce((acc, estado) => acc + estado.EPIEZAS, 0)
     ),
     sumCantidad: computed(() =>
-      selectedEstados().reduce((acc, estado) => acc + estado.ECANT, 0)
+      store.selectedEntities().reduce((acc, estado) => acc + estado.ECANT, 0)
     ),
-    comDiff: computed(() => {
-      const comentarios = selectedEstados().map((estado) => estado.ECOMENTA);
-      let res = new Set(comentarios).size !== 1;
-      console.log('res: ', res);
-      return res;
+    allSelected: computed(() => {
+      const selectedIds = store.selectedIds();
+      const allIds = store.ids();
+      return allIds.every((id) => selectedIds.includes(id.toString()));
     }),
   }))
 );

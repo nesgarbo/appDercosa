@@ -1,26 +1,18 @@
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
+import { signalStore, withHooks } from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
 import {
   Inspection,
   InspectionData,
   InspectionPatch,
   InspectionQuery,
 } from 'feathers-dercosa';
-import {
-  signalStore,
-  type,
-  withMethods,
-  withHooks,
-  patchState,
-} from '@ngrx/signals';
 import { withFeathersDataService } from '../features/with-feathers-data/with-feathers-data-service';
-import { withCallState } from '@angular-architects/ngrx-toolkit';
-import { withEntities, setAllEntities } from '@ngrx/signals/entities';
 
 export const InspectionsStore = signalStore(
   { providedIn: 'root' },
-  withCallState(),
-  withEntities({
-    entity: type<Inspection>(),
-  }),
+  withDevtools('inspections'),
+  withEntities<Inspection>(),
   withFeathersDataService<
     'inspections',
     Inspection,

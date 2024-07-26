@@ -1,0 +1,39 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ titleLabel() }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <form
+      [formGroup]="partidaForm"
+      style="
+        height: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      "
+    >
+      <ion-input
+        style="width: 60%"
+        formControlName="epartida"
+        fill="outline"
+        [maxlength]="5"
+      ></ion-input>
+      <ion-button
+        style="width: 60%"
+        (click)="onSubmit()"
+        [disabled]="!partidaForm.valid"
+        >{{ btnLabel() }}</ion-button
+      >
+    </form>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="startScan()">
+        <ion-icon name="scan-outline"></ion-icon>
+      </ion-fab-button> </ion-fab
+  ></ion-content>
+</div>

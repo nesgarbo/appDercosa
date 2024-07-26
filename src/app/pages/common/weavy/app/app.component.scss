@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.weavy-container {
+  flex: 1;
+}
+
+:host ::ng-deep .weavy-panel .weavy-open .weavy-loaded {
+    padding-top: 10rem !important;
+}
+
