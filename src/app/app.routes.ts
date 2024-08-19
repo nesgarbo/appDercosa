@@ -43,22 +43,18 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/common/weavy/weavy.routes').then((m) => m.default),
       },
-      {
-        path: 'messages',
-        loadChildren: () =>
-          import('./pages/common/messages/message.routes').then(
-            (m) => m.default
-          ),
-      },
     ],
     canActivateChild: [canActivateAuthenticatedGuard],
   },
   {
+    path: 'messages',
+    loadChildren: () =>
+      import('./pages/common/messages/message.routes').then((m) => m.default),
+  },
+  {
     path: '',
     canActivate: [homeRedirectGuard],
-    loadComponent: () =>
-      import('./pages/estadosApp/estado/estado.component').then(
-        (m) => m.EstadoComponent
-      ),
+    loadChildren: () => import('./pages/common/messages/message.routes'),
+    pathMatch: 'full',
   },
 ];

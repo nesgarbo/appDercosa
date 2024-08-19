@@ -22,8 +22,6 @@ export class VisitasComponent implements OnInit {
 
   ngOnInit(): void {
     this.visitasStore.service().on('requestSignature', async (visita: Visita) => {
-      console.log('VISITAAAAA', visita);
-      this.router.navigate(['/tabs/visitas']);
       const modal = await this.modalCtrl.create({
         component: ModalFirmarComponent,
         componentProps: {

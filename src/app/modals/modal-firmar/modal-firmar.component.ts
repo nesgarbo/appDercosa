@@ -21,7 +21,7 @@ import {
 import { ModalController, AlertController } from '@ionic/angular';
 import SignaturePad from 'signature_pad';
 import { ProteccionDatosComponent } from '../proteccion-datos/proteccion-datos.component';
-import { PdfGeneratorStore } from 'src/app/signalStores/stores/pdfGeneratorStore';
+import { FeathersClientService } from 'src/app/services/feathers/feathers-service.service';
 
 @Component({
   selector: 'app-modal-firmar',
@@ -41,11 +41,10 @@ import { PdfGeneratorStore } from 'src/app/signalStores/stores/pdfGeneratorStore
   styleUrls: ['./modal-firmar.component.scss'],
 })
 export class ModalFirmarComponent implements AfterViewInit {
+  private feathers = inject(FeathersClientService);
   @ViewChild('signatureCanvas', { static: true })
   signaturePadElement!: ElementRef;
   signaturePad: any;
-
-  readonly pdfGeneratorStore = inject(PdfGeneratorStore);
 
   @Input({ required: true }) visita!: Visita;
 
@@ -112,7 +111,7 @@ export class ModalFirmarComponent implements AfterViewInit {
         recibeVisita: this.visita.VDNIDERCO,
         firma: dataURL,
       };
-      this.pdfGeneratorStore.create(data, {});
+      this.feathers.getServiceByPath('pdf-generator').create(data);
       this.dismiss();
     }
   }

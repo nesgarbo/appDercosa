@@ -1,22 +1,21 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import {
+  IonButton,
+  IonButtons,
+  IonCheckbox,
   IonContent,
   IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonButtons,
-  IonButton,
-  IonCheckbox,
-  IonItem,
   IonIcon,
+  IonItem,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
+import { Visita } from 'feathers-dercosa';
 import { addIcons } from 'ionicons';
 import { pencilOutline } from 'ionicons/icons';
-import { Router } from '@angular/router';
-import { Visita } from 'feathers-dercosa';
-import { ModalController } from '@ionic/angular';
-import { VisitasStore } from 'src/app/signalStores/stores/visitasStore';
 import { ModalFirmarComponent } from 'src/app/modals/modal-firmar/modal-firmar.component';
+import { VisitasStore } from 'src/app/signalStores/stores/visitasStore';
 
 @Component({
   selector: 'app-sin-firmar',
@@ -36,36 +35,20 @@ import { ModalFirmarComponent } from 'src/app/modals/modal-firmar/modal-firmar.c
   templateUrl: './sin-firmar.component.html',
   styleUrls: ['./sin-firmar.component.scss'],
 })
-export class SinFirmarComponent implements OnInit {
-  constructor(private router: Router, private modalCtrl: ModalController) {
+export class SinFirmarComponent {
+  constructor(private modalCtrl: ModalController) {
     addIcons({ pencilOutline });
   }
 
   readonly visitasStore = inject(VisitasStore);
 
   async firmar(visita: Visita) {
-    this.router.navigate(['/tabs/visitas']);
     const modal = await this.modalCtrl.create({
       component: ModalFirmarComponent,
       componentProps: {
         visita,
       },
-      
     });
     modal.present();
-  }
-
-  ngOnInit(): void {
-    this.visitasStore.service().on('requestSignature', async (visita: Visita) => {
-      console.log('VISITAAAAA', visita);
-      this.router.navigate(['/tabs/visitas']);
-      const modal = await this.modalCtrl.create({
-        component: ModalFirmarComponent,
-        componentProps: {
-          visita,
-        },
-      });
-      modal.present();
-    });
   }
 }

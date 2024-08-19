@@ -1,16 +1,19 @@
 <ion-app>
-    <ion-menu contentId="main-content" type="overlay">
+  <ion-menu contentId="main-content" type="overlay">
     <div class="userBehind">
       <div
         [style.background-image]="'url(' + appStore.user()?.backgroundUrl + ')'"
         style="
           width: 100px;
+          min-width: 100px;
           height: 100px;
+          min-height: 100px;
           background-repeat: no-repeat;
           background-position: center;
           background-size: cover;
           border-radius: 50%;
-        "></div>
+        "
+      ></div>
       <div
         style="
           padding: 0.75rem 1rem;
@@ -18,11 +21,30 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
-        ">
-        <h4 style="margin: 0; margin-bottom: 0.3rem">
+          max-width: calc(100% - 5rem);
+        "
+      >
+        <h4
+          style="
+            margin: 0;
+            margin-bottom: 0.3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          "
+        >
           {{ appStore.user()?.name }}
         </h4>
-        <p style="margin: 0">{{ appStore.user()?.email }}</p>
+        <h6
+          style="
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          "
+        >
+          {{ appStore.user()?.email }}
+        </h6>
       </div>
     </div>
     <div style="flex: 1">
@@ -35,14 +57,16 @@
             <ion-icon
               name="home-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Inicio</ion-label></ion-item
           >
           <ion-item (click)="logout()">
             <ion-icon
               name="log-out-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Salir</ion-label></ion-item
           >
           <ion-list-header>
@@ -52,47 +76,53 @@
             ><ion-icon
               name="chatbubbles-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Chat</ion-label></ion-item
           >
           <ion-item [routerLink]="['/private-routes/weavy/files']"
             ><ion-icon
               name="document-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Files</ion-label></ion-item
           >
           <ion-item [routerLink]="['/private-routes/weavy/posts']"
             ><ion-icon
               name="chatbox-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Posts</ion-label></ion-item
           >
           <ion-item [routerLink]="['/private-routes/weavy/tasks']"
             ><ion-icon
               name="list-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Tasks</ion-label></ion-item
           >
           <ion-item [routerLink]="['/private-routes/weavy/comments']"
             ><ion-icon
               name="chatbox-ellipses-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Comments</ion-label></ion-item
           >
           <ion-item [routerLink]="['/private-routes/weavy/search']"
             ><ion-icon
               name="search-outline"
               aria-hidden="true"
-              slot="start"></ion-icon
+              slot="start"
+            ></ion-icon
             ><ion-label>Search</ion-label></ion-item
           >
         </ion-menu-toggle>
       </ion-list>
     </div>
-    </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

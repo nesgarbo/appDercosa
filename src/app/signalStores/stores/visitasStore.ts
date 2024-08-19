@@ -9,6 +9,7 @@ import { withCallState } from '@angular-architects/ngrx-toolkit';
 import { withEntities } from '@ngrx/signals/entities';
 
 export const VisitasStore = signalStore(
+  { providedIn: 'root' },
   withCallState(),
   withEntities<Visita>(),
   withFeathersDataService<
@@ -18,10 +19,11 @@ export const VisitasStore = signalStore(
     VisitaQuery,
     VisitaPatch
   >({ servicePath: 'visita' }),
-  withHooks(({ startEmitting }) => {
+  withHooks((store) => {
     return {
       onInit() {
-        startEmitting();
+        store.startEmitting();
+        store.find();
       },
     };
   })

@@ -1,4 +1,12 @@
-import { Component, OnInit, inject, input, output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -21,15 +29,22 @@ import {
   IonModal,
   IonButton,
   IonInput,
-  IonMenuButton
+  IonMenuButton,
 } from '@ionic/angular/standalone';
-import { ModalController, AlertController } from '@ionic/angular';
+import {
+  ModalController,
+  AlertController,
+  LoadingController,
+} from '@ionic/angular';
 import { BarcodeScanningModalComponent } from '../barcode-scanning-modal/barcode-scanning-modal.component';
 import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { addIcons } from 'ionicons';
 import { scanOutline } from 'ionicons/icons';
 
-export type selectedOutputType = { epartida: string; epedido: string | null | undefined };
+export type selectedOutputType = {
+  epartida: string;
+  epedido: string | null | undefined;
+};
 
 @Component({
   selector: 'app-select-partida',
@@ -53,16 +68,18 @@ export type selectedOutputType = { epartida: string; epedido: string | null | un
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IonMenuButton
+    IonMenuButton,
   ],
   providers: [ModalController],
 })
 export class SelectPartidaComponent {
   modalController = inject(ModalController);
+  alertController = inject(AlertController);
+  loadingController = inject(LoadingController);
 
   addIcons = addIcons({ scanOutline });
 
-  selected = output<selectedOutputType>();
+  @Output() selected = new EventEmitter<selectedOutputType>();
 
   btnLabel = input<string>();
   titleLabel = input<string>();
@@ -91,8 +108,7 @@ export class SelectPartidaComponent {
     }
     let partida = data.barCode.substring(0, 5);
     const epedido =
-      Number(data.barCode.substring(5, 10)).toString() +
-      Number(data.barCode.substring(10, 12));
+      data.barCode.substring(5, 10) + data.barCode.substring(10, 12);
     this.partidaForm.patchValue({ epartida: partida });
     this.partidaForm.patchValue({ epedido });
     this.onSubmit();
@@ -104,5 +120,8 @@ export class SelectPartidaComponent {
 
     console.log('Emitting: ', emitValues, 'from: ', this.partidaForm.value);
     this.selected.emit(emitValues);
+    setTimeout(() => {
+      this.partidaForm.reset();
+    }, 0);
   }
 }

@@ -11,23 +11,22 @@ import {
 } from '@ionic/angular';
 import { EstadosStore } from 'src/app/signalStores/stores/estadosStore';
 import { ModalEstadoComponent } from 'src/app/modals/modal-estado/modal-estado.component';
+import { IonModal, IonLoading } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-estado',
   templateUrl: './estado.component.html',
   styleUrls: ['./estado.component.scss'],
   standalone: true,
-  imports: [SelectPartidaComponent],
+  imports: [IonLoading, IonModal, SelectPartidaComponent],
   providers: [ModalController],
 })
 export class EstadoComponent {
-  estado = signal<Estado[]>([]);
-
-  loadingController = inject(LoadingController);
-
-  alertController = inject(AlertController);
-
-  modalController = inject(ModalController);
+  constructor(
+    private loadingController: LoadingController,
+    private alertController: AlertController,
+    private modalController: ModalController
+  ) {}
 
   readonly estadosStore = inject(EstadosStore);
 
@@ -44,16 +43,14 @@ export class EstadoComponent {
     const loading = await this.loadingController.create({
       message: 'Cargando...',
     });
-    console.log('Cogiendo estado', partida.epartida.toUpperCase());
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 3; i++) {
       try {
         console.log('Intento: ', i);
         await loading.present();
         // Utiliza la función de estadoConTimeout aquí
         const estado = await this.estadoConTimeout(partida.epartida);
         console.log('Estado: ', estado);
-        this.estado.set(estado);
         await loading.dismiss();
         if (estado.length === 0) {
           let ep = partida.epedido;
@@ -63,6 +60,21 @@ export class EstadoComponent {
             `No se encuentra Partida: ${partida.epartida}, Pedido: ${epedido}, Linea: ${linea}`
           );
           return;
+        }
+        if (partida.epedido) {
+          const epedidoBase = partida.epedido.slice(0, -2);
+          const epedidoLastTwo = partida.epedido.slice(-2);
+          const epedidoNumber = Number(epedidoLastTwo);
+          const epedidoString = epedidoNumber.toString();
+          const epedidoFinal = epedidoBase + epedidoString;
+          let pedido = partida.epartida + epedidoFinal;
+          console.log('Nombre: ', pedido);
+          if (this.estadosStore.ids().includes(pedido)) {
+            this.estadosStore.selectById(pedido);
+          } else {
+            this.presentAlert('No se ha encontrado el pedido');
+            return;
+          }
         }
         const modal = await this.modalController.create({
           component: ModalEstadoComponent,

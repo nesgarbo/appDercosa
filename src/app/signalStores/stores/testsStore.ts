@@ -2,24 +2,24 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { signalStore, withHooks } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
 import {
-  Inspection,
-  InspectionData,
-  InspectionPatch,
-  InspectionQuery,
+  Test,
+  TestData,
+  TestPatch,
+  TestQuery,
 } from 'feathers-dercosa';
 import { withFeathersDataService } from '../features/with-feathers-data/with-feathers-data-service';
 
-export const InspectionsStore = signalStore(
+export const TestsStore = signalStore(
   { providedIn: 'root' },
-  withDevtools('inspections'),
-  withEntities<Inspection>(),
+  withDevtools('tests'),
+  withEntities<Test>(),
   withFeathersDataService<
-    'inspections',
-    Inspection,
-    InspectionData,
-    InspectionQuery,
-    InspectionPatch
-  >({ servicePath: 'inspections' }),
+    'tests',
+    Test,
+    TestData,
+    TestQuery,
+    TestPatch
+  >({ servicePath: 'tests' }),
   withHooks(({ startEmitting, find }) => {
     return {
       onInit() {

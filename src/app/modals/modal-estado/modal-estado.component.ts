@@ -1,48 +1,40 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
-import { Codestados, Estado } from 'feathers-dercosa';
-import {
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonContent,
-  IonItem,
-  IonLabel,
-  IonCheckbox,
-  IonButton,
-  IonFooter,
-  IonInput,
-  IonButtons,
-  IonSelectOption,
-  IonSelect,
-  IonTextarea,
-} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { Component, effect, inject, Input } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import {
+  IonButton,
+  IonButtons,
+  IonCheckbox,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { Codestados, Estado } from 'feathers-dercosa';
 
 import {
-  AditionalData,
-  PedidolinRecord,
-  EstadosStore,
-} from '../../signalStores/stores/estadosStore';
-import {
+  AlertController,
   LoadingController,
   ModalController,
-  AlertController,
 } from '@ionic/angular';
 import { CodEstadosStore } from '../../signalStores/stores/codEstadosStore';
+import {
+  AditionalData,
+  EstadosStore,
+  PedidolinRecord,
+} from '../../signalStores/stores/estadosStore';
 
 import isBlank from 'is-blank';
 
@@ -78,9 +70,6 @@ export type CheckedEstados = {
 })
 export class ModalEstadoComponent {
   readonly estadosStore = inject(EstadosStore);
-
-  estadoSelected?: number = undefined;
-
   readonly codEstadosStore = inject(CodEstadosStore);
 
   codEstado: string | null = null;
@@ -249,6 +238,7 @@ export class ModalEstadoComponent {
         await Promise.race([request, timeout]);
 
         loading.dismiss();
+        this.dismiss();
         break;
       } catch (error) {
         console.dir(error);

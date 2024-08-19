@@ -15,7 +15,7 @@ import {
 } from '@feathersjs/feathers';
 import {
   SignalStoreFeature,
-  StateSignals,
+  StateSignal,
   patchState,
   signalStoreFeature,
   withComputed,
@@ -214,7 +214,7 @@ export function withFeathersDataService<
         ),
       };
     }),
-    withMethods((store: Record<string, unknown> & StateSignals<object>) => {
+    withMethods((store: Record<string, unknown> & StateSignal<object>) => {
       const entities = store[entitiesKey] as Signal<Result[]>;
       const feathers = inject(FeathersClientService);
       const service = feathers.getServiceByPath(
