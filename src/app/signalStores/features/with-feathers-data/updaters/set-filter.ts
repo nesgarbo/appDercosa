@@ -1,10 +1,10 @@
 import { PartialStateUpdater } from '@ngrx/signals';
+import { getFeathersDataServiceKeys } from '../helpers';
 import {
   FeathersDataServiceState,
   Filter,
   NamedFeathersDataServiceState,
 } from '../models';
-import { getFeathersDataServiceKeys } from '../helpers';
 
 export function setFilter<F extends Filter>(
   filter: F | undefined
@@ -23,7 +23,7 @@ export function setFilter<F extends Filter, Collection extends string>(
   const { filterKey } = getFeathersDataServiceKeys({
     collection: config?.collection,
   });
-  return state => {
+  return (state) => {
     return {
       [filterKey]: filter,
     };

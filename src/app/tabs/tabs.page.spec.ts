@@ -10,8 +10,8 @@ describe('TabsPage', () => {
   beforeEach(async () => {
     TestBed.overrideComponent(TabsPage, {
       add: {
-        imports: [RouterTestingModule]
-      }
+        imports: [RouterTestingModule],
+      },
     });
   });
 

@@ -24,8 +24,8 @@ import {
 } from '@ngrx/signals';
 
 import {
-  EntityState,
   EntityId,
+  EntityState,
   addEntity,
   removeEntities,
   removeEntity,
@@ -36,6 +36,9 @@ import {
 
 import { ServiceTypes } from 'feathers-dercosa';
 
+import { NamedEntityComputed } from '@ngrx/signals/entities/src/models';
+import { FeathersClientService } from 'src/app/services/feathers/feathers-service.service';
+import { ServiceMethodsWithPaginationDisabler } from '../../../feathers/service-methods-with-pagination-disabler';
 import { getFeathersDataServiceKeys, isPaginated } from './helpers';
 import {
   FeathersDataServiceMethods,
@@ -45,16 +48,13 @@ import {
   NamedFeathersDataServiceSignals,
   NamedFeathersDataServiceState,
 } from './models';
+import { clearSelection } from './updaters/clear-selection';
+import { deselectEntityById } from './updaters/deselect-entity-by-id';
+import { selectEntityById } from './updaters/select-entity-by-id';
 import { setCurrent } from './updaters/set-current';
 import { setFilter } from './updaters/set-filter';
 import { setPagination } from './updaters/set-pagination';
-import { NamedEntityComputed } from '@ngrx/signals/entities/src/models';
-import { FeathersClientService } from 'src/app/services/feathers/feathers-service.service';
-import { ServiceMethodsWithPaginationDisabler } from '../../../feathers/service-methods-with-pagination-disabler';
-import { clearSelection } from './updaters/clear-selection';
-import { deselectEntityById } from './updaters/deselect-entity-by-id';
 import { setSelection } from './updaters/set-selection';
-import { selectEntityById } from './updaters/select-entity-by-id';
 export type IsRecord<T> = T extends object
   ? T extends unknown[]
     ? false

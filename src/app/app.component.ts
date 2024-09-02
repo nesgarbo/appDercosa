@@ -22,9 +22,24 @@ import {
   IonRouterOutlet,
   IonSplitPane,
 } from '@ionic/angular/standalone';
-import { AppStore } from './signalStores/stores/appStore';
 import { addIcons } from 'ionicons';
-import { chatboxEllipsesOutline, chatboxOutline, chatbubblesOutline, documentOutline, homeOutline, listOutline, logOutOutline, searchOutline } from 'ionicons/icons';
+import {
+  addOutline,
+  caretDownOutline,
+  caretUpOutline,
+  chatboxEllipsesOutline,
+  chatboxOutline,
+  chatbubblesOutline,
+  checkboxOutline,
+  checkmarkCircle,
+  documentOutline,
+  homeOutline,
+  listOutline,
+  logOutOutline,
+  radioButtonOff,
+  searchOutline,
+} from 'ionicons/icons';
+import { AppStore } from './signalStores/stores/appStore';
 
 @Component({
   selector: 'app-root',
@@ -80,7 +95,13 @@ export class AppComponent {
       chatboxOutline,
       chatbubblesOutline,
       listOutline,
-      documentOutline
+      documentOutline,
+      addOutline,
+      checkboxOutline,
+      caretDownOutline,
+      caretUpOutline,
+      radioButtonOff,
+      checkmarkCircle,
     });
   }
 

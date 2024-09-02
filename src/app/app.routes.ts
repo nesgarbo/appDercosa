@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { TabsPage } from './tabs/tabs.page';
 import { canActivateAuthenticatedGuard } from './guards/can-activate-authenticated.guard';
 import { homeRedirectGuard } from './guards/home-redirect.guard';
 import { ManagerGuard } from './guards/manager.guard';
+import { TabsPage } from './tabs/tabs.page';
 
 export const routes: Routes = [
   {
@@ -23,7 +23,6 @@ export const routes: Routes = [
       },
       {
         path: 'calidad',
-        component: TabsPage,
         loadChildren: () =>
           import('./pages/calidadApp/calidad.routes').then((m) => m.default),
         canActivate: [ManagerGuard],

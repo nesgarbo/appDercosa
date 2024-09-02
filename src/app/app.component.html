@@ -70,6 +70,33 @@
             ><ion-label>Salir</ion-label></ion-item
           >
           <ion-list-header>
+            <h5>Inspecciones</h5>
+          </ion-list-header>
+          <ion-item [routerLink]="['/Øprivate-routes/calidad/test-results']"
+            ><ion-icon
+              name="checkbox-outline"
+              aria-hidden="true"
+              slot="start"
+            ></ion-icon
+            ><ion-label>Test Results</ion-label></ion-item
+          >
+          <ion-item [routerLink]="['/private-routes/calidad/tests']"
+            ><ion-icon
+              name="checkbox-outline"
+              aria-hidden="true"
+              slot="start"
+            ></ion-icon
+            ><ion-label>Tipo de tests</ion-label></ion-item
+          >
+          <ion-item [routerLink]="['/private-routes/calidad/client-tests']"
+            ><ion-icon
+              name="checkbox-outline"
+              aria-hidden="true"
+              slot="start"
+            ></ion-icon
+            ><ion-label>Tipo de tests de clientes</ion-label></ion-item
+          >
+          <ion-list-header>
             <h5>Weavy</h5>
           </ion-list-header>
           <ion-item [routerLink]="['/private-routes/weavy/chat']"

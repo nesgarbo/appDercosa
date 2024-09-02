@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CrearInspeccionComponent } from './crear-inspeccion.component';
+import { SearchableSelectComponent } from './searchable-select.component';
 
-describe('CrearInspeccionComponent', () => {
-  let component: CrearInspeccionComponent;
-  let fixture: ComponentFixture<CrearInspeccionComponent>;
+describe('SearchableSelectComponent', () => {
+  let component: SearchableSelectComponent<any>;
+  let fixture: ComponentFixture<SearchableSelectComponent<any>>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrearInspeccionComponent ],
+      declarations: [ SearchableSelectComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CrearInspeccionComponent);
+    fixture = TestBed.createComponent(SearchableSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

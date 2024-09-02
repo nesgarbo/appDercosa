@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Lista de Tests de clientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    @for (clientTest of clientTestsStore.entities(); track $index) {
+    <ion-item-sliding>
+      <ion-item (click)="editItem(clientTest)">
+        <ion-grid class="ctn-icons">
+          <ion-row>
+            <ion-col
+              style="
+                padding-top: 0;
+                padding-bottom: 0;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 0.5rem;
+                margin-top: 0.4rem;
+              "
+            >
+              <ion-text style="display: block"> {{ clientTest.client.NOMBRECLI }}</ion-text>
+              <ion-note style="display: block;">{{ clientTest.test.name }}</ion-note>
+            </ion-col>
+            <ion-col size="auto" style="padding-top: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                @if(clientTest.clientMax){
+                <div style="display: flex; align-items: center; justify-content: center;">
+                  <ion-icon color="medium" name="caret-up-outline"></ion-icon>
+                  <ion-note color="medium" class="ion-text-wrap">{{
+                    clientTest.clientMax + ' ' + clientTest.measurementUnit
+                  }}</ion-note>
+                </div>
+                } @if(clientTest.clientMin){
+                <div style="display: flex; align-items: center; justify-content: center;">
+                  <ion-icon color="medium" name="caret-down-outline"></ion-icon>
+                  <ion-note color="medium" class="ion-text-wrap">{{
+                    clientTest.clientMin + ' ' + clientTest.measurementUnit
+                  }}</ion-note>
+                </div>
+                }
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option color="danger" (click)="deleteItem(clientTest)"
+          >Eliminar</ion-item-option
+        >
+      </ion-item-options>
+    </ion-item-sliding>
+    }
+  </ion-list>
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button (click)="addItem()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<ion-modal></ion-modal>
+<router-outlet></router-outlet>

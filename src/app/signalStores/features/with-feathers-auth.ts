@@ -1,18 +1,21 @@
+import { withCallState } from '@angular-architects/ngrx-toolkit';
 import { computed, inject } from '@angular/core';
 import {
+  PartialStateUpdater,
   patchState,
   signalStoreFeature,
   withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { User } from 'feathers-dercosa';
-import { PartialStateUpdater } from '@ngrx/signals';
-import { withCallState } from '@angular-architects/ngrx-toolkit';
 import { TranslateService } from '@ngx-translate/core';
-import { map, pipe, startWith, tap } from 'rxjs';
+import { User } from 'feathers-dercosa';
 import { derivedFrom } from 'ngxtension/derived-from';
-import { FeathersClientService, LoginCredentials } from 'src/app/services/feathers/feathers-service.service';
+import { map, pipe, startWith } from 'rxjs';
+import {
+  FeathersClientService,
+  LoginCredentials,
+} from 'src/app/services/feathers/feathers-service.service';
 
 export type UserWithBackgroundURL = User & { backgroundUrl?: string };
 
@@ -26,7 +29,7 @@ const initialAuthState: AuthState = { user: undefined, accessToken: undefined };
 export const setUser = (
   user: UserWithBackgroundURL
 ): PartialStateUpdater<AuthState> => {
-  return state => {
+  return (state) => {
     return { ...state, user };
   };
 };
@@ -34,19 +37,19 @@ export const setUser = (
 export const setAccessToken = (
   accessToken: string
 ): PartialStateUpdater<AuthState> => {
-  return state => {
+  return (state) => {
     return { ...state, accessToken };
   };
 };
 
 export const removeUser = (): PartialStateUpdater<AuthState> => {
-  return state => {
+  return (state) => {
     return { ...state, user: undefined };
   };
 };
 
 export const removeAccessToken = (): PartialStateUpdater<AuthState> => {
-  return state => {
+  return (state) => {
     return { ...state, accessToken: undefined };
   };
 };
@@ -62,7 +65,7 @@ export function withFeathersAuth() {
           map(([_, user]) => ({
             displayUserName: user?.name || translate.instant('ANONYMOUS_USER'),
             displayUserRoles:
-              user?.rolesData?.map(rol => rol.nombre).join(', ') ||
+              user?.rolesData?.map((rol) => rol.nombre).join(', ') ||
               translate.instant('VISITOR'),
             displayAvatar:
               user?.backgroundUrl || 'assets/images/avatar-placeholder.png',

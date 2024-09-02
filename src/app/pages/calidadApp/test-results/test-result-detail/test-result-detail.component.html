@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()"> {{ "CLOSE" | translate }} </ion-button>
+    </ion-buttons>
+    <ion-title>{{
+      (item?.test.name | uppercase) || (item?.test.test.name | uppercase) || "Nuevo tipo de test"
+    }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="detailsForm">
+    <ion-list style="width: 100%">
+      <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Partida"
+          formControlName="partida"
+          type="text"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Test</ion-label>
+        <app-searchable-select
+          class="ion-text-right"
+          [items]="testOptions()"
+          itemValueField="customId"
+          itemTextField="name"
+          [(ngModel)]="customId"
+          [getItem]="getTest"
+          (onSearch)="searchTests($event)"
+          (onChange)="onTestChange($event)"
+          [canAddItem]="false"
+          [ngModelOptions]="{standalone: true}"
+        >
+          <ng-template
+            #itemTemplate
+            let-item
+            let-isConsignaSelected="isItemSelected"
+          >
+            <div style="display: flex; flex-direction: column; margin: 3vw">
+              {{ item.name }}
+            </div>
+          </ng-template>
+        </app-searchable-select>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Resultado"
+          formControlName="result"
+          type="number"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+<ion-footer style="padding: 1rem 2rem">
+  <ion-button expand="block" (click)="save()" [disabled]="!detailsForm.valid">{{
+    this.operation === "edit" ? "Guardar" : "Crear"
+  }}</ion-button>
+</ion-footer>

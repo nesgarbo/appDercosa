@@ -1,9 +1,8 @@
-import { patchState, signalStore, withMethods } from '@ngrx/signals';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { setAllEntities, withEntities } from '@ngrx/signals/entities';
-import { withHooks } from '@ngrx/signals';
-import { Codestados } from 'feathers-dercosa';
 import { inject } from '@angular/core';
+import { patchState, signalStore, withHooks, withMethods } from '@ngrx/signals';
+import { setAllEntities, withEntities } from '@ngrx/signals/entities';
+import { Codestados } from 'feathers-dercosa';
 import { FeathersClientService } from 'src/app/services/feathers/feathers-service.service';
 
 export const CodEstadosStore = signalStore(

@@ -1,7 +1,7 @@
-import { SelectedNamedSlice, SelectedSlice } from '../models';
-import { getFeathersDataServiceKeys } from '../helpers';
-import { PartialStateUpdater } from '@ngrx/signals';
 import { Entity } from '@angular-architects/ngrx-toolkit';
+import { PartialStateUpdater } from '@ngrx/signals';
+import { getFeathersDataServiceKeys } from '../helpers';
+import { SelectedNamedSlice, SelectedSlice } from '../models';
 
 /**
  * Clears the selection

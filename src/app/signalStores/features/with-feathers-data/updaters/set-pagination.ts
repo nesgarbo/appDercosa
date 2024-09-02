@@ -1,11 +1,11 @@
 import { Entity } from '@angular-architects/ngrx-toolkit';
 import { PartialStateUpdater } from '@ngrx/signals';
+import { getFeathersDataServiceKeys } from '../helpers';
 import {
   FeathersDataServiceState,
   NamedFeathersDataServiceState,
   Pagination,
 } from '../models';
-import { getFeathersDataServiceKeys } from '../helpers';
 
 export function setPagination(
   pagination: Pagination | undefined
@@ -24,7 +24,7 @@ export function setPagination<E extends Entity, Collection extends string>(
   const { paginationKey } = getFeathersDataServiceKeys({
     collection: config?.collection,
   });
-  return state => {
+  return (state) => {
     return {
       [paginationKey]: pagination,
     };

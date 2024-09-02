@@ -1,10 +1,10 @@
 import { Entity } from '@angular-architects/ngrx-toolkit';
 import { PartialStateUpdater } from '@ngrx/signals';
+import { getFeathersDataServiceKeys } from '../helpers';
 import {
   FeathersDataServiceState,
   NamedFeathersDataServiceState,
 } from '../models';
-import { getFeathersDataServiceKeys } from '../helpers';
 
 export function setCurrent<E extends Entity>(
   current: E
@@ -23,7 +23,7 @@ export function setCurrent<E extends Entity, Collection extends string>(
   const { currentKey } = getFeathersDataServiceKeys({
     collection: config?.collection,
   });
-  return state => {
+  return (state) => {
     return {
       [currentKey]: current.id,
     };

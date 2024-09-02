@@ -38,7 +38,7 @@ import { BiometricService } from 'src/app/services/biometric.service';
     FormsModule,
     ReactiveFormsModule,
     IonButton,
-    IonInput,
+    IonInput
   ],
 })
 export class LoginPage implements OnInit {

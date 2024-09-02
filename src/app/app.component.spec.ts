@@ -7,8 +7,8 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     TestBed.overrideComponent(AppComponent, {
       add: {
-        imports: [RouterTestingModule]
-      }
+        imports: [RouterTestingModule],
+      },
     });
   });
 

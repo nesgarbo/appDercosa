@@ -118,7 +118,9 @@ export type NamedFeathersDataServiceMethods<
 } & {
   [K in Collection as `clear${Capitalize<K>}Selection`]: () => void;
 } & {
-  [K in Collection as `set${Capitalize<K>}Selection`]: (ids: Result['id'][]) => void;
+  [K in Collection as `set${Capitalize<K>}Selection`]: (
+    ids: Result['id'][]
+  ) => void;
 } & {
   [K in Collection as `remove${Capitalize<K>}`]: (
     id: Result['id'] | null,

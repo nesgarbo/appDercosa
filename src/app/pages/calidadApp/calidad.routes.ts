@@ -2,18 +2,23 @@ import { Route } from '@angular/router';
 
 export default [
   {
-    path: 'crear-inspeccion',
-    loadComponent: () =>
-      import('./crear-inspeccion/crear-inspeccion.component').then((m) => m.CrearInspeccionComponent),
+    path: 'tests',
+    loadChildren: () =>
+      import('./tests/tests.routes'),
   },
   {
-    path: 'inspecciones',
-    loadComponent: () =>
-      import('./inspecciones/inspecciones.component').then((m) => m.InspeccionesComponent),
+    path: 'test-results',
+    loadChildren: () =>
+      import('./test-results/test-results.routes'),
+  },
+  {
+    path: 'client-tests',
+    loadChildren: () =>
+      import('./client-tests/client-tests.routes'),
   },
   {
     path: '',
-    redirectTo: 'inspecciones',
+    redirectTo: 'test-results',
     pathMatch: 'full',
   },
 ] satisfies Route[];

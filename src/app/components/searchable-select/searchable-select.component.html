@@ -1,0 +1,28 @@
+<ionic-selectable
+  style="width: 100%"
+  #selectable
+  [items]="items()"
+  [itemValueField]="$any(itemValueField())"
+  [itemTextField]="$any(itemTextField())"
+  [canSearch]="canSearch()"
+  [canAddItem]="canAddItem()"
+  style="width: 100%"
+  [(ngModel)]="value"
+  (onSearch)="onSearch.emit($event)"
+  (onChange)="valueChanged($event)"
+  (onAddItem)="openAddItemModal()"
+  [addButtonText]="addButtonText()"
+  (onClose)="onClose.emit($event)">
+  @if(itemTemplateRef()) {
+  <ng-template
+    ionicSelectableItemTemplate
+    let-item="item"
+    let-isItemSelected="isItemSelected">
+    <ng-container
+      *ngTemplateOutlet="
+        itemTemplateRef()!;
+        context: { $implicit: item, isItemSelected: isItemSelected }
+      "></ng-container>
+  </ng-template>
+  }
+</ionic-selectable>

@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()"> {{ "CLOSE" | translate }} </ion-button>
+    </ion-buttons>
+    <ion-title>{{
+      (item?.name | uppercase) || "Nuevo tipo de test"
+    }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="detailsForm">
+    <ion-list style="width: 100%">
+      <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Nombre"
+          formControlName="name"
+          type="text"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Unidad de medida"
+          formControlName="measurementUnit"
+          type="text"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Minimo por defecto"
+          formControlName="defaultMin"
+          type="number"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Maximo por defecto"
+          formControlName="defaultMax"
+          type="number"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+<ion-footer style="padding: 1rem 2rem">
+  <ion-button expand="block" (click)="save()" [disabled]="!detailsForm.valid">{{
+    this.operation === "edit" ? "Guardar" : "Crear"
+  }}</ion-button>
+</ion-footer>

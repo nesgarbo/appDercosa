@@ -1,7 +1,7 @@
-import { SelectedNamedSlice, SelectedSlice } from '../models';
-import { getFeathersDataServiceKeys } from '../helpers';
-import { PartialStateUpdater } from '@ngrx/signals';
 import { Entity } from '@angular-architects/ngrx-toolkit';
+import { PartialStateUpdater } from '@ngrx/signals';
+import { getFeathersDataServiceKeys } from '../helpers';
+import { SelectedNamedSlice, SelectedSlice } from '../models';
 
 /**
  * Selects the item by its id
@@ -21,10 +21,10 @@ export function selectEntityById<E extends Entity, Collection extends string>(
   const { selectedIdsKey } = getFeathersDataServiceKeys({
     collection: config?.collection,
   });
-  return state => {
-    const currentSelectedIds = (state as any)[selectedIdsKey] as E['id'][]; 
+  return (state) => {
+    const currentSelectedIds = (state as any)[selectedIdsKey] as E['id'][];
     return {
-      [selectedIdsKey]: [...currentSelectedIds, id]
+      [selectedIdsKey]: [...currentSelectedIds, id],
     };
   };
 }
