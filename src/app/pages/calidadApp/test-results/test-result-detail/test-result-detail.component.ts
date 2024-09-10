@@ -124,15 +124,11 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
   @Input({ required: true }) set data(data: TestResult) {
     console.log('Test', data);
     this.item = data;
+    this.customId.set(data.testType === 'clientTest' ? 'c' + data.testId : data.testId.toString());
+    console.log('CustomId', this.customId());
   }
 
   result?: number | undefined;
-
-  testId = new FormGroup({
-    testId: new FormControl<number | undefined>(undefined, [
-      Validators.required,
-    ]),
-  });
 
   override detailsForm = new FormGroup({
     partida: new FormControl<string | undefined>(undefined, [
@@ -176,5 +172,6 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
     this.detailsForm.controls['testId'].setValue(testId);
     this.detailsForm.controls['testType'].setValue(testType);
     this.detailsForm.controls['measurementUnit'].setValue(measurementUnit);
+    console.log('CustomId', this.customId());
   }
 }

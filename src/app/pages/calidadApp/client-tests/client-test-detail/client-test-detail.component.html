@@ -60,12 +60,27 @@
         </app-searchable-select>
       </ion-item>
       <ion-item>
-        <ion-input
+        <ion-label style="min-width: 50vw;">Unidad de medida</ion-label>
+        <app-searchable-select
           class="ion-text-right"
-          label="Unidad de medida"
-          formControlName="measurementUnit"
-          type="text"
-        ></ion-input>
+          [items]="measurementUnitOptions()"
+          itemValueField="id"
+          itemTextField="name"
+          formControlName="measurementUnitId"
+          [getItem]="getMeasurementUnit"
+          (onSearch)="searchMeasurementUnit($event)"
+          [canAddItem]="false"
+        >
+          <ng-template
+            #itemTemplate
+            let-item
+            let-isConsignaSelected="isItemSelected"
+          >
+            <div style="display: flex; flex-direction: column; margin: 3vw">
+              {{ item.name }}
+            </div>
+          </ng-template>
+        </app-searchable-select>
       </ion-item>
       <ion-item>
         <ion-input

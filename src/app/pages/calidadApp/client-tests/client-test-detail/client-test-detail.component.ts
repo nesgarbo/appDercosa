@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, computed, inject, model } from '@angular/core';
+import { Component, Input, computed, effect, inject, model } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -30,7 +30,9 @@ import { SearchableSelectComponent } from 'src/app/components/searchable-select/
 import { BaseDetail } from 'src/app/shared/base-detail';
 import { ClientsStore } from 'src/app/signalStores/stores/clientsStore';
 import { ClientTestsStore } from 'src/app/signalStores/stores/clientTestsStore';
+import { MeasurementUnitsStore } from 'src/app/signalStores/stores/measurementUnitsStore';
 import { TestsStore } from 'src/app/signalStores/stores/testsStore';
+import { addIcons } from "ionicons";
 
 @Component({
   selector: 'app-client-test',
@@ -63,10 +65,12 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
   clientTestsStore = inject(ClientTestsStore);
   testsStore = inject(TestsStore);
   clientsStore = inject(ClientsStore);
+  measurementUnitsStore = inject(MeasurementUnitsStore);
   modalCtrl = inject(ModalController);
 
   filterTestText = model<string>('');
   filterClientText = model<string>('');
+  filterMeasurementUnitText = model<string>('');
 
   close() {
     this.modalCtrl.dismiss();
@@ -99,6 +103,27 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
     return this.testsStore.get(id);
   }
 
+  measurementUnitOptions = computed(() => {
+    return this.measurementUnitsStore
+      .entities()
+      .filter((t) => t?.name.toLowerCase().includes(this.filterMeasurementUnitText()));
+  });
+
+  async searchMeasurementUnit(event: {
+    component: IonicSelectableComponent;
+    text: string;
+  }) {
+    console.log('searchTest event', event);
+    let text = event.text.trim().toLowerCase();
+    event.component.startSearch();
+
+    this.filterMeasurementUnitText.set(text);
+  }
+
+  async getMeasurementUnit(id: number) {
+    return this.measurementUnitsStore.get(id);
+  }
+
   clientOptions = computed(() => {
     return this.clientsStore
       .entities()
@@ -127,7 +152,7 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
   }
 
   override detailsForm = new FormGroup({
-    measurementUnit: new FormControl<string | undefined>(undefined, [
+    measurementUnitId: new FormControl<number | undefined>(undefined, [
       Validators.required,
     ]),
     clientMax: new FormControl<number | undefined>(undefined, [
@@ -161,8 +186,8 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
     if (!values.clientMin) {
       this.detailsForm.controls.clientMin.setValue(e.value?.defaultMin);
     }
-    if (!values.measurementUnit) {
-      this.detailsForm.controls.measurementUnit.setValue(
+    if (!values.measurementUnitId) {
+      this.detailsForm.controls.measurementUnitId.setValue(
         e.value?.measurementUnit
       );
     }

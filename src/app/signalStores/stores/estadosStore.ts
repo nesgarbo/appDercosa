@@ -22,9 +22,9 @@ export type EstadosState = {
 
 export type AditionalData = {
   PEDIDOLIN?: number;
-  ESTADO7?: string;
+  estado7?: string;
   EFECESTA?: string;
-  ECOMENTA?: string;
+  ecomenta?: string;
 };
 
 export type PedidolinRecord = Record<number, AditionalData>;
@@ -48,19 +48,19 @@ export const EstadosStore = signalStore(
         if (selectedIds[id]) {
           const estado = store.selectedEntities()[id];
           try {
-            const updatedEstado = (await store.patch(estado.EPARTIDA, {
-              ECOD: codEstado.CODIESTA,
-              CODESTADO: codEstado,
-              ESTADO7: aditionalData.ESTADO7,
-              ECOMENTA: aditionalData.ECOMENTA,
+            const updatedEstado = (await store.patch(estado.epartida, {
+              ecod: codEstado.codiesta,
+              codestado: codEstado,
+              estado7: aditionalData.estado7,
+              ecomenta: aditionalData.ecomenta,
             })) as Estado;
             patchState(
               store,
               updateEntity({
-                id: updatedEstado.EPEDIDO,
+                id: updatedEstado.epedido,
                 changes: {
-                  ECOD: updatedEstado.ECOD,
-                  CODESTADO: updatedEstado.CODESTADO,
+                  ecod: updatedEstado.ecod,
+                  codestado: updatedEstado.codestado,
                 },
               })
             );
@@ -74,10 +74,10 @@ export const EstadosStore = signalStore(
   })),
   withComputed((store) => ({
     sumPiezas: computed(() =>
-      store.selectedEntities().reduce((acc, estado) => acc + estado.EPIEZAS, 0)
+      store.selectedEntities().reduce((acc, estado) => acc + estado.epiezas, 0)
     ),
     sumCantidad: computed(() =>
-      store.selectedEntities().reduce((acc, estado) => acc + estado.ECANT, 0)
+      store.selectedEntities().reduce((acc, estado) => acc + estado.ecant, 0)
     ),
     allSelected: computed(() => {
       const selectedIds = store.selectedIds();

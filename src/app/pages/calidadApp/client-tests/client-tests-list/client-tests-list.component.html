@@ -34,14 +34,14 @@
                 <div style="display: flex; align-items: center; justify-content: center;">
                   <ion-icon color="medium" name="caret-up-outline"></ion-icon>
                   <ion-note color="medium" class="ion-text-wrap">{{
-                    clientTest.clientMax + ' ' + clientTest.measurementUnit
+                    clientTest.clientMax + ' ' + clientTest.measurementUnit.symbol
                   }}</ion-note>
                 </div>
                 } @if(clientTest.clientMin){
                 <div style="display: flex; align-items: center; justify-content: center;">
                   <ion-icon color="medium" name="caret-down-outline"></ion-icon>
                   <ion-note color="medium" class="ion-text-wrap">{{
-                    clientTest.clientMin + ' ' + clientTest.measurementUnit
+                    clientTest.clientMin + ' ' + clientTest.measurementUnit.symbol
                   }}</ion-note>
                 </div>
                 }

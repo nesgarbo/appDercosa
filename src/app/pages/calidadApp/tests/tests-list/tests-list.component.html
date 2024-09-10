@@ -33,14 +33,14 @@
                 <div style="display: flex; align-items: center; justify-content: center;">
                   <ion-icon color="medium" name="caret-up-outline"></ion-icon>
                   <ion-note color="medium" class="ion-text-wrap">{{
-                    test.defaultMax + ' ' + test.measurementUnit
+                    test.defaultMax + ' ' + test.measurementUnit.symbol
                   }}</ion-note>
                 </div>
                 } @if(test.defaultMin){
                 <div style="display: flex; align-items: center; justify-content: center;">
                   <ion-icon color="medium" name="caret-down-outline"></ion-icon>
                   <ion-note color="medium" class="ion-text-wrap">{{
-                    test.defaultMin + ' ' + test.measurementUnit
+                    test.defaultMin + ' ' + test.measurementUnit.symbol
                   }}</ion-note>
                 </div>
                 }

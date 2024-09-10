@@ -19,6 +19,10 @@ import {
   IonToolbar, IonGrid, IonRow, IonCol, IonNote, IonText, IonChip } from '@ionic/angular/standalone';
 import { Test } from 'feathers-dercosa';
 import { TestsStore } from 'src/app/signalStores/stores/testsStore';
+import { addIcons } from "ionicons";
+import { caretUpOutline } from "ionicons/icons";
+import { caretDownOutline } from "ionicons/icons";
+import { addOutline } from "ionicons/icons";
 
 @Component({
   selector: 'app-tests',
@@ -50,7 +54,8 @@ export class TestsComponent {
 
   route = this.activatedRoute;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+      addIcons({caretUpOutline,caretDownOutline,addOutline});}
 
   addItem() {
     this.router.navigate(['new'], { relativeTo: this.route });
