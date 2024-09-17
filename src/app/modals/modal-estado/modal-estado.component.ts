@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, Input } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  model,
+  untracked,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -36,10 +43,8 @@ import {
   PedidolinRecord,
 } from '../../signalStores/stores/estadosStore';
 
-import isBlank from 'is-blank';
-
 export type CheckedEstados = {
-  EPEDIDO: Number;
+  epedido: Number;
   checked: boolean;
 };
 
@@ -72,17 +77,23 @@ export class ModalEstadoComponent {
   readonly estadosStore = inject(EstadosStore);
   readonly codEstadosStore = inject(CodEstadosStore);
 
-  codEstado: string | null = null;
+  codEstado = model<string>('');
+
+  codEstados = computed(() =>
+    this.codEstadosStore
+      .entities()
+      .sort((a, b) => a.desesta.localeCompare(b.desesta))
+  );
 
   editCom = true;
 
   aditionalDataForm: FormGroup = new FormGroup({
-    ESTADO6: new FormControl<string | null>(null),
-    ESTADO7: new FormControl<string | null>(null),
-    ESTADO8: new FormControl<string | null>(null),
-    EFECESTA: new FormControl<string | null>(null),
-    ECOMENTA: new FormControl<string | null>(null),
-    ECOLOR: new FormControl<string | null>(null),
+    estado6: new FormControl<string | null>(null),
+    estado7: new FormControl<string | null>(null),
+    estado8: new FormControl<string | null>(null),
+    efecesta: new FormControl<string | null>(null),
+    ecomenta: new FormControl<string | null>(null),
+    ecolor: new FormControl<string | null>(null),
   });
 
   constructor(
@@ -91,43 +102,31 @@ export class ModalEstadoComponent {
     private alertController: AlertController
   ) {
     effect(() => {
-      console.log('SelectedIds', this.estadosStore.selectedEntities());
-      const selectedEntities = this.estadosStore.selectedEntities();
-      this.codEstado =
-        selectedEntities.length > 0
-          ? selectedEntities[0].CODESTADO.CODIESTA
-          : null;
-      this.aditionalDataForm.patchValue({
-        ECOMENTA:
-          selectedEntities.length > 0
-            ? !isBlank(selectedEntities[0].ECOMENTA)
-              ? selectedEntities[0].ECOMENTA
-              : ''
-            : null,
-        ECOLOR: selectedEntities.length > 0 ? selectedEntities[0].ECOLOR : null,
-        ESTADO6:
-          selectedEntities.length > 0
-            ? !isBlank(selectedEntities[0].ESTADO6)
-              ? selectedEntities[0].ESTADO6
-              : ''
-            : null,
-        ESTADO7:
-          selectedEntities.length > 0
-            ? !isBlank(selectedEntities[0].ESTADO7)
-              ? selectedEntities[0].ESTADO7
-              : ''
-            : null,
-        ESTADO8:
-          selectedEntities.length > 0
-            ? !isBlank(selectedEntities[0].ESTADO8)
-              ? selectedEntities[0].ESTADO8
-              : ''
-            : null,
+      console.log('SelectedIds', this.estadosStore.selectedIds());
+      const selectedIds = this.estadosStore.selectedIds();
+      const selectedId = selectedIds.length > 0 ? selectedIds[0] : null;
+      const entity = selectedId
+        ? this.estadosStore
+            .entities()
+            .find((entity) => entity.id === selectedId)
+        : null;
+      untracked(() => {
+        if (entity) {
+          this.codEstado.set(entity.codestado.codiesta);
+          this.aditionalDataForm.patchValue({
+            ecomenta: entity.ecomenta,
+            ecolor: entity?.ecolor,
+            estado6: entity.estado6,
+            estado7: entity.estado7,
+            estado8: entity.estado8,
+          });
+        }
       });
     });
   }
 
   dismiss() {
+    this.estadosStore.clearSelection();
     this.modalCtrl.dismiss();
   }
 
@@ -192,50 +191,59 @@ export class ModalEstadoComponent {
     for (let i = 0; i < 3; i++) {
       try {
         let estado: Codestados = {
-          CODIESTA: this.codEstado!,
-          DESESTA: this.codEstadosStore.entityMap()[this.codEstado!].DESESTA,
+          id: this.codEstadosStore.entityMap()[this.codEstado()].id,
+          codiesta: this.codEstado(),
+          desesta: this.codEstadosStore.entityMap()[this.codEstado()].desesta,
         };
         let aditionalData: PedidolinRecord = {};
-        for (const identificador of Object.keys(
-          this.estadosStore.selectedEntities()
-        )) {
+        for (const identificador of this.estadosStore.selectedIds()) {
           const id = parseInt(identificador);
-          if (this.estadosStore.selectedEntities()[id]) {
-            let ad: AditionalData;
-            let fecha = new Date();
-            ad = {
-              PEDIDOLIN: id,
-              EFECESTA: this.aditionalDataForm.value.EFECESTA,
-              ECOMENTA: this.editCom
-                ? this.aditionalDataForm.value.ECOMENTA
-                : this.estadosStore.entityMap()[id].ECOMENTA,
-              ESTADO7: this.aditionalDataForm.value.ESTADO7,
-            };
-            ad.EFECESTA = `${fecha.getFullYear() - 1}-${
+          let ad: AditionalData;
+          let fecha = new Date();
+          ad = {
+            pedidolin: id,
+            efecesta: `${fecha.getFullYear()}-${
               fecha.getMonth() + 1
-            }-${fecha.getDate()}`;
-            ad.ESTADO7 = this.estadosStore.allSelected() ? 'S' : '';
-            ad.ECOMENTA = ad.ECOMENTA ? ad.ECOMENTA : '   ';
-            aditionalData[id] = ad;
+            }-${fecha.getDate()}`,
+            ecomenta: this.editCom
+              ? this.aditionalDataForm.value.ecomenta
+              : this.estadosStore.entityMap()[id].ecomenta,
+            estado7: this.estadosStore.allSelected() ? 'S' : '',
+          };
+          ad.ecomenta = ad.ecomenta ? ad.ecomenta : '   ';
+          aditionalData[id] = ad;
+          const changedEstado =
+            this.estadosStore.entityMap()[identificador].ecod !=
+            this.codEstado();
+            console.log('changedEstado', changedEstado, this.estadosStore.entityMap()[identificador].ecod, this.codEstado());
+          if (changedEstado) {
+            this.estadosStore.patch(identificador, {
+              ecod: this.codEstado(),
+              estado7: ad.estado7,
+              ecomenta: ad.ecomenta,
+              efecesta: ad.efecesta,
+            });
+          } else {
+            this.estadosStore.patch(identificador, {
+              estado7: ad.estado7,
+              ecomenta: ad.ecomenta,
+            });
           }
         }
 
-        console.dir(aditionalData);
-        console.log('AditionalData', aditionalData);
+        // // Iniciar el temporizador
+        // const timeout = new Promise((resolve, reject) => {
+        //   const id = setTimeout(() => {
+        //     clearTimeout(id);
+        //     reject('La petición ha superado el tiempo máximo permitido');
+        //   }, 7000); // 7 segundos
+        // });
 
-        // Iniciar el temporizador
-        const timeout = new Promise((resolve, reject) => {
-          const id = setTimeout(() => {
-            clearTimeout(id);
-            reject('La petición ha superado el tiempo máximo permitido');
-          }, 7000); // 7 segundos
-        });
+        // // Realizar la petición
+        // const request = this.estadosStore.changeEstado(estado, aditionalData);
 
-        // Realizar la petición
-        const request = this.estadosStore.changeEstado(estado, aditionalData);
-
-        // Usar Promise.race para ver cuál promesa se resuelve/rechaza primero
-        await Promise.race([request, timeout]);
+        // // Usar Promise.race para ver cuál promesa se resuelve/rechaza primero
+        // await Promise.race([request, timeout]);
 
         loading.dismiss();
         this.dismiss();

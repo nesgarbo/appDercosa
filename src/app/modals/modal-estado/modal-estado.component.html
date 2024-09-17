@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
   <div style="display: flex; align-items: center; flex-direction: column">
-    @for (estado of estadosStore.entities(); track estado.EPARTIDA) {
+    @for (estado of estadosStore.entities(); track estado.pedidolin) {
     <ion-item style="text-align: center; width: 100%">
       <div style="width: 100%; display: flex; padding: 1rem 0">
         <div style="width: 90%; display: flex">
@@ -20,7 +20,7 @@
               justify-content: center;
             "
           >
-            {{ estado.EPEDIDO }}
+            {{ estado.epedido }}
           </div>
           <div
             style="
@@ -30,7 +30,7 @@
               justify-content: center;
             "
           >
-            {{ estado.ELINPED }}
+            {{ estado.elinped }}
           </div>
           <div
             style="
@@ -40,7 +40,7 @@
               justify-content: center;
             "
           >
-            {{ estado.CLIENTE.NOMBRECLI }}
+            {{ estado.cliente.nombrecli }}
           </div>
           <div
             style="
@@ -50,7 +50,7 @@
               justify-content: center;
             "
           >
-            {{ estado.ARTICULO.DESARTI }}
+            {{ estado.articulo.desarti }}
           </div>
         </div>
         <div
@@ -108,7 +108,7 @@
           justify-content: center;
         "
       >
-        {{ aditionalDataForm.getRawValue().ESTADO6 }}
+        {{ aditionalDataForm.getRawValue().estado6 }}
       </div>
       <div
         class="fill right"
@@ -119,7 +119,7 @@
           justify-content: center;
         "
       >
-        {{ aditionalDataForm.getRawValue().ESTADO7 }}
+        {{ aditionalDataForm.getRawValue().estado7 }}
       </div>
       <div
         class="fill right"
@@ -130,7 +130,7 @@
           justify-content: center;
         "
       >
-        {{ aditionalDataForm.getRawValue().ESTADO8 }}
+        {{ aditionalDataForm.getRawValue().estado8 }}
       </div>
     </div>
     <div
@@ -171,7 +171,7 @@
         fill="outline"
         label="Color"
         labelPlacement="floating"
-        formControlName="ECOLOR"
+        formControlName="ecolor"
         [readonly]="true"
         style="margin: 1rem 0"
       >
@@ -181,7 +181,7 @@
         fill="outline"
         label="Comentario"
         labelPlacement="floating"
-        formControlName="ECOMENTA"
+        formControlName="ecomenta"
         style="margin: 1rem 0"
       >
       </ion-input>
@@ -195,9 +195,9 @@
         [(ngModel)]="codEstado"
         multiple="false"
       >
-        @for(option of codEstadosStore.entities(); track option.CODIESTA) {
-        <ion-select-option [value]="option.CODIESTA">{{
-          option.DESESTA
+        @for(option of codEstados(); track option.codiesta) {
+        <ion-select-option [value]="option.codiesta">{{
+          option.desesta
         }}</ion-select-option>
         }
       </ion-select>

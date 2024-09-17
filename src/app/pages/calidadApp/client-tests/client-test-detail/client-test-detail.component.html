@@ -41,7 +41,7 @@
           class="ion-text-right"
           [items]="clientOptions()"
           itemValueField="id"
-          itemTextField="NOMBRECLI"
+          itemTextField="nombrecli"
           formControlName="clientId"
           [getItem]="getClient"
           (onSearch)="searchClients($event)"
@@ -54,7 +54,7 @@
             let-isConsignaSelected="isItemSelected"
           >
             <div style="display: flex; flex-direction: column; margin: 3vw">
-              {{ item.NOMBRECLI }}
+              {{ item.nombrecli }}
             </div>
           </ng-template>
         </app-searchable-select>

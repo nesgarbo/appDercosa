@@ -99,7 +99,7 @@ export class EstadoComponent {
 
       resolve(
         (await this.estadosStore.find({
-          query: { EPARTIDA: epartida.toUpperCase() },
+          query: { epartida: epartida.toUpperCase() },
         })) as any
       );
     });

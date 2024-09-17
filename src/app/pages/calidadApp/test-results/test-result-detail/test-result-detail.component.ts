@@ -86,7 +86,7 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
       .entities()
       .map((t) => ({
         ...t,
-        name: t.test.name + ' de ' + t.client.NOMBRECLI,
+        name: t.test.name + ' de ' + t.client.nombrecli,
         id: 'clientTest' + t.id,
       }))
       .filter((t) => t?.name.toLowerCase().includes(filterTestText));

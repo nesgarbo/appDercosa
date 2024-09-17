@@ -21,9 +21,9 @@ export type EstadosState = {
 };
 
 export type AditionalData = {
-  PEDIDOLIN?: number;
+  pedidolin?: number;
   estado7?: string;
-  EFECESTA?: string;
+  efecesta?: string;
   ecomenta?: string;
 };
 
@@ -41,36 +41,36 @@ export const EstadosStore = signalStore(
     EstadoPatch
   >({ servicePath: 'estado' }),
   withMethods((store) => ({
-    async changeEstado(codEstado: Codestados, aditionalData: AditionalData) {
-      const selectedIds = store.selectedIds();
-      for (const identificador of Object.keys(selectedIds)) {
-        const id = parseInt(identificador);
-        if (selectedIds[id]) {
-          const estado = store.selectedEntities()[id];
-          try {
-            const updatedEstado = (await store.patch(estado.epartida, {
-              ecod: codEstado.codiesta,
-              codestado: codEstado,
-              estado7: aditionalData.estado7,
-              ecomenta: aditionalData.ecomenta,
-            })) as Estado;
-            patchState(
-              store,
-              updateEntity({
-                id: updatedEstado.epedido,
-                changes: {
-                  ecod: updatedEstado.ecod,
-                  codestado: updatedEstado.codestado,
-                },
-              })
-            );
-          } catch (error) {
-            console.error('Error updating estado:', error);
-            throw error;
-          }
-        }
-      }
-    },
+    // async changeEstado(codEstado: Codestados, aditionalData: AditionalData) {
+    //   const selectedIds = store.selectedIds();
+    //   for (const identificador of Object.keys(selectedIds)) {
+    //     const id = parseInt(identificador);
+    //     if (selectedIds[id]) {
+    //       const estado = store.selectedEntities()[id];
+    //       try {
+    //         const updatedEstado = (await store.patch(estado.epartida, {
+    //           ecod: codEstado.codiesta,
+    //           codestado: codEstado,
+    //           estado7: aditionalData.estado7,
+    //           ecomenta: aditionalData.ecomenta,
+    //         })) as Estado;
+    //         patchState(
+    //           store,
+    //           updateEntity({
+    //             id: updatedEstado.epedido,
+    //             changes: {
+    //               ecod: updatedEstado.ecod,
+    //               codestado: updatedEstado.codestado,
+    //             },
+    //           })
+    //         );
+    //       } catch (error) {
+    //         console.error('Error updating estado:', error);
+    //         throw error;
+    //       }
+    //     }
+    //   }
+    // },
   })),
   withComputed((store) => ({
     sumPiezas: computed(() =>

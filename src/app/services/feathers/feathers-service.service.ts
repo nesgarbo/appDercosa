@@ -24,6 +24,7 @@ import { unpackRules } from '@casl/ability/extra';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { Paginated } from '@feathersjs/feathers';
 
 export interface LoginCredentials {
   email: string;
@@ -241,7 +242,7 @@ export class FeathersClientService {
     });
   }
 
-  public async getCodEstados(): Promise<Codestados[]> {
+  public async getCodEstados(): Promise<Paginated<Codestados>> {
     return await this._feathers.service('codestados').find();
   }
 }

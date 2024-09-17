@@ -128,7 +128,7 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
     return this.clientsStore
       .entities()
       .filter((c) =>
-        c?.NOMBRECLI.toLowerCase().includes(this.filterClientText())
+        c?.nombrecli.toLowerCase().includes(this.filterClientText())
       );
   });
 
@@ -143,7 +143,7 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
       event.component.startSearch();
 
       // this.filterClientText.set(text);
-      this.clientsStore.find({ query: { NOMBRECLI: { $ilike: `%${text}%` } } });
+      this.clientsStore.find({ query: { nombrecli: { $ilike: `%${text}%` } } });
     }
   }
 

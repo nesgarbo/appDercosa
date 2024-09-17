@@ -121,7 +121,7 @@ export class SelectPartidaComponent {
     console.log('Emitting: ', emitValues, 'from: ', this.partidaForm.value);
     this.selected.emit(emitValues);
     setTimeout(() => {
-      this.partidaForm.reset();
+      this.partidaForm.reset({ epartida: '', epedido: '' });
     }, 0);
   }
 }

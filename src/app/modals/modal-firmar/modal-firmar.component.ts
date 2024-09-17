@@ -100,15 +100,15 @@ export class ModalFirmarComponent implements AfterViewInit {
     } else {
       var dataURL = this.signaturePad.toDataURL();
       const data = {
-        id: this.visita.VID || this.visita.id,
-        fecha: this.visita.VFECHA,
-        nombre: this.visita.VNOMVISTA,
-        dni: this.visita.VDNIVISTA,
-        telefono: this.visita.VTELEFONO,
-        nombreEmpresa: this.visita.VEMPRESA,
-        horaEntrada: this.visita.VENTRADA,
-        horaSalida: this.visita.VSALIDA || '',
-        recibeVisita: this.visita.VDNIDERCO,
+        id: this.visita.id,
+        fecha: this.visita.vfecha,
+        nombre: this.visita.vnomvista,
+        dni: this.visita.vdnivista,
+        telefono: this.visita.vtelefono,
+        nombreEmpresa: this.visita.vempresa,
+        horaEntrada: this.visita.ventrada,
+        horaSalida: this.visita.vsalida || '',
+        recibeVisita: this.visita.vdniderco,
         firma: dataURL,
       };
       this.feathers.getServiceByPath('pdf-generator').create(data);

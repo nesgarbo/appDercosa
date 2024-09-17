@@ -6,7 +6,7 @@
 <ion-content>
   <div style="display: flex; align-items: center; flex-direction: column">
     @for (visita of visitasStore.entities(); track visita.id) {
-    @if(visita.VFIRMADO === 'N') {
+    @if(visita.vfirmado === 'N') {
     <ion-item style="text-align: center; width: 100%">
       <div style="width: 90%; display: flex; padding: 1rem 0">
         <div style="width: 100%; display: flex">
@@ -28,7 +28,7 @@
               justify-content: center;
             "
           >
-            {{ visita.VNOMVISTA }}
+            {{ visita.vnomvista }}
           </div>
           <div
             style="
@@ -38,7 +38,7 @@
               justify-content: center;
             "
           >
-            {{ visita.VEMPRESA }}
+            {{ visita.vempresa }}
           </div>
           <div
             style="
@@ -48,7 +48,7 @@
               justify-content: center;
             "
           >
-            {{ visita.VFECHA }}
+            {{ visita.vfecha }}
           </div>
         </div>
       </div>
