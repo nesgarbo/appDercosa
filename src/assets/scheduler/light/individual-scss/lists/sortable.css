@@ -1,0 +1,43 @@
+/* Error: Undefined mixin.
+ *    ,
+ * 4  | / @include export-module('sortable-layout') {
+ * 5  | |   #{&}.e-sortable {
+ * 6  | |     outline: none;
+ * 7  | |     position: relative;
+ * 8  | |     user-select: none;
+ * 9  | | 
+ * 10 | |     .e-disabled {
+ * 11 | |       background-image: none;
+ * 12 | |       cursor: default;
+ * 13 | |       filter: alpha(Opacity=35);
+ * 14 | |       opacity: .35;
+ * 15 | |     }
+ * 16 | | 
+ * 17 | |     * {
+ * 18 | |       box-sizing: border-box;
+ * 19 | | 
+ * 20 | |       &:focus {
+ * 21 | |         outline: none;
+ * 22 | |       }
+ * 23 | |     }
+ * 24 | |   }
+ * 25 | | 
+ * 26 | |   /* stylelint-disable *∕
+ * 27 | |   .e-sortableclone {
+ * 28 | |     position: fixed !important;
+ * 29 | |   }
+ * 30 | |   /* stylelint-enable *∕
+ * 31 | \ }
+ *    '
+ *   src/assets/scheduler/light/individual-scss/lists/sortable.scss 4:1  root stylesheet */
+
+body::before {
+  font-family: 'Source Code Pro', 'SF Mono', Monaco, Inconsolata, 'Fira Mono',
+    'Droid Sans Mono', monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined mixin.\a    \2577 \a 4  \2502  \250c  @include export-module('sortable-layout') {\a 5  \2502  \2502    #{&}.e-sortable {\a 6  \2502  \2502      outline: none;\a 7  \2502  \2502      position: relative;\a 8  \2502  \2502      user-select: none;\a 9  \2502  \2502  \a 10 \2502  \2502      .e-disabled {\a 11 \2502  \2502        background-image: none;\a 12 \2502  \2502        cursor: default;\a 13 \2502  \2502        filter: alpha(Opacity=35);\a 14 \2502  \2502        opacity: .35;\a 15 \2502  \2502      }\a 16 \2502  \2502  \a 17 \2502  \2502      * {\a 18 \2502  \2502        box-sizing: border-box;\a 19 \2502  \2502  \a 20 \2502  \2502        &:focus {\a 21 \2502  \2502          outline: none;\a 22 \2502  \2502        }\a 23 \2502  \2502      }\a 24 \2502  \2502    }\a 25 \2502  \2502  \a 26 \2502  \2502    /* stylelint-disable */\a 27 \2502  \2502    .e-sortableclone {\a 28 \2502  \2502      position: fixed !important;\a 29 \2502  \2502    }\a 30 \2502  \2502    /* stylelint-enable */\a 31 \2502  \2514  }\a    \2575 \a   src/assets/scheduler/light/individual-scss/lists/sortable.scss 4:1  root stylesheet";
+}

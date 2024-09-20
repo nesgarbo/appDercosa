@@ -100,6 +100,7 @@ export class SearchableSelectComponent<T extends WithId>
   itemTextField = model.required<keyof T>();
   canSearch = model<boolean>(true);
   canAddItem = model<boolean>(true);
+  canSaveItem = model<boolean>(true);
   addButtonText = model<string>(this.translate.instant('ADD'));
 
   detailComponent = input<Type<BaseDetail<any>>>();

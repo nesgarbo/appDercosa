@@ -33,7 +33,10 @@
               }
             ],
             "styles": [
+              "src/assets/scheduler/light/bootstrap5.scss",
+              "src/assets/scheduler/dark/bootstrap5-dark.scss",
               "src/global.scss",
+              "node_modules/@syncfusion/ej2-icons/styles/bootstrap5.css",
               "src/theme/variables.scss"
             ],
             "scripts": [],

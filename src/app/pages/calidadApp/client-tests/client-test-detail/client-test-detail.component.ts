@@ -21,8 +21,7 @@ import {
   IonNote,
   IonTextarea,
   IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+  IonToolbar, IonGrid, IonRow, IonCol, IonText, IonIcon } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { ClientTest } from 'feathers-dercosa';
 import { IonicSelectableComponent } from 'ionic-selectable';
@@ -39,7 +38,7 @@ import { addIcons } from "ionicons";
   templateUrl: './client-test-detail.component.html',
   styleUrls: ['./client-test-detail.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonIcon, IonText, IonCol, IonRow, IonGrid, 
     IonNote,
     IonFooter,
     IonTextarea,

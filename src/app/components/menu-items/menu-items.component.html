@@ -1,0 +1,11 @@
+<ion-list-header>
+  <h5>{{ header() }}</h5>
+</ion-list-header>
+@for(item of items(); track item.label){
+<app-menu-item
+  [icon]="item.icon"
+  [label]="item.label"
+  [routerLink]="item.routerLink"
+  (onClickEvent)="onClickEvent.emit($event)"
+></app-menu-item>
+}

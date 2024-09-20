@@ -4,7 +4,9 @@
       <ion-button (click)="close()"> {{ "CLOSE" | translate }} </ion-button>
     </ion-buttons>
     <ion-title>{{
-      (item?.test.name | uppercase) || (item?.test.test.name | uppercase) || "Nuevo tipo de test"
+      (item?.test.name | uppercase) ||
+        (item?.test.test.name | uppercase) ||
+        "Nuevo resultado"
     }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,27 +22,119 @@
         ></ion-input>
       </ion-item>
       <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Pedido"
+          formControlName="pedido"
+          type="number"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          class="ion-text-right"
+          label="Linea"
+          formControlName="linea"
+          type="number"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-label>Test</ion-label>
         <app-searchable-select
           class="ion-text-right"
           [items]="testOptions()"
           itemValueField="id"
           itemTextField="name"
-          [(ngModel)]="customId"
           [getItem]="getTest"
           (onSearch)="searchTests($event)"
           (onChange)="onTestChange($event)"
-          [canAddItem]="false"
-          [ngModelOptions]="{standalone: true}"
+          [canAddItem]="true"
+          formControlName="testId"
         >
           <ng-template
             #itemTemplate
             let-item
             let-isConsignaSelected="isItemSelected"
           >
-            <div style="display: flex; flex-direction: column; margin: 3vw">
-              {{ item.name }}
-            </div>
+            <ion-grid class="ctn-icons">
+              <ion-row>
+                <ion-col
+                  style="
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    align-items: center;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    margin-bottom: 0.5rem;
+                    margin-top: 0.4rem;
+                  "
+                >
+                  <ion-text style="display: block">
+                    {{ item.client.nombrecli }}</ion-text
+                  >
+                  <ion-note style="display: block">{{
+                    item.test.name
+                  }}</ion-note>
+                </ion-col>
+                <ion-col
+                  size="auto"
+                  style="
+                    padding-top: 0;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                  >
+                    @if(item.clientMax){
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <ion-icon
+                        color="medium"
+                        name="caret-up-outline"
+                      ></ion-icon>
+                      <ion-note color="medium" class="ion-text-wrap">{{
+                        item.clientMax +
+                          " " +
+                          item.measurementUnit.symbol
+                      }}</ion-note>
+                    </div>
+                    } @if(item.clientMin){
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <ion-icon
+                        color="medium"
+                        name="caret-down-outline"
+                      ></ion-icon>
+                      <ion-note color="medium" class="ion-text-wrap">{{
+                        item.clientMin +
+                          " " +
+                          item.measurementUnit.symbol
+                      }}</ion-note>
+                    </div>
+                    }
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ng-template>
         </app-searchable-select>
       </ion-item>
@@ -54,6 +148,11 @@
       </ion-item>
     </ion-list>
   </form>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="startScan()">
+      <ion-icon name="scan-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 <ion-footer style="padding: 1rem 2rem">
   <ion-button expand="block" (click)="save()" [disabled]="!detailsForm.valid">{{

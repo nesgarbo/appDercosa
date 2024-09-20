@@ -22,6 +22,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import SignaturePad from 'signature_pad';
 import { ProteccionDatosComponent } from '../proteccion-datos/proteccion-datos.component';
 import { FeathersClientService } from 'src/app/services/feathers/feathers-service.service';
+import { OperariosStore } from 'src/app/signalStores/stores/operariosStore';
 
 @Component({
   selector: 'app-modal-firmar',
@@ -42,6 +43,7 @@ import { FeathersClientService } from 'src/app/services/feathers/feathers-servic
 })
 export class ModalFirmarComponent implements AfterViewInit {
   private feathers = inject(FeathersClientService);
+  readonly operariosStore = inject(OperariosStore);
   @ViewChild('signatureCanvas', { static: true })
   signaturePadElement!: ElementRef;
   signaturePad: any;
@@ -99,6 +101,7 @@ export class ModalFirmarComponent implements AfterViewInit {
       a.present();
     } else {
       var dataURL = this.signaturePad.toDataURL();
+      const operario = await this.operariosStore.get(this.visita.voperarioid);
       const data = {
         id: this.visita.id,
         fecha: this.visita.vfecha,
@@ -108,7 +111,7 @@ export class ModalFirmarComponent implements AfterViewInit {
         nombreEmpresa: this.visita.vempresa,
         horaEntrada: this.visita.ventrada,
         horaSalida: this.visita.vsalida || '',
-        recibeVisita: this.visita.vdniderco,
+        recibeVisita: operario.tnombre || String(operario.tdni),
         firma: dataURL,
       };
       this.feathers.getServiceByPath('pdf-generator').create(data);

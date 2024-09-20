@@ -38,8 +38,6 @@ import {
 } from '@ionic/angular';
 import { BarcodeScanningModalComponent } from '../barcode-scanning-modal/barcode-scanning-modal.component';
 import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
-import { addIcons } from 'ionicons';
-import { scanOutline } from 'ionicons/icons';
 
 export type selectedOutputType = {
   epartida: string;
@@ -76,8 +74,6 @@ export class SelectPartidaComponent {
   modalController = inject(ModalController);
   alertController = inject(AlertController);
   loadingController = inject(LoadingController);
-
-  addIcons = addIcons({ scanOutline });
 
   @Output() selected = new EventEmitter<selectedOutputType>();
 

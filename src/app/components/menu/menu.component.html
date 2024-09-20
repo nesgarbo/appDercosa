@@ -1,0 +1,27 @@
+<ion-menu contentId="main-content" type="overlay">
+  <div>
+    <div class="user-behind">
+      <div
+        class="user-img"
+        [style.background-image]="'url(' + appStore.user()?.backgroundUrl + ')'"
+      ></div>
+      <div class="user-info">
+        <h4>{{ appStore.user()?.name }}</h4>
+        <h6>{{ appStore.user()?.email }}</h6>
+      </div>
+    </div>
+    <div style="flex: 1">
+      <ion-list>
+        <ion-menu-toggle autoHide="false">
+          @for(menuItem of menuItems(); track menuItem.header){
+          <app-menu-items
+            [header]="menuItem.header"
+            [items]="menuItem.items"
+            (onClickEvent)="logoutIfClicked($event)"
+          ></app-menu-items>
+          }
+        </ion-menu-toggle>
+      </ion-list>
+    </div>
+  </div>
+</ion-menu>

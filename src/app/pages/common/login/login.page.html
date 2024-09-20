@@ -11,15 +11,17 @@
         <ion-input
           label="Email"
           type="email"
-          labelPlacement="floating"
+          labelPlacement="stacked"
           formControlName="email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-input
           label="Password"
           type="password"
-          labelPlacement="floating"
-          formControlName="password"></ion-input>
+          labelPlacement="stacked"
+          formControlName="password">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
       </ion-item>
       <ion-button type="submit" expand="block" [disabled]="!loginForm.valid">
         Log in

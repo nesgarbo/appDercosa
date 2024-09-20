@@ -15,6 +15,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { ModalController } from '@ionic/angular';
 import {
   IonButton,
@@ -29,10 +30,13 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+  IonFab,
+  IonFabButton,
+  IonIcon, IonNote, IonGrid, IonRow, IonCol, IonText } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestResult } from 'feathers-dercosa';
 import { IonicSelectableComponent } from 'ionic-selectable';
+import { BarcodeScanningModalComponent } from 'src/app/components/barcode-scanning-modal/barcode-scanning-modal.component';
 import { SearchableSelectComponent } from 'src/app/components/searchable-select/searchable-select.component';
 import { BaseDetail } from 'src/app/shared/base-detail';
 import { ClientTestsStore } from 'src/app/signalStores/stores/clientTestsStore';
@@ -44,7 +48,10 @@ import { TestsStore } from 'src/app/signalStores/stores/testsStore';
   templateUrl: './test-result-detail.component.html',
   styleUrls: ['./test-result-detail.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonText, IonCol, IonRow, IonGrid, IonNote, 
+    IonIcon,
+    IonFabButton,
+    IonFab,
     IonFooter,
     IonTextarea,
     IonLabel,
@@ -68,38 +75,23 @@ import { TestsStore } from 'src/app/signalStores/stores/testsStore';
 export class TestResultDetailComponent extends BaseDetail<TestResult> {
   testResultsStore = inject(TestResultsStore);
   clientTestsStore = inject(ClientTestsStore);
-  testsStore = inject(TestsStore);
 
   modalCtrl = inject(ModalController);
 
   filterTestText = model<string>('');
   testOptions = computed(() => {
     const filterTestText = this.filterTestText();
-    const tests = this.testsStore
-      .entities()
-      .filter((t) => t?.name.toLowerCase().includes(filterTestText))
-      .map((t) => ({
-        ...t,
-        id: 'test' + t.id,
-      }));
     const clientTests = this.clientTestsStore
       .entities()
       .map((t) => ({
         ...t,
         name: t.test.name + ' de ' + t.client.nombrecli,
-        id: 'clientTest' + t.id,
       }))
       .filter((t) => t?.name.toLowerCase().includes(filterTestText));
     console.log(clientTests);
     return untracked(() => {
-      return [...clientTests, ...tests];
+      return clientTests;
     });
-  });
-
-  customId = model<string>('');
-
-  customIdEffect = effect(() => {
-    console.log('customIdEffect', this.customId());
   });
 
   async searchTests(event: {
@@ -114,7 +106,7 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
   }
 
   async getTest(id: number) {
-    return this.testsStore.get(id);
+    return this.clientTestsStore.get(id);
   }
 
   close() {
@@ -124,8 +116,6 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
   @Input({ required: true }) set data(data: TestResult) {
     console.log('Test', data);
     this.item = data;
-    this.customId.set(data.testType === 'clientTest' ? 'c' + data.testId : data.testId.toString());
-    console.log('CustomId', this.customId());
   }
 
   result?: number | undefined;
@@ -136,7 +126,12 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
       Validators.minLength(5),
       Validators.maxLength(5),
     ]),
-    measurementUnit: new FormControl<string | undefined>(undefined, [
+    pedido: new FormControl<number | undefined>(undefined, [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(5),
+    ]),
+    linea: new FormControl<number | undefined>(undefined, [
       Validators.required,
     ]),
     testId: new FormControl<number | undefined>(undefined, [
@@ -159,19 +154,35 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
     this.modalCtrl.dismiss();
   }
 
-  onTestChange(e: { component: IonicSelectableComponent; value: any }) {
-    const isClientTest = e.value.id.startsWith('c');
-    const testId = isClientTest
-      ? Number(e.value.id.substr(10))
-      : Number(e.value.id.substr(4));
-    const testType = isClientTest ? 'clientTest' : 'test';
-    const measurementUnit = isClientTest
-      ? e.value.test.measurementUnit
-      : e.value.measurementUnit;
+  async startScan(): Promise<void> {
+    const element = await this.modalCtrl.create({
+      component: BarcodeScanningModalComponent,
+      cssClass: 'barcode-scanning-modal',
+      showBackdrop: false,
+      componentProps: {
+        formats: [],
+        lensFacing: LensFacing.Back,
+      },
+    });
+    await element.present();
 
-    this.detailsForm.controls['testId'].setValue(testId);
-    this.detailsForm.controls['testType'].setValue(testType);
-    this.detailsForm.controls['measurementUnit'].setValue(measurementUnit);
-    console.log('CustomId', this.customId());
+    const { data } = await element.onDidDismiss();
+    console.log('Data: ', data);
+    if (!data || !data.barCode) {
+      return;
+    }
+    let partida = data.barCode.substring(0, 5);
+    const pedido =
+      data.barCode.substring(5, 10);
+    const linea = data.barCode.substring(10)
+    console.log('data', partida, pedido, linea);
+    this.detailsForm.patchValue({ partida });
+    this.detailsForm.patchValue({ pedido });
+    this.detailsForm.patchValue({ linea: Number(linea) });
+  }
+
+  onTestChange(e: { component: IonicSelectableComponent; value: any }) {
+    this.detailsForm.controls['testId'].setValue(e.value.id);
+    this.detailsForm.controls['testType'].setValue('clientTest');
   }
 }

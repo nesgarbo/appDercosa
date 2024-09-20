@@ -1,0 +1,17 @@
+{
+  "theme": "bootstrap5",
+  "properties": {
+    "$primary": "rgba(27,116,197,1)",
+    "$primary-text-color": "rgba(248,250,252,1)",
+    "$secondary": "rgba(27,116,197,1)",
+    "$secondary-text-color": "rgba(248,250,252,1)"
+  },
+  "components": [
+    "calendar",
+    "schedule",
+    "datepicker",
+    "daterangepicker",
+    "datetimepicker",
+    "timepicker"
+  ]
+}

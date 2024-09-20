@@ -3,14 +3,20 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Lista de Tests</ion-title>
+    <ion-title>Lista de Resultados</ion-title>
+    <ion-buttons slot="end">
+      <app-timezoned-datetimepicker
+        [(ngModel)]="dateFilter"
+        presentation="date"
+      ></app-timezoned-datetimepicker>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-list>
-    @for (test of testResultsStore.entities(); track $index) {
+    @for (testResult of dayTestResults(); track $index) {
     <ion-item-sliding>
-      <ion-item (click)="editItem(test)">
+      <ion-item (click)="editItem(testResult)">
         <ion-grid class="ctn-icons">
           <ion-row>
             <ion-col
@@ -19,31 +25,83 @@
                 padding-bottom: 0;
                 align-items: center;
                 display: flex;
+                flex-direction: column;
                 text-align: center;
-                justify-content: space-between;
                 margin-bottom: 0.5rem;
                 margin-top: 0.4rem;
               "
+              size="3"
             >
-              <ion-text style="display: block"> {{ testName(test.test) }}</ion-text>
+              <ion-text style="display: block">
+                {{ testResult.partida }}</ion-text
+              >
+              <ion-note style="display: block">{{
+                testResult.pedido
+              }}</ion-note>
+              <ion-note style="display: block">{{ testResult.linea }}</ion-note>
             </ion-col>
-            <ion-col style="padding-top: 0">
-              <div style="display: flex; flex-direction: column; align-items: end;">
-                @if(test.result){
-                <div style="display: flex; align-items: center; justify-content: center;">
-                  <ion-icon color="medium" name="caret-up-outline"></ion-icon>
-                  <ion-note color="medium" class="ion-text-wrap">{{
-                    test.result
-                  }}</ion-note>
-                </div>
-                }
+            <ion-col
+              style="
+                padding-top: 0;
+                padding-bottom: 0;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 0.5rem;
+                margin-top: 0.4rem;
+              "
+              size="6"
+            >
+              <ion-text style="display: block">
+                {{ testResult.test.client.nombrecli }}</ion-text
+              >
+              <ion-note style="display: block">{{
+                testResult.test.test.name
+              }}</ion-note>
+            </ion-col>
+            <ion-col
+              style="
+                padding-top: 0;
+                padding-bottom: 0;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 0.5rem;
+                margin-top: 0.4rem;
+              "
+              size="3"
+            >
+              @if(testResult.result){
+              <div
+                style="
+                  width: 70%;
+                  height: 70%;
+                  align-items: center;
+                  justify-content: center;
+                  display: flex;
+                "
+                [ngStyle]="{
+                  'background-color':
+                    testResult.result > testResult.test.clientMax ||
+                    testResult.result < testResult.test.clientMin
+                      ? 'red'
+                      : 'green'
+                }"
+              >
+                <ion-note color="white" class="ion-text-wrap">{{
+                  testResult.result
+                }}</ion-note>
               </div>
+              }
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
       <ion-item-options>
-        <ion-item-option color="danger" (click)="deleteItem(test)"
+        <ion-item-option color="danger" (click)="deleteItem(testResult)"
           >Eliminar</ion-item-option
         >
       </ion-item-options>

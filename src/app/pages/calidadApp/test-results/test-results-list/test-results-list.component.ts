@@ -1,10 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, computed, inject, model } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import {
+  IonButton,
   IonButtons,
+  IonChip,
+  IonCol,
   IonContent,
   IonFab,
   IonFabButton,
+  IonGrid,
   IonHeader,
   IonIcon,
   IonItem,
@@ -15,18 +21,16 @@ import {
   IonList,
   IonMenuButton,
   IonModal,
+  IonNote,
+  IonRow,
+  IonText,
   IonTitle,
   IonToolbar,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonNote,
-  IonText,
-  IonChip,
+  IonFooter,
 } from '@ionic/angular/standalone';
-import { ClientTest, Test, TestResult } from 'feathers-dercosa';
+import { ClientTest, TestResult } from 'feathers-dercosa';
+import { TimezonedDatetimepickerComponent } from 'src/app/components/timezoned-datetimepicker/timezoned-datetimepicker.component';
 import { TestResultsStore } from 'src/app/signalStores/stores/testResultsStore';
-import { TestsStore } from 'src/app/signalStores/stores/testsStore';
 
 @Component({
   selector: 'app-test-results',
@@ -34,6 +38,8 @@ import { TestsStore } from 'src/app/signalStores/stores/testsStore';
   styleUrls: ['./test-results-list.component.scss'],
   standalone: true,
   imports: [
+    IonFooter,
+    IonButton,
     IonChip,
     IonText,
     IonNote,
@@ -57,15 +63,15 @@ import { TestsStore } from 'src/app/signalStores/stores/testsStore';
     IonHeader,
     IonMenuButton,
     RouterOutlet,
+    CommonModule,
+    FormsModule,
+    TimezonedDatetimepickerComponent,
   ],
 })
 export class TestResultsComponent {
   readonly testResultsStore = inject(TestResultsStore);
 
-  testName = (test: Test | ClientTest) =>
-    (test as Test).name !== undefined
-      ? (test as Test).name
-      : (test as ClientTest).test.name;
+  testName = (test: ClientTest) => test.test.name;
 
   route = this.activatedRoute;
 
@@ -75,12 +81,28 @@ export class TestResultsComponent {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
+  dateFilter = model<Date>(new Date());
+  dayTestResults = computed(() => {
+    const date = new Date(this.dateFilter());
+    return this.testResultsStore.entities().filter((testResult) => {
+      if (!testResult.createdAt) return false;
+      const testDate = new Date(testResult.createdAt);
+      return (
+        testDate.getDate() === date.getDate() &&
+        testDate.getMonth() === date.getMonth() &&
+        testDate.getFullYear() === date.getFullYear()
+      );
+    });
+  });
+
   editItem(item: TestResult) {
     this.router.navigate([item.id], {
       state: { item: item },
       relativeTo: this.route,
     });
   }
+
+  changeDate() {}
 
   deleteItem(resSt: TestResult) {
     const id = resSt.id;

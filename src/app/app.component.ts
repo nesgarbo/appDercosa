@@ -1,30 +1,10 @@
-import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  computed,
-  inject,
-  viewChild,
-} from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import {
-  IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonRouterOutlet,
-  IonSplitPane,
-} from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   addOutline,
+  beakerOutline,
   caretDownOutline,
   caretUpOutline,
   chatboxEllipsesOutline,
@@ -32,61 +12,29 @@ import {
   chatbubblesOutline,
   checkboxOutline,
   checkmarkCircle,
+  createSharp,
   documentOutline,
+  flaskOutline,
   homeOutline,
   listOutline,
   logOutOutline,
   radioButtonOff,
+  scanOutline,
   searchOutline,
+  todayOutline,
 } from 'ionicons/icons';
-import { AppStore } from './signalStores/stores/appStore';
+import { MenuComponent } from './components/menu/menu.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    IonApp,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonNote,
-    IonMenuToggle,
-    IonItem,
-    IonIcon,
-    IonLabel,
-    IonRouterOutlet,
-  ],
+  imports: [IonApp, IonRouterOutlet, MenuComponent],
   providers: [ModalController],
 })
 export class AppComponent {
-  isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  menu = viewChild(IonMenu);
-
-  readonly appStore = inject(AppStore);
-
-  homeUrl = computed(() => {
-    return this.appStore.user()?.appHomeUrl
-      ? [this.appStore.user()?.appHomeUrl]
-      : ['/private-routes/visitas/visitas'];
-  });
-
-  constructor(private cdr: ChangeDetectorRef, private router: Router) {
-    const darkModeMediaQuery = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    );
-    this.isDarkTheme = darkModeMediaQuery.matches;
-    darkModeMediaQuery.addEventListener('change', (event) => {
-      this.isDarkTheme = event.matches;
-      this.cdr.detectChanges();
-    });
+  constructor() {
     addIcons({
       homeOutline,
       logOutOutline,
@@ -102,18 +50,11 @@ export class AppComponent {
       caretUpOutline,
       radioButtonOff,
       checkmarkCircle,
+      createSharp,
+      scanOutline,
+      beakerOutline,
+      flaskOutline,
+      todayOutline,
     });
-  }
-
-  user = this.appStore.user;
-
-  logout() {
-    this.appStore.logout();
-    this.router.navigate(['/login']);
-  }
-
-  closeMenu() {
-    console.log('closeMenu');
-    this.menu()?.close();
   }
 }

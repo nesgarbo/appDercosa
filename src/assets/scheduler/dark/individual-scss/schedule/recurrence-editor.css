@@ -1,0 +1,563 @@
+/* Error: Undefined mixin.
+ *     ,
+ * 16  | / @include export-module('recurrence-editor-layout') {
+ * 17  | | 
+ * 18  | |   /*! Recurrence-Editor component layout *∕
+ * 19  | |   .e-recurrenceeditor {
+ * 20  | |     .e-editor {
+ * 21  | |       display: flex;
+ * 22  | |       flex-flow: row wrap;
+ * 23  | |       margin: 0 auto;
+ * 24  | |       max-width: 1240px;
+ * 25  | |     }
+ * 26  | | 
+ * 27  | |     .e-recurrence-table {
+ * 28  | |       table-layout: fixed;
+ * 29  | |       width: 100%;
+ * 30  | | 
+ * 31  | |       &.e-repeat-content-wrapper td:last-child {
+ * 32  | |         width: 27%;
+ * 33  | |       }
+ * 34  | | 
+ * 35  | |       &.e-month-expand-wrapper td:first-child {
+ * 36  | |         width: 24%;
+ * 37  | |       }
+ * 38  | | 
+ * 39  | |       .e-repeat-content {
+ * 40  | |         display: inline-block;
+ * 41  | |         font-weight: normal;
+ * 42  | |         padding: 18px 0 0 8px;
+ * 43  | |       }
+ * 44  | | 
+ * 45  | |       .e-input-wrapper {
+ * 46  | |         float: none;
+ * 47  | |         width: 100%;
+ * 48  | |       }
+ * 49  | | 
+ * 50  | |       .e-week-position {
+ * 51  | |         min-width: $recurrence-week-position-min-width;
+ * 52  | |         position: relative;
+ * 53  | |         right: 20px;
+ * 54  | |       }
+ * 55  | | 
+ * 56  | |       .e-day-position {
+ * 57  | |         min-width: 120px;
+ * 58  | |       }
+ * 59  | | 
+ * 60  | |       .e-monthday-element {
+ * 61  | |         padding-left: 10px;
+ * 62  | |       }
+ * 63  | |     }
+ * 64  | | 
+ * 65  | |     .e-input-wrapper-side.e-form-left {
+ * 66  | |       padding: $recurrence-left-padding;
+ * 67  | |     }
+ * 68  | | 
+ * 69  | |     .e-form-left {
+ * 70  | |       padding: 0 8px 16px 0;
+ * 71  | |     }
+ * 72  | | 
+ * 73  | |     .e-form-right,
+ * 74  | |     .e-input-wrapper-side.e-form-right {
+ * 75  | |       padding: 0 0 10px;
+ * 76  | |     }
+ * 77  | | 
+ * 78  | |     .e-input-wrapper {
+ * 79  | |       float: left;
+ * 80  | |       width: 50%;
+ * 81  | | 
+ * 82  | |       div {
+ * 83  | |         margin-bottom: 2.5%;
+ * 84  | |       }
+ * 85  | |     }
+ * 86  | | 
+ * 87  | |     .e-input-wrapper.e-end-on-date,
+ * 88  | |     .e-input-wrapper.e-end-on-count {
+ * 89  | |       padding-right: 0;
+ * 90  | |     }
+ * 91  | | 
+ * 92  | |     &.e-rtl {
+ * 93  | |       .e-end-on > div,
+ * 94  | |       .e-month-expander > div > div {
+ * 95  | |         float: right;
+ * 96  | |       }
+ * 97  | | 
+ * 98  | |       .e-form-left,
+ * 99  | |       .e-input-wrapper-side.e-form-left {
+ * 100 | |         padding: 0 0 10px 8px;
+ * 101 | |       }
+ * 102 | | 
+ * 103 | |       .e-form-right,
+ * 104 | |       .e-input-wrapper-side.e-form-right {
+ * 105 | |         padding: 0 8px 10px 0;
+ * 106 | |       }
+ * 107 | | 
+ * 108 | |       .e-recurrence-table .e-monthday-element {
+ * 109 | |         position: relative;
+ * 110 | |         right: 10px;
+ * 111 | |       }
+ * 112 | | 
+ * 113 | |       .e-week-position {
+ * 114 | |         left: 20px;
+ * 115 | |         right: 0;
+ * 116 | |       }
+ * 117 | | 
+ * 118 | |       .e-input-wrapper-side.e-end-on .e-end-on-label,
+ * 119 | |       .e-input-wrapper-side.e-non-week > .e-month-expander-label {
+ * 120 | |         padding-right: 0;
+ * 121 | |       }
+ * 122 | | 
+ * 123 | |       .e-end-on-label {
+ * 124 | |         margin-bottom: 5px;
+ * 125 | |       }
+ * 126 | | 
+ * 127 | |       .e-input-wrapper-side.e-end-on .e-end-on-left {
+ * 128 | |         padding: 0 0 0 8px;
+ * 129 | |       }
+ * 130 | | 
+ * 131 | |       .e-input-wrapper.e-end-on-date,
+ * 132 | |       .e-input-wrapper.e-end-on-count {
+ * 133 | |         padding: 0 8px 0 0;
+ * 134 | |       }
+ * 135 | | 
+ * 136 | |       .e-recurrenceeditor {
+ * 137 | |         .e-recurrence-table {
+ * 138 | |           &.e-month-expand-wrapper td:first-child {
+ * 139 | |             width: 30px;
+ * 140 | |           }
+ * 141 | |         }
+ * 142 | |       }
+ * 143 | |     }
+ * 144 | | 
+ * 145 | |     .e-days {
+ * 146 | |       .e-week-expander-label {
+ * 147 | |         font-size: $recurrence-label-font-nrml-size;
+ * 148 | |         font-weight: $recurrence-label-font-weight;
+ * 149 | |         margin-bottom: 8px;
+ * 150 | |       }
+ * 151 | | 
+ * 152 | |       button {
+ * 153 | |         border-radius: 50%;
+ * 154 | |         flex-flow: row wrap;
+ * 155 | |         height: 35px;
+ * 156 | |         margin: 0 8px 10px;
+ * 157 | |         width: 35px;
+ * 158 | |       }
+ * 159 | |     }
+ * 160 | | 
+ * 161 | |     .e-hide-recurrence-element {
+ * 162 | |       display: none;
+ * 163 | |     }
+ * 164 | | 
+ * 165 | |     .e-half-space {
+ * 166 | |       width: 20%;
+ * 167 | |     }
+ * 168 | | 
+ * 169 | |     .e-year-expander {
+ * 170 | |       margin-bottom: 11px;
+ * 171 | |     }
+ * 172 | | 
+ * 173 | |     .e-month-expander tr:first-child .e-input-wrapper {
+ * 174 | |       padding-bottom: 11px;
+ * 175 | |     }
+ * 176 | | 
+ * 177 | |     .e-month-expander-checkbox-wrapper.e-input-wrapper {
+ * 178 | |       padding-top: 3px;
+ * 179 | | 
+ * 180 | |       .e-month-type .e-label {
+ * 181 | |         display: none;
+ * 182 | |       }
+ * 183 | |     }
+ * 184 | | 
+ * 185 | |     .e-input-wrapper-side {
+ * 186 | |       float: left;
+ * 187 | |       padding: 16px 20px 0;
+ * 188 | |       width: 50%;
+ * 189 | | 
+ * 190 | |       &.e-end-on {
+ * 191 | | 
+ * 192 | |         .e-end-on-label {
+ * 193 | |           float: none;
+ * 194 | |           font-size: $recurrence-label-font-nrml-size;
+ * 195 | |           font-weight: $recurrence-label-font-weight;
+ * 196 | |           margin-bottom: $recurrence-month-label-bottom;
+ * 197 | |           padding-right: 16px;
+ * 198 | |         }
+ * 199 | | 
+ * 200 | |         .e-end-on-left {
+ * 201 | |           padding-right: 16px;
+ * 202 | |         }
+ * 203 | |       }
+ * 204 | | 
+ * 205 | |       &.e-non-week > .e-input-wrapper {
+ * 206 | |         margin: 0;
+ * 207 | |       }
+ * 208 | | 
+ * 209 | |       &.e-non-week > .e-month-expander-label {
+ * 210 | |         font-size: $recurrence-label-font-nrml-size;
+ * 211 | |         font-weight: $recurrence-label-font-weight;
+ * 212 | |         margin-bottom: $recurrence-month-label-bottom;
+ * 213 | |         padding-right: 16px;
+ * 214 | |       }
+ * 215 | |     }
+ * 216 | | 
+ * 217 | |     .e-input-wrapper-side .e-days .e-form-left {
+ * 218 | |       padding-bottom: 6px;
+ * 219 | |     }
+ * 220 | | 
+ * 221 | |     .e-input-wrapper-side .e-non-week .e-form-left {
+ * 222 | |       padding-bottom: 12px;
+ * 223 | |     }
+ * 224 | | 
+ * 225 | |     .e-input-wrapper-side.e-form-right {
+ * 226 | |       margin-bottom: 11px;
+ * 227 | |     }
+ * 228 | |   }
+ * 229 | | 
+ * 230 | |   .e-bigger {
+ * 231 | |     .e-recurrenceeditor {
+ * 232 | |       padding: 0;
+ * 233 | | 
+ * 234 | |       .e-input-wrapper-side.e-form-left {
+ * 235 | |         padding: 0 12px 11px 0;
+ * 236 | |       }
+ * 237 | | 
+ * 238 | |       .e-form-left {
+ * 239 | |         padding: 0 12px 14px 0;
+ * 240 | |       }
+ * 241 | | 
+ * 242 | |       .e-form-right,
+ * 243 | |       .e-input-wrapper-side.e-form-right {
+ * 244 | |         padding: 0 0 10px;
+ * 245 | |       }
+ * 246 | | 
+ * 247 | |       .e-input-wrapper-side .e-days .e-form-left {
+ * 248 | |         padding-bottom: 6px;
+ * 249 | |       }
+ * 250 | | 
+ * 251 | |       .e-recurrence-table .e-monthday-element {
+ * 252 | |         padding-left: 70px;
+ * 253 | |       }
+ * 254 | | 
+ * 255 | |       .e-week-position {
+ * 256 | |         min-width: $recurrence-week-position-bgr-min-width;
+ * 257 | |         right: 0;
+ * 258 | |       }
+ * 259 | | 
+ * 260 | |       .e-day-position {
+ * 261 | |         min-width: $recurrence-day-position-bgr-min-width;
+ * 262 | |         padding-left: $recurrence-day-position-bgr-padding-left;
+ * 263 | |       }
+ * 264 | | 
+ * 265 | |       .e-input-wrapper-side.e-non-week > .e-month-expander-label {
+ * 266 | |         font-size: $recurrence-label-font-bgr-size;
+ * 267 | |         margin-bottom: 0;
+ * 268 | |       }
+ * 269 | | 
+ * 270 | |       .e-input-wrapper-side.e-end-on .e-end-on-left {
+ * 271 | |         padding-right: $recurrence-end-bgr-padding-right;
+ * 272 | |       }
+ * 273 | | 
+ * 274 | |       .e-end-on-label {
+ * 275 | |         margin-bottom: 0;
+ * 276 | |       }
+ * 277 | | 
+ * 278 | |       .e-days .e-week-expander-label {
+ * 279 | |         font-size: $recurrence-label-font-bgr-size;
+ * 280 | |         margin-bottom: 8px;
+ * 281 | |       }
+ * 282 | | 
+ * 283 | |       .e-input-wrapper-side .e-non-week .e-form-left {
+ * 284 | |         padding-bottom: 12px;
+ * 285 | |       }
+ * 286 | | 
+ * 287 | |       .e-input-wrapper-side.e-end-on .e-end-on-label {
+ * 288 | |         font-size: $recurrence-label-font-bgr-size;
+ * 289 | |         margin-bottom: 1px;
+ * 290 | |       }
+ * 291 | | 
+ * 292 | |       .e-month-expander tr:first-child .e-input-wrapper,
+ * 293 | |       .e-year-expander,
+ * 294 | |       .e-input-wrapper-side.e-form-right {
+ * 295 | |         margin-bottom: 11px;
+ * 296 | |       }
+ * 297 | | 
+ * 298 | |       .e-recurrence-table {
+ * 299 | |         &.e-month-expand-wrapper td:first-child {
+ * 300 | |           width: 30px;
+ * 301 | |         }
+ * 302 | |       }
+ * 303 | | 
+ * 304 | |       .e-days {
+ * 305 | |         button {
+ * 306 | |           height: 40px;
+ * 307 | |           width: 40px;
+ * 308 | |         }
+ * 309 | |       }
+ * 310 | | 
+ * 311 | |       &.e-rtl {
+ * 312 | | 
+ * 313 | |         .e-form-left,
+ * 314 | |         .e-input-wrapper-side.e-form-left {
+ * 315 | |           padding: 0 0 10px 12px;
+ * 316 | |         }
+ * 317 | | 
+ * 318 | |         .e-form-right,
+ * 319 | |         .e-input-wrapper-side.e-form-right {
+ * 320 | |           padding: 0 12px 10px 0;
+ * 321 | |         }
+ * 322 | | 
+ * 323 | |         .e-recurrence-table .e-monthday-element,
+ * 324 | |         .e-recurrence-table .e-day-position {
+ * 325 | |           padding: 0 64px 0 0;
+ * 326 | |         }
+ * 327 | | 
+ * 328 | |         .e-input-wrapper-side.e-end-on .e-end-on-label,
+ * 329 | |         .e-input-wrapper-side.e-non-week > .e-month-expander-label {
+ * 330 | |           padding-right: 0;
+ * 331 | |         }
+ * 332 | | 
+ * 333 | |         .e-end-on-label {
+ * 334 | |           margin-bottom: 5px;
+ * 335 | |         }
+ * 336 | | 
+ * 337 | |         .e-input-wrapper-side.e-end-on .e-end-on-left {
+ * 338 | |           padding: 0 0 0 12px;
+ * 339 | |         }
+ * 340 | | 
+ * 341 | |         .e-input-wrapper.e-end-on-date,
+ * 342 | |         .e-input-wrapper.e-end-on-count {
+ * 343 | |           padding: 0 12px 0 0;
+ * 344 | |         }
+ * 345 | | 
+ * 346 | |         .e-recurrence-table .e-week-position {
+ * 347 | |           left: 0;
+ * 348 | |         }
+ * 349 | |       }
+ * 350 | |     }
+ * 351 | |   }
+ * 352 | | 
+ * 353 | |   .e-device {
+ * 354 | |     .e-recurrenceeditor {
+ * 355 | |       .e-recurrence-table {
+ * 356 | |         &.e-repeat-content-wrapper td:last-child {
+ * 357 | |           width: 25%;
+ * 358 | |         }
+ * 359 | | 
+ * 360 | |         &.e-month-expand-wrapper td:first-child {
+ * 361 | |           width: 20%;
+ * 362 | |         }
+ * 363 | |       }
+ * 364 | | 
+ * 365 | |       .e-week-expander-label {
+ * 366 | |         margin-bottom: 6px;
+ * 367 | |       }
+ * 368 | | 
+ * 369 | |       .e-month-expander-label {
+ * 370 | |         font-size: 12px;
+ * 371 | |         margin-bottom: 5px;
+ * 372 | |       }
+ * 373 | | 
+ * 374 | |       .e-footer-content {
+ * 375 | |         padding: 12px;
+ * 376 | |       }
+ * 377 | | 
+ * 378 | |       .e-form-left,
+ * 379 | |       .e-input-wrapper-side.e-form-left {
+ * 380 | |         padding: 0 3px 10px 0;
+ * 381 | |       }
+ * 382 | | 
+ * 383 | |       .e-form-right,
+ * 384 | |       .e-input-wrapper-side.e-form-right {
+ * 385 | |         padding: 0 0 10px 3px;
+ * 386 | |       }
+ * 387 | | 
+ * 388 | |       .e-input-wrapper.e-end-on-date,
+ * 389 | |       .e-input-wrapper.e-end-on-count {
+ * 390 | |         padding: 0 0 0 10px;
+ * 391 | |       }
+ * 392 | | 
+ * 393 | |       .e-input-wrapper-side.e-end-on .e-end-on-left {
+ * 394 | |         padding-right: 10px;
+ * 395 | |       }
+ * 396 | | 
+ * 397 | |       &.e-end-on {
+ * 398 | |         padding-right: 0;
+ * 399 | | 
+ * 400 | |         .e-end-on-label {
+ * 401 | |           float: none;
+ * 402 | |           font-size: 12px;
+ * 403 | |           font-weight: $recurrence-label-font-weight;
+ * 404 | |           margin-bottom: $recurrence-label-bottom;
+ * 405 | |         }
+ * 406 | | 
+ * 407 | |         .e-end-on-left {
+ * 408 | |           padding-right: 0;
+ * 409 | |         }
+ * 410 | |       }
+ * 411 | | 
+ * 412 | |       .e-recurrence-table .e-monthday-element,
+ * 413 | |       .e-recurrence-table .e-day-position {
+ * 414 | |         padding-left: 20px;
+ * 415 | |       }
+ * 416 | | 
+ * 417 | |       .e-recurrence-table .e-monthday-element {
+ * 418 | |         margin-left: 20px;
+ * 419 | |       }
+ * 420 | | 
+ * 421 | |       .e-week-position {
+ * 422 | |         right: 0;
+ * 423 | |         padding-right: 10px;
+ * 424 | |       }
+ * 425 | | 
+ * 426 | |       &.e-rtl {
+ * 427 | |         .e-input-wrapper-side.e-end-on .e-end-on-left {
+ * 428 | |           padding-right: 0;
+ * 429 | |         }
+ * 430 | | 
+ * 431 | |         .e-input-wrapper.e-end-on-date,
+ * 432 | |         .e-input-wrapper.e-end-on-count {
+ * 433 | |           padding: 0 10px 0 0;
+ * 434 | |         }
+ * 435 | | 
+ * 436 | |         .e-recurrence-table .e-monthday-element {
+ * 437 | |           padding: 0 20px 0 0;
+ * 438 | |         }
+ * 439 | | 
+ * 440 | |         .e-recurrence-table .e-day-position {
+ * 441 | |           padding: 0 50px 0 0;
+ * 442 | |         }
+ * 443 | | 
+ * 444 | |         .e-week-position {
+ * 445 | |           left: 0;
+ * 446 | |         }
+ * 447 | |       }
+ * 448 | |     }
+ * 449 | | 
+ * 450 | |     &.e-recurrence-dialog {
+ * 451 | |       .e-dlg-header-content {
+ * 452 | |         background: none;
+ * 453 | |         box-shadow: none;
+ * 454 | |         padding-bottom: 10px;
+ * 455 | |       }
+ * 456 | | 
+ * 457 | |       .e-editor {
+ * 458 | |         .e-input-wrapper-side.e-end-on .e-end-on-label {
+ * 459 | |           margin-bottom: $recurrence-label-bottom;
+ * 460 | |         }
+ * 461 | |       }
+ * 462 | | 
+ * 463 | |       .e-footer-content {
+ * 464 | |         padding: 16px 8px;
+ * 465 | |       }
+ * 466 | |     }
+ * 467 | |   }
+ * 468 | | 
+ * 469 | |   @media (max-width: 1024px) {
+ * 470 | |     .e-recurrenceeditor {
+ * 471 | | 
+ * 472 | |       .e-editor {
+ * 473 | | 
+ * 474 | |         .e-input-wrapper-side.e-end-on {
+ * 475 | |           width: 100%;
+ * 476 | |         }
+ * 477 | | 
+ * 478 | |         .e-input-wrapper-side.e-non-week {
+ * 479 | |           width: 65%;
+ * 480 | |         }
+ * 481 | |       }
+ * 482 | |     }
+ * 483 | |   }
+ * 484 | | 
+ * 485 | |   @media (max-width: 580px) {
+ * 486 | |     .e-recurrenceeditor {
+ * 487 | |       margin-left: auto;
+ * 488 | |       margin-right: auto;
+ * 489 | |       width: 100%;
+ * 490 | | 
+ * 491 | |       .e-editor {
+ * 492 | |         flex-direction: column;
+ * 493 | | 
+ * 494 | |         >.e-input-wrapper.e-form-left {
+ * 495 | |           margin-top: 0;
+ * 496 | |         }
+ * 497 | | 
+ * 498 | |         .e-input-wrapper-side.e-non-week > .e-month-expander-label,
+ * 499 | |         .e-input-wrapper-side.e-end-on .e-end-on-label {
+ * 500 | |           margin-bottom: $recurrence-month-label-bottom;
+ * 501 | |         }
+ * 502 | | 
+ * 503 | |         > div {
+ * 504 | |           margin-top: 20px;
+ * 505 | |         }
+ * 506 | | 
+ * 507 | |         > .e-input-wrapper {
+ * 508 | |           width: 100%;
+ * 509 | |         }
+ * 510 | | 
+ * 511 | |         .e-input-wrapper-side.e-end-on {
+ * 512 | |           width: 100%;
+ * 513 | | 
+ * 514 | |           .e-input-wrapper {
+ * 515 | |             width: 50%;
+ * 516 | |           }
+ * 517 | |         }
+ * 518 | | 
+ * 519 | |         .e-form-left,
+ * 520 | |         .e-input-wrapper-side.e-form-left {
+ * 521 | |           padding: 0 0 10px;
+ * 522 | |         }
+ * 523 | | 
+ * 524 | |         .e-input-wrapper.e-end-on-date,
+ * 525 | |         .e-input-wrapper.e-end-on-count {
+ * 526 | |           padding: 0 0 0 10px;
+ * 527 | |         }
+ * 528 | | 
+ * 529 | |         .e-input-wrapper-side.e-end-on .e-end-on-left {
+ * 530 | |           padding-right: 10px;
+ * 531 | |         }
+ * 532 | | 
+ * 533 | |         .e-form-right,
+ * 534 | |         .e-input-wrapper-side.e-form-right {
+ * 535 | |           padding-left: 0;
+ * 536 | |         }
+ * 537 | | 
+ * 538 | |         .e-input-wrapper-side.e-days {
+ * 539 | |           width: 100%;
+ * 540 | |         }
+ * 541 | | 
+ * 542 | |         .e-input-wrapper-side.e-non-week {
+ * 543 | |           width: 65%;
+ * 544 | |         }
+ * 545 | | 
+ * 546 | |         .e-recurrence-table .e-day-position {
+ * 547 | |           padding-left: 50px;
+ * 548 | |         }
+ * 549 | |       }
+ * 550 | | 
+ * 551 | |       &.e-rtl {
+ * 552 | |         .e-input-wrapper-side.e-end-on .e-end-on-left {
+ * 553 | |           padding-right: 0;
+ * 554 | |         }
+ * 555 | | 
+ * 556 | |         .e-input-wrapper.e-end-on-date,
+ * 557 | |         .e-input-wrapper.e-end-on-count {
+ * 558 | |           padding: 0 10px 0 0;
+ * 559 | |         }
+ * 560 | |       }
+ * 561 | |     }
+ * 562 | |   }
+ * 563 | \ }
+ *     '
+ *   src/assets/scheduler/dark/individual-scss/schedule/recurrence-editor.scss 16:1  root stylesheet */
+
+body::before {
+  font-family: 'Source Code Pro', 'SF Mono', Monaco, Inconsolata, 'Fira Mono',
+    'Droid Sans Mono', monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined mixin.\a     \2577 \a 16  \2502  \250c  @include export-module('recurrence-editor-layout') {\a 17  \2502  \2502  \a 18  \2502  \2502    /*! Recurrence-Editor component layout */\a 19  \2502  \2502    .e-recurrenceeditor {\a 20  \2502  \2502      .e-editor {\a 21  \2502  \2502        display: flex;\a 22  \2502  \2502        flex-flow: row wrap;\a 23  \2502  \2502        margin: 0 auto;\a 24  \2502  \2502        max-width: 1240px;\a 25  \2502  \2502      }\a 26  \2502  \2502  \a 27  \2502  \2502      .e-recurrence-table {\a 28  \2502  \2502        table-layout: fixed;\a 29  \2502  \2502        width: 100%;\a 30  \2502  \2502  \a 31  \2502  \2502        &.e-repeat-content-wrapper td:last-child {\a 32  \2502  \2502          width: 27%;\a 33  \2502  \2502        }\a 34  \2502  \2502  \a 35  \2502  \2502        &.e-month-expand-wrapper td:first-child {\a 36  \2502  \2502          width: 24%;\a 37  \2502  \2502        }\a 38  \2502  \2502  \a 39  \2502  \2502        .e-repeat-content {\a 40  \2502  \2502          display: inline-block;\a 41  \2502  \2502          font-weight: normal;\a 42  \2502  \2502          padding: 18px 0 0 8px;\a 43  \2502  \2502        }\a 44  \2502  \2502  \a 45  \2502  \2502        .e-input-wrapper {\a 46  \2502  \2502          float: none;\a 47  \2502  \2502          width: 100%;\a 48  \2502  \2502        }\a 49  \2502  \2502  \a 50  \2502  \2502        .e-week-position {\a 51  \2502  \2502          min-width: $recurrence-week-position-min-width;\a 52  \2502  \2502          position: relative;\a 53  \2502  \2502          right: 20px;\a 54  \2502  \2502        }\a 55  \2502  \2502  \a 56  \2502  \2502        .e-day-position {\a 57  \2502  \2502          min-width: 120px;\a 58  \2502  \2502        }\a 59  \2502  \2502  \a 60  \2502  \2502        .e-monthday-element {\a 61  \2502  \2502          padding-left: 10px;\a 62  \2502  \2502        }\a 63  \2502  \2502      }\a 64  \2502  \2502  \a 65  \2502  \2502      .e-input-wrapper-side.e-form-left {\a 66  \2502  \2502        padding: $recurrence-left-padding;\a 67  \2502  \2502      }\a 68  \2502  \2502  \a 69  \2502  \2502      .e-form-left {\a 70  \2502  \2502        padding: 0 8px 16px 0;\a 71  \2502  \2502      }\a 72  \2502  \2502  \a 73  \2502  \2502      .e-form-right,\a 74  \2502  \2502      .e-input-wrapper-side.e-form-right {\a 75  \2502  \2502        padding: 0 0 10px;\a 76  \2502  \2502      }\a 77  \2502  \2502  \a 78  \2502  \2502      .e-input-wrapper {\a 79  \2502  \2502        float: left;\a 80  \2502  \2502        width: 50%;\a 81  \2502  \2502  \a 82  \2502  \2502        div {\a 83  \2502  \2502          margin-bottom: 2.5%;\a 84  \2502  \2502        }\a 85  \2502  \2502      }\a 86  \2502  \2502  \a 87  \2502  \2502      .e-input-wrapper.e-end-on-date,\a 88  \2502  \2502      .e-input-wrapper.e-end-on-count {\a 89  \2502  \2502        padding-right: 0;\a 90  \2502  \2502      }\a 91  \2502  \2502  \a 92  \2502  \2502      &.e-rtl {\a 93  \2502  \2502        .e-end-on > div,\a 94  \2502  \2502        .e-month-expander > div > div {\a 95  \2502  \2502          float: right;\a 96  \2502  \2502        }\a 97  \2502  \2502  \a 98  \2502  \2502        .e-form-left,\a 99  \2502  \2502        .e-input-wrapper-side.e-form-left {\a 100 \2502  \2502          padding: 0 0 10px 8px;\a 101 \2502  \2502        }\a 102 \2502  \2502  \a 103 \2502  \2502        .e-form-right,\a 104 \2502  \2502        .e-input-wrapper-side.e-form-right {\a 105 \2502  \2502          padding: 0 8px 10px 0;\a 106 \2502  \2502        }\a 107 \2502  \2502  \a 108 \2502  \2502        .e-recurrence-table .e-monthday-element {\a 109 \2502  \2502          position: relative;\a 110 \2502  \2502          right: 10px;\a 111 \2502  \2502        }\a 112 \2502  \2502  \a 113 \2502  \2502        .e-week-position {\a 114 \2502  \2502          left: 20px;\a 115 \2502  \2502          right: 0;\a 116 \2502  \2502        }\a 117 \2502  \2502  \a 118 \2502  \2502        .e-input-wrapper-side.e-end-on .e-end-on-label,\a 119 \2502  \2502        .e-input-wrapper-side.e-non-week > .e-month-expander-label {\a 120 \2502  \2502          padding-right: 0;\a 121 \2502  \2502        }\a 122 \2502  \2502  \a 123 \2502  \2502        .e-end-on-label {\a 124 \2502  \2502          margin-bottom: 5px;\a 125 \2502  \2502        }\a 126 \2502  \2502  \a 127 \2502  \2502        .e-input-wrapper-side.e-end-on .e-end-on-left {\a 128 \2502  \2502          padding: 0 0 0 8px;\a 129 \2502  \2502        }\a 130 \2502  \2502  \a 131 \2502  \2502        .e-input-wrapper.e-end-on-date,\a 132 \2502  \2502        .e-input-wrapper.e-end-on-count {\a 133 \2502  \2502          padding: 0 8px 0 0;\a 134 \2502  \2502        }\a 135 \2502  \2502  \a 136 \2502  \2502        .e-recurrenceeditor {\a 137 \2502  \2502          .e-recurrence-table {\a 138 \2502  \2502            &.e-month-expand-wrapper td:first-child {\a 139 \2502  \2502              width: 30px;\a 140 \2502  \2502            }\a 141 \2502  \2502          }\a 142 \2502  \2502        }\a 143 \2502  \2502      }\a 144 \2502  \2502  \a 145 \2502  \2502      .e-days {\a 146 \2502  \2502        .e-week-expander-label {\a 147 \2502  \2502          font-size: $recurrence-label-font-nrml-size;\a 148 \2502  \2502          font-weight: $recurrence-label-font-weight;\a 149 \2502  \2502          margin-bottom: 8px;\a 150 \2502  \2502        }\a 151 \2502  \2502  \a 152 \2502  \2502        button {\a 153 \2502  \2502          border-radius: 50%;\a 154 \2502  \2502          flex-flow: row wrap;\a 155 \2502  \2502          height: 35px;\a 156 \2502  \2502          margin: 0 8px 10px;\a 157 \2502  \2502          width: 35px;\a 158 \2502  \2502        }\a 159 \2502  \2502      }\a 160 \2502  \2502  \a 161 \2502  \2502      .e-hide-recurrence-element {\a 162 \2502  \2502        display: none;\a 163 \2502  \2502      }\a 164 \2502  \2502  \a 165 \2502  \2502      .e-half-space {\a 166 \2502  \2502        width: 20%;\a 167 \2502  \2502      }\a 168 \2502  \2502  \a 169 \2502  \2502      .e-year-expander {\a 170 \2502  \2502        margin-bottom: 11px;\a 171 \2502  \2502      }\a 172 \2502  \2502  \a 173 \2502  \2502      .e-month-expander tr:first-child .e-input-wrapper {\a 174 \2502  \2502        padding-bottom: 11px;\a 175 \2502  \2502      }\a 176 \2502  \2502  \a 177 \2502  \2502      .e-month-expander-checkbox-wrapper.e-input-wrapper {\a 178 \2502  \2502        padding-top: 3px;\a 179 \2502  \2502  \a 180 \2502  \2502        .e-month-type .e-label {\a 181 \2502  \2502          display: none;\a 182 \2502  \2502        }\a 183 \2502  \2502      }\a 184 \2502  \2502  \a 185 \2502  \2502      .e-input-wrapper-side {\a 186 \2502  \2502        float: left;\a 187 \2502  \2502        padding: 16px 20px 0;\a 188 \2502  \2502        width: 50%;\a 189 \2502  \2502  \a 190 \2502  \2502        &.e-end-on {\a 191 \2502  \2502  \a 192 \2502  \2502          .e-end-on-label {\a 193 \2502  \2502            float: none;\a 194 \2502  \2502            font-size: $recurrence-label-font-nrml-size;\a 195 \2502  \2502            font-weight: $recurrence-label-font-weight;\a 196 \2502  \2502            margin-bottom: $recurrence-month-label-bottom;\a 197 \2502  \2502            padding-right: 16px;\a 198 \2502  \2502          }\a 199 \2502  \2502  \a 200 \2502  \2502          .e-end-on-left {\a 201 \2502  \2502            padding-right: 16px;\a 202 \2502  \2502          }\a 203 \2502  \2502        }\a 204 \2502  \2502  \a 205 \2502  \2502        &.e-non-week > .e-input-wrapper {\a 206 \2502  \2502          margin: 0;\a 207 \2502  \2502        }\a 208 \2502  \2502  \a 209 \2502  \2502        &.e-non-week > .e-month-expander-label {\a 210 \2502  \2502          font-size: $recurrence-label-font-nrml-size;\a 211 \2502  \2502          font-weight: $recurrence-label-font-weight;\a 212 \2502  \2502          margin-bottom: $recurrence-month-label-bottom;\a 213 \2502  \2502          padding-right: 16px;\a 214 \2502  \2502        }\a 215 \2502  \2502      }\a 216 \2502  \2502  \a 217 \2502  \2502      .e-input-wrapper-side .e-days .e-form-left {\a 218 \2502  \2502        padding-bottom: 6px;\a 219 \2502  \2502      }\a 220 \2502  \2502  \a 221 \2502  \2502      .e-input-wrapper-side .e-non-week .e-form-left {\a 222 \2502  \2502        padding-bottom: 12px;\a 223 \2502  \2502      }\a 224 \2502  \2502  \a 225 \2502  \2502      .e-input-wrapper-side.e-form-right {\a 226 \2502  \2502        margin-bottom: 11px;\a 227 \2502  \2502      }\a 228 \2502  \2502    }\a 229 \2502  \2502  \a 230 \2502  \2502    .e-bigger {\a 231 \2502  \2502      .e-recurrenceeditor {\a 232 \2502  \2502        padding: 0;\a 233 \2502  \2502  \a 234 \2502  \2502        .e-input-wrapper-side.e-form-left {\a 235 \2502  \2502          padding: 0 12px 11px 0;\a 236 \2502  \2502        }\a 237 \2502  \2502  \a 238 \2502  \2502        .e-form-left {\a 239 \2502  \2502          padding: 0 12px 14px 0;\a 240 \2502  \2502        }\a 241 \2502  \2502  \a 242 \2502  \2502        .e-form-right,\a 243 \2502  \2502        .e-input-wrapper-side.e-form-right {\a 244 \2502  \2502          padding: 0 0 10px;\a 245 \2502  \2502        }\a 246 \2502  \2502  \a 247 \2502  \2502        .e-input-wrapper-side .e-days .e-form-left {\a 248 \2502  \2502          padding-bottom: 6px;\a 249 \2502  \2502        }\a 250 \2502  \2502  \a 251 \2502  \2502        .e-recurrence-table .e-monthday-element {\a 252 \2502  \2502          padding-left: 70px;\a 253 \2502  \2502        }\a 254 \2502  \2502  \a 255 \2502  \2502        .e-week-position {\a 256 \2502  \2502          min-width: $recurrence-week-position-bgr-min-width;\a 257 \2502  \2502          right: 0;\a 258 \2502  \2502        }\a 259 \2502  \2502  \a 260 \2502  \2502        .e-day-position {\a 261 \2502  \2502          min-width: $recurrence-day-position-bgr-min-width;\a 262 \2502  \2502          padding-left: $recurrence-day-position-bgr-padding-left;\a 263 \2502  \2502        }\a 264 \2502  \2502  \a 265 \2502  \2502        .e-input-wrapper-side.e-non-week > .e-month-expander-label {\a 266 \2502  \2502          font-size: $recurrence-label-font-bgr-size;\a 267 \2502  \2502          margin-bottom: 0;\a 268 \2502  \2502        }\a 269 \2502  \2502  \a 270 \2502  \2502        .e-input-wrapper-side.e-end-on .e-end-on-left {\a 271 \2502  \2502          padding-right: $recurrence-end-bgr-padding-right;\a 272 \2502  \2502        }\a 273 \2502  \2502  \a 274 \2502  \2502        .e-end-on-label {\a 275 \2502  \2502          margin-bottom: 0;\a 276 \2502  \2502        }\a 277 \2502  \2502  \a 278 \2502  \2502        .e-days .e-week-expander-label {\a 279 \2502  \2502          font-size: $recurrence-label-font-bgr-size;\a 280 \2502  \2502          margin-bottom: 8px;\a 281 \2502  \2502        }\a 282 \2502  \2502  \a 283 \2502  \2502        .e-input-wrapper-side .e-non-week .e-form-left {\a 284 \2502  \2502          padding-bottom: 12px;\a 285 \2502  \2502        }\a 286 \2502  \2502  \a 287 \2502  \2502        .e-input-wrapper-side.e-end-on .e-end-on-label {\a 288 \2502  \2502          font-size: $recurrence-label-font-bgr-size;\a 289 \2502  \2502          margin-bottom: 1px;\a 290 \2502  \2502        }\a 291 \2502  \2502  \a 292 \2502  \2502        .e-month-expander tr:first-child .e-input-wrapper,\a 293 \2502  \2502        .e-year-expander,\a 294 \2502  \2502        .e-input-wrapper-side.e-form-right {\a 295 \2502  \2502          margin-bottom: 11px;\a 296 \2502  \2502        }\a 297 \2502  \2502  \a 298 \2502  \2502        .e-recurrence-table {\a 299 \2502  \2502          &.e-month-expand-wrapper td:first-child {\a 300 \2502  \2502            width: 30px;\a 301 \2502  \2502          }\a 302 \2502  \2502        }\a 303 \2502  \2502  \a 304 \2502  \2502        .e-days {\a 305 \2502  \2502          button {\a 306 \2502  \2502            height: 40px;\a 307 \2502  \2502            width: 40px;\a 308 \2502  \2502          }\a 309 \2502  \2502        }\a 310 \2502  \2502  \a 311 \2502  \2502        &.e-rtl {\a 312 \2502  \2502  \a 313 \2502  \2502          .e-form-left,\a 314 \2502  \2502          .e-input-wrapper-side.e-form-left {\a 315 \2502  \2502            padding: 0 0 10px 12px;\a 316 \2502  \2502          }\a 317 \2502  \2502  \a 318 \2502  \2502          .e-form-right,\a 319 \2502  \2502          .e-input-wrapper-side.e-form-right {\a 320 \2502  \2502            padding: 0 12px 10px 0;\a 321 \2502  \2502          }\a 322 \2502  \2502  \a 323 \2502  \2502          .e-recurrence-table .e-monthday-element,\a 324 \2502  \2502          .e-recurrence-table .e-day-position {\a 325 \2502  \2502            padding: 0 64px 0 0;\a 326 \2502  \2502          }\a 327 \2502  \2502  \a 328 \2502  \2502          .e-input-wrapper-side.e-end-on .e-end-on-label,\a 329 \2502  \2502          .e-input-wrapper-side.e-non-week > .e-month-expander-label {\a 330 \2502  \2502            padding-right: 0;\a 331 \2502  \2502          }\a 332 \2502  \2502  \a 333 \2502  \2502          .e-end-on-label {\a 334 \2502  \2502            margin-bottom: 5px;\a 335 \2502  \2502          }\a 336 \2502  \2502  \a 337 \2502  \2502          .e-input-wrapper-side.e-end-on .e-end-on-left {\a 338 \2502  \2502            padding: 0 0 0 12px;\a 339 \2502  \2502          }\a 340 \2502  \2502  \a 341 \2502  \2502          .e-input-wrapper.e-end-on-date,\a 342 \2502  \2502          .e-input-wrapper.e-end-on-count {\a 343 \2502  \2502            padding: 0 12px 0 0;\a 344 \2502  \2502          }\a 345 \2502  \2502  \a 346 \2502  \2502          .e-recurrence-table .e-week-position {\a 347 \2502  \2502            left: 0;\a 348 \2502  \2502          }\a 349 \2502  \2502        }\a 350 \2502  \2502      }\a 351 \2502  \2502    }\a 352 \2502  \2502  \a 353 \2502  \2502    .e-device {\a 354 \2502  \2502      .e-recurrenceeditor {\a 355 \2502  \2502        .e-recurrence-table {\a 356 \2502  \2502          &.e-repeat-content-wrapper td:last-child {\a 357 \2502  \2502            width: 25%;\a 358 \2502  \2502          }\a 359 \2502  \2502  \a 360 \2502  \2502          &.e-month-expand-wrapper td:first-child {\a 361 \2502  \2502            width: 20%;\a 362 \2502  \2502          }\a 363 \2502  \2502        }\a 364 \2502  \2502  \a 365 \2502  \2502        .e-week-expander-label {\a 366 \2502  \2502          margin-bottom: 6px;\a 367 \2502  \2502        }\a 368 \2502  \2502  \a 369 \2502  \2502        .e-month-expander-label {\a 370 \2502  \2502          font-size: 12px;\a 371 \2502  \2502          margin-bottom: 5px;\a 372 \2502  \2502        }\a 373 \2502  \2502  \a 374 \2502  \2502        .e-footer-content {\a 375 \2502  \2502          padding: 12px;\a 376 \2502  \2502        }\a 377 \2502  \2502  \a 378 \2502  \2502        .e-form-left,\a 379 \2502  \2502        .e-input-wrapper-side.e-form-left {\a 380 \2502  \2502          padding: 0 3px 10px 0;\a 381 \2502  \2502        }\a 382 \2502  \2502  \a 383 \2502  \2502        .e-form-right,\a 384 \2502  \2502        .e-input-wrapper-side.e-form-right {\a 385 \2502  \2502          padding: 0 0 10px 3px;\a 386 \2502  \2502        }\a 387 \2502  \2502  \a 388 \2502  \2502        .e-input-wrapper.e-end-on-date,\a 389 \2502  \2502        .e-input-wrapper.e-end-on-count {\a 390 \2502  \2502          padding: 0 0 0 10px;\a 391 \2502  \2502        }\a 392 \2502  \2502  \a 393 \2502  \2502        .e-input-wrapper-side.e-end-on .e-end-on-left {\a 394 \2502  \2502          padding-right: 10px;\a 395 \2502  \2502        }\a 396 \2502  \2502  \a 397 \2502  \2502        &.e-end-on {\a 398 \2502  \2502          padding-right: 0;\a 399 \2502  \2502  \a 400 \2502  \2502          .e-end-on-label {\a 401 \2502  \2502            float: none;\a 402 \2502  \2502            font-size: 12px;\a 403 \2502  \2502            font-weight: $recurrence-label-font-weight;\a 404 \2502  \2502            margin-bottom: $recurrence-label-bottom;\a 405 \2502  \2502          }\a 406 \2502  \2502  \a 407 \2502  \2502          .e-end-on-left {\a 408 \2502  \2502            padding-right: 0;\a 409 \2502  \2502          }\a 410 \2502  \2502        }\a 411 \2502  \2502  \a 412 \2502  \2502        .e-recurrence-table .e-monthday-element,\a 413 \2502  \2502        .e-recurrence-table .e-day-position {\a 414 \2502  \2502          padding-left: 20px;\a 415 \2502  \2502        }\a 416 \2502  \2502  \a 417 \2502  \2502        .e-recurrence-table .e-monthday-element {\a 418 \2502  \2502          margin-left: 20px;\a 419 \2502  \2502        }\a 420 \2502  \2502  \a 421 \2502  \2502        .e-week-position {\a 422 \2502  \2502          right: 0;\a 423 \2502  \2502          padding-right: 10px;\a 424 \2502  \2502        }\a 425 \2502  \2502  \a 426 \2502  \2502        &.e-rtl {\a 427 \2502  \2502          .e-input-wrapper-side.e-end-on .e-end-on-left {\a 428 \2502  \2502            padding-right: 0;\a 429 \2502  \2502          }\a 430 \2502  \2502  \a 431 \2502  \2502          .e-input-wrapper.e-end-on-date,\a 432 \2502  \2502          .e-input-wrapper.e-end-on-count {\a 433 \2502  \2502            padding: 0 10px 0 0;\a 434 \2502  \2502          }\a 435 \2502  \2502  \a 436 \2502  \2502          .e-recurrence-table .e-monthday-element {\a 437 \2502  \2502            padding: 0 20px 0 0;\a 438 \2502  \2502          }\a 439 \2502  \2502  \a 440 \2502  \2502          .e-recurrence-table .e-day-position {\a 441 \2502  \2502            padding: 0 50px 0 0;\a 442 \2502  \2502          }\a 443 \2502  \2502  \a 444 \2502  \2502          .e-week-position {\a 445 \2502  \2502            left: 0;\a 446 \2502  \2502          }\a 447 \2502  \2502        }\a 448 \2502  \2502      }\a 449 \2502  \2502  \a 450 \2502  \2502      &.e-recurrence-dialog {\a 451 \2502  \2502        .e-dlg-header-content {\a 452 \2502  \2502          background: none;\a 453 \2502  \2502          box-shadow: none;\a 454 \2502  \2502          padding-bottom: 10px;\a 455 \2502  \2502        }\a 456 \2502  \2502  \a 457 \2502  \2502        .e-editor {\a 458 \2502  \2502          .e-input-wrapper-side.e-end-on .e-end-on-label {\a 459 \2502  \2502            margin-bottom: $recurrence-label-bottom;\a 460 \2502  \2502          }\a 461 \2502  \2502        }\a 462 \2502  \2502  \a 463 \2502  \2502        .e-footer-content {\a 464 \2502  \2502          padding: 16px 8px;\a 465 \2502  \2502        }\a 466 \2502  \2502      }\a 467 \2502  \2502    }\a 468 \2502  \2502  \a 469 \2502  \2502    @media (max-width: 1024px) {\a 470 \2502  \2502      .e-recurrenceeditor {\a 471 \2502  \2502  \a 472 \2502  \2502        .e-editor {\a 473 \2502  \2502  \a 474 \2502  \2502          .e-input-wrapper-side.e-end-on {\a 475 \2502  \2502            width: 100%;\a 476 \2502  \2502          }\a 477 \2502  \2502  \a 478 \2502  \2502          .e-input-wrapper-side.e-non-week {\a 479 \2502  \2502            width: 65%;\a 480 \2502  \2502          }\a 481 \2502  \2502        }\a 482 \2502  \2502      }\a 483 \2502  \2502    }\a 484 \2502  \2502  \a 485 \2502  \2502    @media (max-width: 580px) {\a 486 \2502  \2502      .e-recurrenceeditor {\a 487 \2502  \2502        margin-left: auto;\a 488 \2502  \2502        margin-right: auto;\a 489 \2502  \2502        width: 100%;\a 490 \2502  \2502  \a 491 \2502  \2502        .e-editor {\a 492 \2502  \2502          flex-direction: column;\a 493 \2502  \2502  \a 494 \2502  \2502          >.e-input-wrapper.e-form-left {\a 495 \2502  \2502            margin-top: 0;\a 496 \2502  \2502          }\a 497 \2502  \2502  \a 498 \2502  \2502          .e-input-wrapper-side.e-non-week > .e-month-expander-label,\a 499 \2502  \2502          .e-input-wrapper-side.e-end-on .e-end-on-label {\a 500 \2502  \2502            margin-bottom: $recurrence-month-label-bottom;\a 501 \2502  \2502          }\a 502 \2502  \2502  \a 503 \2502  \2502          > div {\a 504 \2502  \2502            margin-top: 20px;\a 505 \2502  \2502          }\a 506 \2502  \2502  \a 507 \2502  \2502          > .e-input-wrapper {\a 508 \2502  \2502            width: 100%;\a 509 \2502  \2502          }\a 510 \2502  \2502  \a 511 \2502  \2502          .e-input-wrapper-side.e-end-on {\a 512 \2502  \2502            width: 100%;\a 513 \2502  \2502  \a 514 \2502  \2502            .e-input-wrapper {\a 515 \2502  \2502              width: 50%;\a 516 \2502  \2502            }\a 517 \2502  \2502          }\a 518 \2502  \2502  \a 519 \2502  \2502          .e-form-left,\a 520 \2502  \2502          .e-input-wrapper-side.e-form-left {\a 521 \2502  \2502            padding: 0 0 10px;\a 522 \2502  \2502          }\a 523 \2502  \2502  \a 524 \2502  \2502          .e-input-wrapper.e-end-on-date,\a 525 \2502  \2502          .e-input-wrapper.e-end-on-count {\a 526 \2502  \2502            padding: 0 0 0 10px;\a 527 \2502  \2502          }\a 528 \2502  \2502  \a 529 \2502  \2502          .e-input-wrapper-side.e-end-on .e-end-on-left {\a 530 \2502  \2502            padding-right: 10px;\a 531 \2502  \2502          }\a 532 \2502  \2502  \a 533 \2502  \2502          .e-form-right,\a 534 \2502  \2502          .e-input-wrapper-side.e-form-right {\a 535 \2502  \2502            padding-left: 0;\a 536 \2502  \2502          }\a 537 \2502  \2502  \a 538 \2502  \2502          .e-input-wrapper-side.e-days {\a 539 \2502  \2502            width: 100%;\a 540 \2502  \2502          }\a 541 \2502  \2502  \a 542 \2502  \2502          .e-input-wrapper-side.e-non-week {\a 543 \2502  \2502            width: 65%;\a 544 \2502  \2502          }\a 545 \2502  \2502  \a 546 \2502  \2502          .e-recurrence-table .e-day-position {\a 547 \2502  \2502            padding-left: 50px;\a 548 \2502  \2502          }\a 549 \2502  \2502        }\a 550 \2502  \2502  \a 551 \2502  \2502        &.e-rtl {\a 552 \2502  \2502          .e-input-wrapper-side.e-end-on .e-end-on-left {\a 553 \2502  \2502            padding-right: 0;\a 554 \2502  \2502          }\a 555 \2502  \2502  \a 556 \2502  \2502          .e-input-wrapper.e-end-on-date,\a 557 \2502  \2502          .e-input-wrapper.e-end-on-count {\a 558 \2502  \2502            padding: 0 10px 0 0;\a 559 \2502  \2502          }\a 560 \2502  \2502        }\a 561 \2502  \2502      }\a 562 \2502  \2502    }\a 563 \2502  \2514  }\a     \2575 \a   src/assets/scheduler/dark/individual-scss/schedule/recurrence-editor.scss 16:1  root stylesheet";
+}

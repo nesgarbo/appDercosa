@@ -16,6 +16,7 @@ import {
   IonItem,
   IonInput,
   IonAlert,
+  IonInputPasswordToggle
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -38,7 +39,8 @@ import { BiometricService } from 'src/app/services/biometric.service';
     FormsModule,
     ReactiveFormsModule,
     IonButton,
-    IonInput
+    IonInput,
+    IonInputPasswordToggle
   ],
 })
 export class LoginPage implements OnInit {
