@@ -98,8 +98,8 @@ export class AgendaResultComponent {
       id: 'id',
       subject: { name: 'partida' },
       isAllDay: { name: 'isAllDay' },
-      startTime: { name: 'createdAt' },
-      endTime: { name: 'createdAt' }
+      startTime: { name: 'date' },
+      endTime: { name: 'date' }
     },
   });
 

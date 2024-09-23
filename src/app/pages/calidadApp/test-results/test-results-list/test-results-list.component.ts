@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, model } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import {
   IonButton,
@@ -10,9 +15,11 @@ import {
   IonContent,
   IonFab,
   IonFabButton,
+  IonFooter,
   IonGrid,
   IonHeader,
   IonIcon,
+  IonInput,
   IonItem,
   IonItemOption,
   IonItemOptions,
@@ -25,8 +32,8 @@ import {
   IonRow,
   IonText,
   IonTitle,
+  IonToggle,
   IonToolbar,
-  IonFooter,
 } from '@ionic/angular/standalone';
 import { ClientTest, TestResult } from 'feathers-dercosa';
 import { TimezonedDatetimepickerComponent } from 'src/app/components/timezoned-datetimepicker/timezoned-datetimepicker.component';
@@ -38,6 +45,8 @@ import { TestResultsStore } from 'src/app/signalStores/stores/testResultsStore';
   styleUrls: ['./test-results-list.component.scss'],
   standalone: true,
   imports: [
+    IonInput,
+    IonToggle,
     IonFooter,
     IonButton,
     IonChip,
@@ -64,7 +73,7 @@ import { TestResultsStore } from 'src/app/signalStores/stores/testResultsStore';
     IonMenuButton,
     RouterOutlet,
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     TimezonedDatetimepickerComponent,
   ],
 })
@@ -81,19 +90,45 @@ export class TestResultsComponent {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
-  dateFilter = model<Date>(new Date());
-  dayTestResults = computed(() => {
-    const date = new Date(this.dateFilter());
+  filters = model<{ dateFrom: Date; dateTo: Date; partida: string } | null>(
+    {dateFrom: new Date(), dateTo: new Date(), partida: ''}
+  );
+  filtersForm = new FormGroup({
+    dateFrom: new FormControl<Date>(new Date(), [Validators.required]),
+    dateTo: new FormControl<Date>(new Date(), [Validators.required]),
+    partida: new FormControl<string>('', [Validators.required]),
+  });
+  testResultsFilteredEntities = computed(() => {
+    const filters = this.filters();
+    if (!filters) {
+      return this.testResultsStore.entities();
+    }
+
     return this.testResultsStore.entities().filter((testResult) => {
-      if (!testResult.createdAt) return false;
-      const testDate = new Date(testResult.createdAt);
+      const testDate = new Date(testResult.updatedAt || testResult.createdAt!);
+      const testPartida = testResult.partida?.toLowerCase() || '';
       return (
-        testDate.getDate() === date.getDate() &&
-        testDate.getMonth() === date.getMonth() &&
-        testDate.getFullYear() === date.getFullYear()
+        this.isDateInRange(
+          testDate,
+          new Date(filters.dateFrom),
+          new Date(filters.dateTo)
+        ) && testPartida.includes(filters.partida.toLowerCase())
       );
     });
   });
+
+  setFilters() {
+    this.filters.set(this.filtersForm.value as any);
+  }
+
+  clearFilters() {
+    this.filters.set(null);
+    this.filtersForm.reset({
+      dateFrom: new Date(),
+      dateTo: new Date(),
+      partida: '',
+    });
+  }
 
   editItem(item: TestResult) {
     this.router.navigate([item.id], {
@@ -107,5 +142,25 @@ export class TestResultsComponent {
   deleteItem(resSt: TestResult) {
     const id = resSt.id;
     this.testResultsStore.remove(id);
+  }
+
+  private isDateInRange(testDate: Date, dateFrom: Date, dateTo: Date): boolean {
+    const testDateOnly = new Date(
+      testDate.getFullYear(),
+      testDate.getMonth(),
+      testDate.getDate()
+    );
+    const fromDateOnly = new Date(
+      dateFrom.getFullYear(),
+      dateFrom.getMonth(),
+      dateFrom.getDate()
+    );
+    const toDateOnly = new Date(
+      dateTo.getFullYear(),
+      dateTo.getMonth(),
+      dateTo.getDate()
+    );
+
+    return testDateOnly >= fromDateOnly && testDateOnly <= toDateOnly;
   }
 }

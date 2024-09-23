@@ -32,10 +32,10 @@ export const TestResultsStore = signalStore(
             partida: testResult.partida,
             pedido: testResult.pedido,
             linea: testResult.linea,
-            cliente: testResult.test.client.name,
+            cliente: testResult.test.client.nombrecli,
             test: testResult.test,
             result: testResult.result!,
-            createdAt: new Date(testResult.createdAt!),
+            date: new Date( testResult.updatedAt || testResult.createdAt!),
             isAllDay: false,
             backgroundColor:
               (testResult.result ?? 0) > testResult.test.clientMax ||

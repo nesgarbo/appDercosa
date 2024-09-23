@@ -15,6 +15,8 @@ import {
   createSharp,
   documentOutline,
   flaskOutline,
+  funnel,
+  funnelOutline,
   homeOutline,
   listOutline,
   logOutOutline,
@@ -55,6 +57,8 @@ export class AppComponent {
       beakerOutline,
       flaskOutline,
       todayOutline,
+      funnelOutline,
+      funnel
     });
   }
 }

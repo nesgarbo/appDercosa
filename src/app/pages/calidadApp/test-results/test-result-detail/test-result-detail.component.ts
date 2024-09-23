@@ -32,7 +32,13 @@ import {
   IonToolbar,
   IonFab,
   IonFabButton,
-  IonIcon, IonNote, IonGrid, IonRow, IonCol, IonText } from '@ionic/angular/standalone';
+  IonIcon,
+  IonNote,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonText,
+} from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestResult } from 'feathers-dercosa';
 import { IonicSelectableComponent } from 'ionic-selectable';
@@ -48,7 +54,12 @@ import { TestsStore } from 'src/app/signalStores/stores/testsStore';
   templateUrl: './test-result-detail.component.html',
   styleUrls: ['./test-result-detail.component.scss'],
   standalone: true,
-  imports: [IonText, IonCol, IonRow, IonGrid, IonNote, 
+  imports: [
+    IonText,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonNote,
     IonIcon,
     IonFabButton,
     IonFab,
@@ -137,9 +148,6 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
     testId: new FormControl<number | undefined>(undefined, [
       Validators.required,
     ]),
-    testType: new FormControl<string | undefined>(undefined, [
-      Validators.required,
-    ]),
     result: new FormControl<number | undefined>(undefined, [
       Validators.required,
     ]),
@@ -172,17 +180,11 @@ export class TestResultDetailComponent extends BaseDetail<TestResult> {
       return;
     }
     let partida = data.barCode.substring(0, 5);
-    const pedido =
-      data.barCode.substring(5, 10);
-    const linea = data.barCode.substring(10)
+    const pedido = data.barCode.substring(5, 10);
+    const linea = data.barCode.substring(10);
     console.log('data', partida, pedido, linea);
     this.detailsForm.patchValue({ partida });
     this.detailsForm.patchValue({ pedido });
     this.detailsForm.patchValue({ linea: Number(linea) });
-  }
-
-  onTestChange(e: { component: IonicSelectableComponent; value: any }) {
-    this.detailsForm.controls['testId'].setValue(e.value.id);
-    this.detailsForm.controls['testType'].setValue('clientTest');
   }
 }

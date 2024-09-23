@@ -5,16 +5,69 @@
     </ion-buttons>
     <ion-title>Lista de Resultados</ion-title>
     <ion-buttons slot="end">
-      <app-timezoned-datetimepicker
+      <ion-button id="open-modal">
+        @if(filters()){
+        <ion-icon slot="icon-only" name="funnel"></ion-icon>
+        } @else {
+        <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
+        }
+      </ion-button>
+      <ion-modal
+        trigger="open-modal"
+        [initialBreakpoint]="0.27"
+        [breakpoints]="[0, 0.27]"
+      >
+        <ng-template>
+          <ion-content class="ion-padding" [formGroup]="filtersForm">
+            <ion-list>
+              <ion-item>
+                <ion-label>Desde</ion-label>
+                <app-timezoned-datetimepicker
+                  formControlName="dateFrom"
+                  presentation="date"
+                ></app-timezoned-datetimepicker>
+              </ion-item>
+              <ion-item>
+                <ion-label>Hasta</ion-label>
+                <app-timezoned-datetimepicker
+                  formControlName="dateTo"
+                  presentation="date"
+                ></app-timezoned-datetimepicker>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label="Partida"
+                  class="ion-text-right"
+                  type="text"
+                  formControlName="partida"
+                ></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-row>
+              <ion-col>
+                <ion-button expand="block" (click)="setFilters()">
+                  Aplicar
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button expand="block" (click)="clearFilters()" [disabled]="!filters()">
+                  Limpiar
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- <app-timezoned-datetimepicker
         [(ngModel)]="dateFilter"
         presentation="date"
-      ></app-timezoned-datetimepicker>
+      ></app-timezoned-datetimepicker> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-list>
-    @for (testResult of dayTestResults(); track $index) {
+    @for (testResult of testResultsFilteredEntities(); track $index) {
     <ion-item-sliding>
       <ion-item (click)="editItem(testResult)">
         <ion-grid class="ctn-icons">

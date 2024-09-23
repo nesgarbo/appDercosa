@@ -6,7 +6,7 @@ export interface TestResultViewModel {
   cliente: string;
   test: string;
   result: number;
-  createdAt: Date;
+  date: Date;
   isAllDay: boolean;
   backgroundColor?: string;
   textColor?: string;
