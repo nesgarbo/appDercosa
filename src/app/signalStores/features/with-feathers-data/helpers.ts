@@ -1,6 +1,13 @@
 import { capitalize } from '@angular-architects/ngrx-toolkit';
 import { Paginated } from '@feathersjs/feathers';
 
+/**
+ * Generates a set of keys for Feathers data service operations based on the provided collection name.
+ * @template Collection - The type of the collection name.
+ * @param {Object} options - The options object.
+ * @param {Collection} [options.collection] - The name of the collection.
+ * @returns {Object} An object containing the generated keys.
+ */
 export function getFeathersDataServiceKeys<Collection extends string>(options: {
   collection?: Collection;
 }) {
@@ -133,7 +140,13 @@ export function getFeathersDataServiceKeys<Collection extends string>(options: {
   };
 }
 
+/**
+ * Type guard to check if a response is paginated.
+ * @param {any} response - The response to check.
+ * @returns {boolean} True if the response is paginated, false otherwise.
+ */
 export const isPaginated = (response: any): response is Paginated<any> => {
+  console.log('response', response);
   return (
     response &&
     typeof response === 'object' &&

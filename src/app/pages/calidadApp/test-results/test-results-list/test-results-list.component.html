@@ -50,7 +50,11 @@
                 </ion-button>
               </ion-col>
               <ion-col>
-                <ion-button expand="block" (click)="clearFilters()" [disabled]="!filters()">
+                <ion-button
+                  expand="block"
+                  (click)="clearFilters()"
+                  [disabled]="!filters()"
+                >
                   Limpiar
                 </ion-button>
               </ion-col>
@@ -107,10 +111,10 @@
               size="6"
             >
               <ion-text style="display: block">
-                {{ testResult.test.client.nombrecli }}</ion-text
+                {{ testResult.clientTest.client.nombrecli }}</ion-text
               >
               <ion-note style="display: block">{{
-                testResult.test.test.name
+                testResult.clientTest.test.name
               }}</ion-note>
             </ion-col>
             <ion-col
@@ -127,7 +131,7 @@
               "
               size="3"
             >
-              @if(testResult.result){
+              @if(testResult.result || testResult.booleanResult !== undefined){
               <div
                 style="
                   width: 70%;
@@ -137,15 +141,21 @@
                   display: flex;
                 "
                 [ngStyle]="{
-                  'background-color':
-                    testResult.result > testResult.test.clientMax ||
-                    testResult.result < testResult.test.clientMin
-                      ? 'red'
-                      : 'green'
+                  'background-color': (
+                    testResult.result
+                      ? testResult.result >
+                        testResult.clientTest.clientMax ||
+                        testResult.result <
+                        testResult.clientTest.clientMin
+                      : testResult.booleanResult !==
+                        testResult.clientTest.booleanOkValue
+                  )
+                    ? 'red'
+                    : 'green'
                 }"
               >
                 <ion-note color="white" class="ion-text-wrap">{{
-                  testResult.result
+                  testResult.result || (testResult.booleanResult? 'Sí' : 'No')
                 }}</ion-note>
               </div>
               }

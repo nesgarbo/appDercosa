@@ -17,7 +17,6 @@ import { ModalFirmarComponent } from 'src/app/modals/modal-firmar/modal-firmar.c
 export class VisitasComponent implements OnInit {
 
   readonly visitasStore = inject(VisitasStore);
-  private router = inject(Router);
   private modalCtrl = inject(ModalController);
 
   ngOnInit(): void {

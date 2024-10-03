@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, computed, effect, inject, model } from '@angular/core';
+import {
+  Component,
+  Input,
+  computed,
+  effect,
+  inject,
+  model,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -21,9 +28,15 @@ import {
   IonNote,
   IonTextarea,
   IonTitle,
-  IonToolbar, IonGrid, IonRow, IonCol, IonText, IonIcon } from '@ionic/angular/standalone';
+  IonToolbar,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonText,
+  IonIcon,
+} from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
-import { ClientTest } from 'feathers-dercosa';
+import { ClientTest, Test } from 'feathers-dercosa';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { SearchableSelectComponent } from 'src/app/components/searchable-select/searchable-select.component';
 import { BaseDetail } from 'src/app/shared/base-detail';
@@ -31,14 +44,21 @@ import { ClientsStore } from 'src/app/signalStores/stores/clientsStore';
 import { ClientTestsStore } from 'src/app/signalStores/stores/clientTestsStore';
 import { MeasurementUnitsStore } from 'src/app/signalStores/stores/measurementUnitsStore';
 import { TestsStore } from 'src/app/signalStores/stores/testsStore';
-import { addIcons } from "ionicons";
+import { addIcons } from 'ionicons';
+import { clientTestConditionalValidator } from 'src/app/validators/clientTestConditionalValidator';
+import { SelectComponent } from 'src/app/components/select/select.component';
 
 @Component({
   selector: 'app-client-test',
   templateUrl: './client-test-detail.component.html',
   styleUrls: ['./client-test-detail.component.scss'],
   standalone: true,
-  imports: [IonIcon, IonText, IonCol, IonRow, IonGrid, 
+  imports: [
+    IonIcon,
+    IonText,
+    IonCol,
+    IonRow,
+    IonGrid,
     IonNote,
     IonFooter,
     IonTextarea,
@@ -58,6 +78,7 @@ import { addIcons } from "ionicons";
     ReactiveFormsModule,
     CommonModule,
     SearchableSelectComponent,
+    SelectComponent,
   ],
 })
 export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
@@ -70,6 +91,7 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
   filterTestText = model<string>('');
   filterClientText = model<string>('');
   filterMeasurementUnitText = model<string>('');
+  test = model<Test>();
 
   close() {
     this.modalCtrl.dismiss();
@@ -105,7 +127,9 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
   measurementUnitOptions = computed(() => {
     return this.measurementUnitsStore
       .entities()
-      .filter((t) => t?.name.toLowerCase().includes(this.filterMeasurementUnitText()));
+      .filter((t) =>
+        t?.name.toLowerCase().includes(this.filterMeasurementUnitText())
+      );
   });
 
   async searchMeasurementUnit(event: {
@@ -150,23 +174,24 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
     return this.clientsStore.get(id);
   }
 
-  override detailsForm = new FormGroup({
-    measurementUnitId: new FormControl<number | undefined>(undefined, [
-      Validators.required,
-    ]),
-    clientMax: new FormControl<number | undefined>(undefined, [
-      Validators.required,
-    ]),
-    clientMin: new FormControl<number | undefined>(undefined, [
-      Validators.required,
-    ]),
-    testId: new FormControl<number | undefined>(undefined, [
-      Validators.required,
-    ]),
-    clientId: new FormControl<number | undefined>(undefined, [
-      Validators.required,
-    ]),
-  });
+  override detailsForm = new FormGroup(
+    {
+      clientId: new FormControl<string | undefined>(undefined, [
+        Validators.required,
+      ]),
+      testId: new FormControl<number | undefined>(undefined, [
+        Validators.required,
+      ]),
+      articuloId: new FormControl<string | undefined>(undefined, [
+        Validators.required,
+      ]),
+      booleanOkValue: new FormControl<boolean | undefined>(undefined, []),
+      measurementUnitId: new FormControl<number | undefined>(undefined, []),
+      clientMax: new FormControl<number | undefined>(undefined, []),
+      clientMin: new FormControl<number | undefined>(undefined, []),
+    },
+    { validators: clientTestConditionalValidator }
+  );
 
   override getSignalStore() {
     return this.clientTestsStore;
@@ -177,19 +202,32 @@ export class ClientTestDetailComponent extends BaseDetail<ClientTest> {
     this.modalCtrl.dismiss();
   }
 
-  onTestChange(e: { component: IonicSelectableComponent; value: any }) {
+  onTestChange(e: { component: IonicSelectableComponent; value: Test }) {
     const values = this.detailsForm.getRawValue();
-    if (!values.clientMax) {
-      this.detailsForm.controls.clientMax.setValue(e.value?.defaultMax);
+    if (!e.value.isBoolean) {
+      if (!values.clientMax) {
+        this.detailsForm.controls.clientMax.setValue(e.value?.defaultMax);
+      }
+      if (!values.clientMin) {
+        this.detailsForm.controls.clientMin.setValue(e.value?.defaultMin);
+      }
+      if (!values.measurementUnitId) {
+        this.detailsForm.controls.measurementUnitId.setValue(
+          e.value?.measurementUnit
+        );
+      }
+      this.detailsForm.controls.booleanOkValue.setValue(undefined);
+    } else {
+      this.detailsForm.controls.clientMax.setValue(undefined);
+      this.detailsForm.controls.clientMin.setValue(undefined);
+      this.detailsForm.controls.measurementUnitId.setValue(undefined);
+      if (!values.booleanOkValue) {
+        this.detailsForm.controls.booleanOkValue.setValue(
+          e.value?.booleanOkValue
+        );
+      }
     }
-    if (!values.clientMin) {
-      this.detailsForm.controls.clientMin.setValue(e.value?.defaultMin);
-    }
-    if (!values.measurementUnitId) {
-      this.detailsForm.controls.measurementUnitId.setValue(
-        e.value?.measurementUnit
-      );
-    }
+    this.test.set(e.value);
   }
 
   onClose(e: { component: IonicSelectableComponent }) {

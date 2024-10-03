@@ -4,8 +4,8 @@
       <ion-button (click)="close()"> {{ "CLOSE" | translate }} </ion-button>
     </ion-buttons>
     <ion-title>{{
-      (item?.test.name | uppercase) ||
-        (item?.test.test.name | uppercase) ||
+      (item?.clientTest.name | uppercase) ||
+        (item?.clientTest.test.name | uppercase) ||
         "Nuevo resultado"
     }}</ion-title>
   </ion-toolbar>
@@ -47,6 +47,7 @@
           [getItem]="getTest"
           (onSearch)="searchTests($event)"
           [canAddItem]="true"
+          (onChange)="onTestChange($event)"
           formControlName="testId"
         >
           <ng-template
@@ -106,9 +107,7 @@
                         name="caret-up-outline"
                       ></ion-icon>
                       <ion-note color="medium" class="ion-text-wrap">{{
-                        item.clientMax +
-                          " " +
-                          item.measurementUnit.symbol
+                        item.clientMax + " " + item.measurementUnit.symbol
                       }}</ion-note>
                     </div>
                     } @if(item.clientMin){
@@ -124,9 +123,7 @@
                         name="caret-down-outline"
                       ></ion-icon>
                       <ion-note color="medium" class="ion-text-wrap">{{
-                        item.clientMin +
-                          " " +
-                          item.measurementUnit.symbol
+                        item.clientMin + " " + item.measurementUnit.symbol
                       }}</ion-note>
                     </div>
                     }
@@ -138,12 +135,23 @@
         </app-searchable-select>
       </ion-item>
       <ion-item>
+        @if(!test()?.test?.isBoolean){
         <ion-input
           class="ion-text-right"
           label="Resultado"
           formControlName="result"
           type="number"
         ></ion-input>
+        } @else {
+          <app-select
+          label="Resultado"
+          [options]="[
+            { value: true, label: 'Sí' },
+            { value: false, label: 'No' }
+          ]"
+          formControlName="booleanResult"
+        ></app-select>
+        }
       </ion-item>
     </ion-list>
   </form>

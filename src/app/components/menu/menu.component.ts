@@ -62,9 +62,9 @@ export class MenuComponent {
         ],
       },
     ];
-    if (this.ability.can('manage', 'tests')) {
+    if (this.ability.can('manage', 'calidad')) {
       res.push({
-        header: 'Tests',
+        header: 'Calidad',
         items: [
           {
             icon: 'today-outline',
@@ -76,16 +76,16 @@ export class MenuComponent {
             label: 'Test Results',
             routerLink: '/private-routes/calidad/test-results',
           },
-          {
-            icon: 'flask-outline',
-            label: 'Client Tests',
-            routerLink: '/private-routes/calidad/client-tests',
-          },
-          {
-            icon: 'beaker-outline',
-            label: 'Tests',
-            routerLink: '/private-routes/calidad/tests',
-          },
+          // {
+          //   icon: 'flask-outline',
+          //   label: 'Client Tests',
+          //   routerLink: '/private-routes/calidad/client-tests',
+          // },
+          // {
+          //   icon: 'beaker-outline',
+          //   label: 'Tests',
+          //   routerLink: '/private-routes/calidad/tests',
+          // },
         ],
       });
     }

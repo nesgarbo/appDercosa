@@ -32,14 +32,13 @@ export const TestResultsStore = signalStore(
             partida: testResult.partida,
             pedido: testResult.pedido,
             linea: testResult.linea,
-            cliente: testResult.test.client.nombrecli,
-            test: testResult.test,
-            result: testResult.result!,
+            clientTest: testResult.clientTest,
+            result: testResult.result || testResult.booleanResult!,
             date: new Date( testResult.updatedAt || testResult.createdAt!),
             isAllDay: false,
             backgroundColor:
-              (testResult.result ?? 0) > testResult.test.clientMax ||
-              (testResult.result ?? 0) < testResult.test.clientMin
+             (testResult.result ? (testResult.result ?? 0) > testResult.clientTest.clientMax ||
+              (testResult.result ?? 0) < testResult.clientTest.clientMin: testResult.booleanResult !== testResult.clientTest.booleanOkValue)
                 ? 'red'
                 : 'green',
             textColor: '#fff',

@@ -23,6 +23,7 @@ import SignaturePad from 'signature_pad';
 import { ProteccionDatosComponent } from '../proteccion-datos/proteccion-datos.component';
 import { FeathersClientService } from 'src/app/services/feathers/feathers-service.service';
 import { OperariosStore } from 'src/app/signalStores/stores/operariosStore';
+import { VisitasStore } from 'src/app/signalStores/stores/visitasStore';
 
 @Component({
   selector: 'app-modal-firmar',
@@ -42,7 +43,7 @@ import { OperariosStore } from 'src/app/signalStores/stores/operariosStore';
   styleUrls: ['./modal-firmar.component.scss'],
 })
 export class ModalFirmarComponent implements AfterViewInit {
-  private feathers = inject(FeathersClientService);
+  readonly visitasStore = inject(VisitasStore);
   readonly operariosStore = inject(OperariosStore);
   @ViewChild('signatureCanvas', { static: true })
   signaturePadElement!: ElementRef;
@@ -101,21 +102,29 @@ export class ModalFirmarComponent implements AfterViewInit {
       a.present();
     } else {
       var dataURL = this.signaturePad.toDataURL();
-      const operario = await this.operariosStore.get(this.visita.voperarioid);
-      const data = {
-        id: this.visita.id,
-        fecha: this.visita.vfecha,
-        nombre: this.visita.vnomvista,
-        dni: this.visita.vdnivista,
-        telefono: this.visita.vtelefono,
-        nombreEmpresa: this.visita.vempresa,
-        horaEntrada: this.visita.ventrada,
-        horaSalida: this.visita.vsalida || '',
-        recibeVisita: operario.tnombre || String(operario.tdni),
-        firma: dataURL,
+      const visita: Partial<Visita> = {
+        vfecha: this.visita.vfecha,
+        vnomvista: this.visita.vnomvista,
+        vdnivista: this.visita.vdnivista,
+        vtelefono: this.visita.vtelefono,
+        vempresa: this.visita.vempresa,
+        ventrada: this.visita.ventrada,
+        vsalida: this.visita.vsalida || "",
+        vfirmado: this.removeBase64Prefix(dataURL),
+        voperarioid: this.visita.voperarioid,
+        vtarjeta: this.visita.vtarjeta,
       };
-      this.feathers.getServiceByPath('pdf-generator').create(data);
+      await this.visitasStore.patch(this.visita.id, visita);
       this.dismiss();
     }
+  }
+  removeBase64Prefix(base64String: any) {
+    // Verifica si la cadena contiene el prefijo 'data:image'
+    if (base64String.startsWith('data:image')) {
+      // Elimina todo hasta la coma (inclusive)
+      return base64String.split(',')[1];
+    }
+    // Si no tiene el prefijo, devuelve la cadena original
+    return base64String;
   }
 }

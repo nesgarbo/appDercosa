@@ -1,0 +1,112 @@
+<ng-template #sharedEventTemplate let-data>
+    <div class="template-wrap" [style.background]="data.primaryColor">
+        <div class="subject" [style.background]="data.secondaryColor">
+            {{ data.boatName }} ({{ data.boatOwnerName }})
+        </div>
+
+        <div class="time" [style.background]="data.secondaryColor">
+            {{ data.portName }} {{ data.mooringNumber }}
+        </div>
+    </div>
+</ng-template>
+<div class="ion-grid ion-flex ion-flex-column ion-flex-1">
+    <div class="ion-col-12 ion-flex ion-flex-column ion-flex-1">
+        <ejs-schedule
+            #schedule
+            [eventSettings]="eventSettings()"
+            [(currentView)]="currentView"
+            [workDays]="workDays"
+            (popupOpen)="onPopupOpen($event)"
+            (dragStart)="onDragStart($event)"
+            (dragStop)="onDragStop($event)"
+            (resizeStart)="onResizeStart($event)"
+            (resizeStop)="onResizeStop($event)"
+            (navigating)="onMoreEventsClick($event)"
+            (eventRendered)="onEventRendered($event)"
+            [allowDragAndDrop]="allowDragAndDrop()"
+            [allowResizing]="allowResizing()"
+            cssClass="schedule-cell-dimension"
+            height="100%"
+            class="ion-flex ion-flex-column ion-flex-1"
+        >
+            <e-views>
+                <!-- <e-view option="TimelineDay" [displayName]='{{ 'TIMELINE_DAY' | translate }}'>
+              <ng-template #eventTemplate let-data>
+                              <ng-container *ngTemplateOutlet="sharedEventTemplate;context: {$implicit: data}">
+                              </ng-container>
+                          </ng-template>
+            </e-view> -->
+                @if(views().includes('TimelineWeek')){
+                <e-view
+                    option="TimelineWeek"
+                    displayName="{{ 'TIMELINE_WEEK' | translate }}"
+                >
+                    <!-- <ng-template #eventTemplate let-data>
+                              <ng-container *ngTemplateOutlet="sharedEventTemplate;context: {$implicit: data}">
+                              </ng-container>
+                          </ng-template> -->
+                </e-view>
+                }
+                @if(views().includes('Month')){
+                <e-view option="Month" displayName="{{ 'MONTH' | translate }}">
+                </e-view>
+              }
+                <!-- <e-view option="TimelineWorkWeek">
+              <ng-template #eventTemplate let-data>
+                              <ng-container *ngTemplateOutlet="sharedEventTemplate;context: {$implicit: data}">
+                              </ng-container>
+                          </ng-template>
+            </e-view> -->
+            @if(views().includes('TimelineMonth')){
+                <e-view
+                    option="TimelineMonth"
+                    [interval]="timeLineMonthViewInterval"
+                    displayName="{{ 'TIMELINE_MONTH' | translate }}"
+                >
+                    <ng-template #dateHeaderTemplate let-data>
+                        <div class="date-text">
+                            {{ getDateHeaderText(data.date) }}
+                        </div>
+                    </ng-template>
+                    @if(timelineMonthTemplateRef()) {
+                    <ng-template #eventTemplate let-data>
+                        <ng-container
+                            *ngTemplateOutlet="
+                                timelineMonthTemplateRef()!;
+                                context: { $implicit: data }
+                            "
+                        >
+                        </ng-container>
+                    </ng-template>
+                    }
+
+                    <!-- <ng-template #eventTemplate let-data>
+                              <ng-container *ngTemplateOutlet="sharedEventTemplate;context: {$implicit: data}">
+                              </ng-container>
+                          </ng-template> -->
+                </e-view>
+              }
+              @if(views().includes('Agenda')){
+                <e-view option="Agenda">
+                    <!-- <ng-template #eventTemplate let-data>
+                              <ng-container *ngTemplateOutlet="sharedEventTemplate;context: {$implicit: data}">
+                              </ng-container>
+                          </ng-template> -->
+                </e-view>
+              }
+            </e-views>
+
+            @if (eventTooltipTemplateRef()) {
+            <ng-template #eventSettingsTooltipTemplate let-data>
+                <ng-container
+                    *ngTemplateOutlet="
+                        eventTooltipTemplateRef()!;
+                        context: { $implicit: data }
+                    "
+                >
+                </ng-container>
+            </ng-template>
+            }
+        </ejs-schedule>
+    </div>
+</div>

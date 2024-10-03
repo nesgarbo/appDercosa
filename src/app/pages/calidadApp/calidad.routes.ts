@@ -19,7 +19,7 @@ export default [
   },
   {
     path: '',
-    redirectTo: 'test-results',
+    redirectTo: 'agenda-results',
     pathMatch: 'full',
   },
 ] satisfies Route[];

@@ -19,8 +19,9 @@
           type="text"
         ></ion-input>
       </ion-item>
+      @if(!formValue().isBoolean){
       <ion-item>
-        <ion-label style="min-width: 50vw;">Unidad de medida</ion-label>
+        <ion-label style="min-width: 50vw">Unidad de medida</ion-label>
         <app-searchable-select
           class="ion-text-right"
           [items]="measurementUnitOptions()"
@@ -57,6 +58,25 @@
           formControlName="defaultMax"
           type="number"
         ></ion-input>
+      </ion-item>
+      } @else {
+      <ion-item>
+        <app-select
+          label="Valor Correcto"
+          [options]="[
+            { value: true, label: 'Sí' },
+            { value: false, label: 'No' }
+          ]"
+          formControlName="booleanOkValue"
+        ></app-select>
+      </ion-item>
+      }
+      <ion-item>
+        <ion-toggle
+          [(ngModel)]="isBoolean"
+          [ngModelOptions]="{ standalone: true }"
+          >Booleano</ion-toggle
+        >
       </ion-item>
     </ion-list>
   </form>

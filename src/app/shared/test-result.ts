@@ -3,9 +3,8 @@ export interface TestResultViewModel {
   partida: string;
   pedido: number;
   linea: number;
-  cliente: string;
-  test: string;
-  result: number;
+  clientTest: string;
+  result: number | boolean;
   date: Date;
   isAllDay: boolean;
   backgroundColor?: string;

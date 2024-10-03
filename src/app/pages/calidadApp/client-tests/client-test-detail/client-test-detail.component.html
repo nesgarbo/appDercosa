@@ -29,43 +29,67 @@
             let-item
             let-isConsignaSelected="isItemSelected"
           >
-          <ion-grid class="ctn-icons">
-            <ion-row>
-              <ion-col
-                style="
-                  padding-top: 0;
-                  padding-bottom: 0;
-                  align-items: center;
-                  display: flex;
-                  text-align: center;
-                  justify-content: space-between;
-                  margin-bottom: 0.5rem;
-                  margin-top: 0.4rem;
-                "
-              >
-                <ion-text style="display: block"> {{ item.name }}</ion-text>
-              </ion-col>
-              <ion-col style="padding-top: 0">
-                <div style="display: flex; flex-direction: column; align-items: end;">
-                  @if(item.defaultMax){
-                  <div style="display: flex; align-items: center; justify-content: center;">
-                    <ion-icon color="medium" name="caret-up-outline"></ion-icon>
-                    <ion-note color="medium" class="ion-text-wrap">{{
-                      item.defaultMax + ' ' + item.measurementUnit.symbol
-                    }}</ion-note>
+            <ion-grid class="ctn-icons">
+              <ion-row>
+                <ion-col
+                  style="
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    align-items: center;
+                    display: flex;
+                    text-align: center;
+                    justify-content: space-between;
+                    margin-bottom: 0.5rem;
+                    margin-top: 0.4rem;
+                  "
+                >
+                  <ion-text style="display: block"> {{ item.name }}</ion-text>
+                </ion-col>
+                <ion-col style="padding-top: 0">
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: end;
+                    "
+                  >
+                    @if(item.defaultMax){
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <ion-icon
+                        color="medium"
+                        name="caret-up-outline"
+                      ></ion-icon>
+                      <ion-note color="medium" class="ion-text-wrap">{{
+                        item.defaultMax + " " + item.measurementUnit.symbol
+                      }}</ion-note>
+                    </div>
+                    } @if(item.defaultMin){
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <ion-icon
+                        color="medium"
+                        name="caret-down-outline"
+                      ></ion-icon>
+                      <ion-note color="medium" class="ion-text-wrap">{{
+                        item.defaultMin + " " + item.measurementUnit.symbol
+                      }}</ion-note>
+                    </div>
+                    }
                   </div>
-                  } @if(item.defaultMin){
-                  <div style="display: flex; align-items: center; justify-content: center;">
-                    <ion-icon color="medium" name="caret-down-outline"></ion-icon>
-                    <ion-note color="medium" class="ion-text-wrap">{{
-                      item.defaultMin + ' ' + item.measurementUnit.symbol
-                    }}</ion-note>
-                  </div>
-                  }
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ng-template>
         </app-searchable-select>
       </ion-item>
@@ -81,6 +105,7 @@
           (onSearch)="searchClients($event)"
           [canAddItem]="false"
           (onClose)="onClose($event)"
+          (ngModelChange)="onTestChange($event)"
         >
           <ng-template
             #itemTemplate
@@ -93,8 +118,9 @@
           </ng-template>
         </app-searchable-select>
       </ion-item>
+      @if(!test()?.isBoolean){
       <ion-item>
-        <ion-label style="min-width: 50vw;">Unidad de medida</ion-label>
+        <ion-label style="min-width: 50vw">Unidad de medida</ion-label>
         <app-searchable-select
           class="ion-text-right"
           [items]="measurementUnitOptions()"
@@ -132,6 +158,16 @@
           type="number"
         ></ion-input>
       </ion-item>
+      } @else {<ion-item>
+        <app-select
+          label="Valor Correcto"
+          [options]="[
+            { value: true, label: 'Sí' },
+            { value: false, label: 'No' }
+          ]"
+          formControlName="booleanOkValue"
+        ></app-select> </ion-item
+      >}
     </ion-list>
   </form>
 </ion-content>

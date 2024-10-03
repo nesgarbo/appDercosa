@@ -27,25 +27,58 @@
             >
               <ion-text style="display: block"> {{ test.name }}</ion-text>
             </ion-col>
+            @if(test.defaultMax && test.defaultMin){
             <ion-col style="padding-top: 0">
-              <div style="display: flex; flex-direction: column; align-items: end;">
-                @if(test.defaultMax){
-                <div style="display: flex; align-items: center; justify-content: center;">
+              <div
+                style="display: flex; flex-direction: column; align-items: end"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
                   <ion-icon color="medium" name="caret-up-outline"></ion-icon>
                   <ion-note color="medium" class="ion-text-wrap">{{
-                    test.defaultMax + ' ' + test.measurementUnit.symbol
+                    test.defaultMax + " " + test.measurementUnit.symbol
                   }}</ion-note>
                 </div>
-                } @if(test.defaultMin){
-                <div style="display: flex; align-items: center; justify-content: center;">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
                   <ion-icon color="medium" name="caret-down-outline"></ion-icon>
                   <ion-note color="medium" class="ion-text-wrap">{{
-                    test.defaultMin + ' ' + test.measurementUnit.symbol
+                    test.defaultMin + " " + test.measurementUnit.symbol
                   }}</ion-note>
                 </div>
-                }
               </div>
             </ion-col>
+            } @else if (test.isBoolean) {
+            <ion-col style="padding-top: 0">
+              <div
+                style="display: flex; flex-direction: column; align-items: end"
+              >
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <ion-note color="medium" class="ion-text-wrap">Valor correcto</ion-note>
+                  <ion-note color="medium" class="ion-text-wrap">{{
+                    test.booleanOkValue ? "Sí" : "No"
+                  }}</ion-note>
+                </div>
+              </div>
+            </ion-col>
+            }
           </ion-row>
         </ion-grid>
       </ion-item>

@@ -9,9 +9,31 @@
 
 <ion-content [fullscreen]="true">
   <div class="content-container">
-
-    <div #schedulerContainer style="display:flex; flex-direction: column; flex: 1;" [ngClass]="{'dark-theme': isDarkTheme}">
-      <app-agenda-results (onEditEvent)="onEditEvent($event)" style="display:flex; flex-direction: column; flex: 1;" [events]="events()"></app-agenda-results>
+    <div
+      #schedulerContainer
+      style="height: 100%"
+      [ngClass]="{'dark-theme': isDarkTheme}"
+    >
+      <app-planning
+        (onEditEvent)="onEditEvent($event)"
+        subjectField="partida"
+        [events]="planningEvents()"
+        [allowDragAndDrop]="false"
+        [allowResizing]="false"
+        [views]="['TimelineMonth']"
+        style="height: 100%"
+      >
+        <ng-template #timelineMonthTemplate let-data>
+          <div class="template-wrap" [style.background]="data.primaryColor">
+            <div class="flex gap-2">
+              <span>{{ data.partida }}</span>
+            </div>
+            <div class="flex gap-2">
+              <span>{{ data.pedido + " / " + data.linea }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </app-planning>
       <ion-modal></ion-modal>
     </div>
   </div>

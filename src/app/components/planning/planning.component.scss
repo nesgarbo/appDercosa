@@ -1,0 +1,41 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1; // This is the important part, it makes the component take the full height of the parent container
+  }
+  
+  :host ::ng-deep {
+    .e-tooltip-wrap.e-popup {
+      // background-color: var(--tooltip-bg);
+      background-color: red !important;
+      border: none;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+  
+    .e-schedule-event-tooltip .tooltip-wrap {
+      color: var(--tooltip-text-color);
+      font-family: var(--font-family);
+    }
+  
+    .e-schedule-event-tooltip .tooltip-wrap .content-area {
+      padding-left: 6px;
+      font-size: 12px;
+      margin: 0px;
+    }
+  
+    .e-schedule-event-tooltip .tooltip-wrap .tooltip-header {
+      .tooltip-subtitle {
+        color: var(--tooltip-secondary-text-color);
+      }
+    }
+  }
+  .ion-grid {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .ion-col-12 {
+    flex: 1;
+  }

@@ -1,0 +1,9 @@
+<ion-select
+  class="ion-text-right"
+  [label]="label()"
+  [(ngModel)]="value"
+>
+  @for (option of options(); track option) {
+  <ion-select-option [value]="option.value">{{option.label}}</ion-select-option>
+  }
+</ion-select>
